@@ -95,8 +95,27 @@ export default function ContactSection() {
                 opacity: sending ? 0.7 : 1,
               }}
             >
-              {sending ? '⏳' : '📨'} {t('send')}
+              {sending ? (
+                <svg className="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ width: 18, height: 18, marginRight: 8 }}>
+                  <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 18, height: 18, marginRight: 8 }}>
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              )}
+              {t('send')}
             </button>
+            <style jsx>{`
+              @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+              }
+              .spinner {
+                animation: spin 1s linear infinite;
+              }
+            `}</style>
           </form>
         </div>
       </div>

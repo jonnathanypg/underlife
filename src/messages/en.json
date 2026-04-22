@@ -9,6 +9,7 @@
     "donate": "Become a Hero!"
   },
   "hero": {
+    "brand": "Underlife Foundation",
     "headline": "We don't just assist vulnerability;",
     "headlineAccent": "we innovate to eradicate it.",
     "subheadline": "Transforming Ecuador's future through child protection, technological access to justice, and divergent thinking.",
@@ -16,14 +17,14 @@
     "ctaPrimary": "Become a Hero Now",
     "ctaSecondary": "See Our Impact",
     "stats": {
-      "years": "+6 Years",
-      "yearsLabel": "of social innovation",
+      "years": "+2,300",
+      "yearsLabel": "Days working",
       "children": "+395",
       "childrenLabel": "Children protected",
-      "families": "+60",
-      "familiesLabel": "Families restored",
-      "youth": "+1,000",
-      "youthLabel": "Youth empowered"
+      "families": "+100",
+      "familiesLabel": "Families assisted",
+      "youth": "+1,500",
+      "youthLabel": "Youth impacted"
     }
   },
   "dna": {
@@ -71,19 +72,19 @@
   },
   "galleries": {
     "innovation": {
-      "title": "Technology at the Service of Society",
+      "title": "Transformative technology",
       "body": "Development ecosystems where AI and digital training empower our community."
     },
     "hiphop": {
-      "title": "Hip-Hop Culture as Transformation",
+      "title": "Cultural activism",
       "body": "We turn street risks into creative energy, art, and active youth leadership."
     },
     "children": {
-      "title": "Protected Childhood",
+      "title": "Protecting childhood",
       "body": "A gallery of moments reflecting the restitution of rights and the vitality of our childhood."
     },
     "workshops": {
-      "title": "Community Workshops",
+      "title": "Community workshops",
       "body": "Skill development and participatory learning to empower our local communities."
     },
     "reels": {
@@ -117,9 +118,11 @@
     "slider": {
       "low": "Comprehensive nutrition and educational care for our infants.",
       "mid": "Youth prevention, artistic culture, and tech classrooms.",
-      "high": "Therapeutic support and permanent safeguard of lives."
+      "high": "Therapeutic support and permanent safeguard of lives.",
+      "next": "Next →"
     },
     "ctaPay": "Proceed to Secure Payment",
+    "back": "← Back",
     "securityBadge": "Secure payments processed by dLocal Go and PayPal"
   },
   "contact": {
@@ -139,7 +142,8 @@
     }
   },
   "footer": {
-    "tagline": "From the neighborhood to the cloud. Transforming lives in Milagro and Santa Elena through innovation and social empathy.",
+    "brand": "Underlife Foundation",
+    "tagline": "From the neighborhood to the cloud. Transforming lives across Ecuador through innovation and social empathy.",
     "quickLinks": "Quick Links",
     "contactTitle": "Contact",
     "location": "Milagro, Ecuador",

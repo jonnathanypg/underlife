@@ -24,7 +24,6 @@ const galleries: GalleryGroup[] = [
       'fundacion-underlife-ninos-10.jpg',
       'fundacion-underlife-ninos-11.jpg',
       'fundacion-underlife-ninos-12.jpg',
-      'fundacion-underlife-ninos-13.jpg',
       'fundacion-underlife-ninos-14.jpg',
       'fundacion-underlife-ninos-15.jpg',
       'fundacion-underlife-ninos-16.jpg',
@@ -113,7 +112,7 @@ export default function GalleriesSection() {
       <div className="container">
         <div className="section-header">
           <h2 className="section-title">
-            <span className="gradient-text" style={{ padding: '0 10px'}}>{t(`${active.key}.title`)}</span>
+            <span className="gradient-text" style={{ padding: '0 10px' }}>{t(`${active.key}.title`)}</span>
           </h2>
           <p className="section-subtitle">{t(`${active.key}.body`)}</p>
         </div>
@@ -168,32 +167,32 @@ export default function GalleriesSection() {
             style={{ width: '100%', paddingTop: '30px', paddingBottom: '60px' }}
           >
             {/* Duplicating images if count is low (< 10) to ensure smooth Swiper loop */}
-            {(active.images.length < 10 
-              ? [...active.images, ...active.images, ...active.images] 
+            {(active.images.length < 10
+              ? [...active.images, ...active.images, ...active.images]
               : active.images
             ).map((img, i) => (
               <SwiperSlide key={i} style={{ width: '300px', height: '350px', backgroundPosition: 'center', backgroundSize: 'cover' }}>
-                <img 
+                <img
                   src={`/recursos_opt/${active.folder}/${img}`}
-                  alt={`${active.key} slide ${i}`} 
+                  alt={`${active.key} slide ${i}`}
                   loading="lazy"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }} 
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}
                 />
               </SwiperSlide>
             ))}
           </Swiper>
 
           {/* Invisible Navigation Click Zones */}
-          <div 
-            className="swiper-nav-zone-left" 
+          <div
+            className="swiper-nav-zone-left"
             onClick={() => {
               const swiper = (document.querySelector('.mySwiper') as any)?.swiper;
               if (swiper) swiper.slidePrev();
             }}
             style={{ position: 'absolute', top: 0, left: 0, width: '15%', height: '100%', zIndex: 10, cursor: 'w-resize' }}
           />
-          <div 
-            className="swiper-nav-zone-right" 
+          <div
+            className="swiper-nav-zone-right"
             onClick={() => {
               const swiper = (document.querySelector('.mySwiper') as any)?.swiper;
               if (swiper) swiper.slideNext();
@@ -205,7 +204,19 @@ export default function GalleriesSection() {
         {/* Video Section */}
         <div style={{ marginTop: 60 }}>
           <div className="section-header">
-            <h3 className="section-title">🎬 <span className="gradient-text">{t('reels.title')}</span></h3>
+            <h3 className="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: 32, height: 32, verticalAlign: 'middle', marginRight: 12, display: 'inline-block', color: 'var(--color-primary)' }}>
+                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                <line x1="7" y1="2" x2="7" y2="22"></line>
+                <line x1="17" y1="2" x2="17" y2="22"></line>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <line x1="2" y1="7" x2="7" y2="7"></line>
+                <line x1="2" y1="17" x2="7" y2="17"></line>
+                <line x1="17" y1="17" x2="22" y2="17"></line>
+                <line x1="17" y1="7" x2="22" y2="7"></line>
+              </svg>
+              <span className="gradient-text">{t('reels.title')}</span>
+            </h3>
             <p className="section-subtitle">{t('reels.body')}</p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 20 }}>

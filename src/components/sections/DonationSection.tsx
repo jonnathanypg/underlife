@@ -11,6 +11,8 @@ export default function DonationSection() {
   const [donorType, setDonorType] = useState<DonorType>('personal');
   const [step, setStep] = useState<1 | 2>(1);
   const [paymentMethod, setPaymentMethod] = useState<'dlocal' | 'paypal'>('dlocal');
+  const [country, setCountry] = useState<string | null>(null);
+  const [showDLocal, setShowDLocal] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
@@ -64,6 +66,32 @@ export default function DonationSection() {
     isDragging.current = false;
   }, []);
 
+  // Geolocation detection
+  useEffect(() => {
+    const detectCountry = async () => {
+      try {
+        const res = await fetch('https://ipapi.co/json/');
+        const data = await res.json();
+        if (data.country_code) {
+          const code = data.country_code;
+          setCountry(code);
+          
+          // Official dLocal Go supported countries
+          const supported = ['AR', 'BO', 'BR', 'CL', 'CO', 'CR', 'EC', 'GT', 'MX', 'PA', 'PE', 'UY', 'ID', 'MY', 'KE', 'NG'];
+          const isSupported = supported.includes(code);
+          
+          setShowDLocal(isSupported);
+          if (!isSupported) {
+            setPaymentMethod('paypal');
+          }
+        }
+      } catch (error) {
+        console.error('Country detection failed:', error);
+      }
+    };
+    detectCountry();
+  }, []);
+
   const handleDonate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -113,10 +141,38 @@ export default function DonationSection() {
   // Gradient color shifts from teal → accent as amount increases
   const gradientPosition = `${Math.round(ratio * 100)}%`;
 
-  const donorTypes: { key: DonorType; icon: string }[] = [
-    { key: 'anonymous', icon: '🕶️' },
-    { key: 'personal', icon: '🦸' },
-    { key: 'institutional', icon: '🏢' },
+  const donorTypes: { key: DonorType; icon: React.ReactNode }[] = [
+    { 
+      key: 'anonymous', 
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 28, height: 28 }}>
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+          <line x1="1" y1="1" x2="23" y2="23"></line>
+        </svg>
+      )
+    },
+    { 
+      key: 'personal', 
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 28, height: 28 }}>
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      )
+    },
+    { 
+      key: 'institutional', 
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 28, height: 28 }}>
+          <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+          <line x1="9" y1="22" x2="9" y2="18"></line>
+          <line x1="15" y1="22" x2="15" y2="18"></line>
+          <line x1="12" y1="18" x2="12" y2="22"></line>
+          <line x1="4" y1="6" x2="20" y2="6"></line>
+          <line x1="4" y1="10" x2="20" y2="10"></line>
+        </svg>
+      )
+    },
   ];
 
   return (
@@ -229,7 +285,9 @@ export default function DonationSection() {
                         textAlign: 'center',
                       }}
                     >
-                      <div style={{ fontSize: '1.5rem', marginBottom: 6 }}>{dt.icon}</div>
+                      <div style={{ fontSize: '1.5rem', marginBottom: 6, color: donorType === dt.key ? 'var(--color-accent)' : 'var(--text-muted)' }}>
+                        {dt.icon}
+                      </div>
                       <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>
                         {t(`types.${dt.key}.label`)}
                       </div>
@@ -246,7 +304,7 @@ export default function DonationSection() {
                 style={{ width: '100%', justifyContent: 'center' }}
                 onClick={() => setStep(2)}
               >
-                Continuar →
+                {t('next')}
               </button>
             </>
           )}
@@ -267,7 +325,7 @@ export default function DonationSection() {
                   gap: 6,
                 }}
               >
-                ← Volver
+                {t('back')}
               </button>
 
               <div
@@ -323,23 +381,30 @@ export default function DonationSection() {
               </div>
 
               {/* Payment Method */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 20 }}>
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod('dlocal')}
-                  style={{
-                    padding: '16px',
-                    borderRadius: 'var(--radius-md)',
-                    border: paymentMethod === 'dlocal' ? '2px solid var(--color-teal)' : '2px solid var(--border-color)',
-                    background: paymentMethod === 'dlocal' ? 'rgba(38,180,156,0.08)' : 'transparent',
-                    fontWeight: 600,
-                    fontSize: '0.85rem',
-                    color: 'var(--text-primary)',
-                    transition: 'all var(--duration-fast)',
-                  }}
-                >
-                  💳 Tarjeta / Local
-                </button>
+              <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: showDLocal ? '1fr 1fr' : '1fr', 
+                gap: 10, 
+                marginBottom: 20 
+              }}>
+                {showDLocal && (
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('dlocal')}
+                    style={{
+                      padding: '16px',
+                      borderRadius: 'var(--radius-md)',
+                      border: paymentMethod === 'dlocal' ? '2px solid var(--color-teal)' : '2px solid var(--border-color)',
+                      background: paymentMethod === 'dlocal' ? 'rgba(38,180,156,0.08)' : 'transparent',
+                      fontWeight: 600,
+                      fontSize: '0.85rem',
+                      color: 'var(--text-primary)',
+                      transition: 'all var(--duration-fast)',
+                    }}
+                  >
+                    💳 {country === 'EC' ? 'Tarjeta / Local (Ecuador)' : 'Tarjeta / Pago Local'}
+                  </button>
+                )}
                 <button
                   type="button"
                   onClick={() => setPaymentMethod('paypal')}
@@ -354,7 +419,12 @@ export default function DonationSection() {
                     transition: 'all var(--duration-fast)',
                   }}
                 >
-                  🅿️ PayPal
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <span>🅿️ PayPal</span>
+                    <span style={{ fontSize: '0.65rem', opacity: 0.8, fontWeight: 400 }}>
+                      Debito / Credito / Internacional
+                    </span>
+                  </div>
                 </button>
               </div>
 

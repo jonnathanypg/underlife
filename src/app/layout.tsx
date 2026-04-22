@@ -31,6 +31,24 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} data-theme="dark" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('underlife-theme');
+                  if (theme) {
+                    document.documentElement.setAttribute('data-theme', theme);
+                  } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body>
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>

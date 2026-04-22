@@ -49,7 +49,7 @@ export default function ImpactSection() {
   const tHero = useTranslations('hero');
 
   const metrics = [
-    { target: 6, suffix: '+', label: tHero('stats.yearsLabel') },
+    { target: 2300, suffix: '+', label: tHero('stats.yearsLabel') },
     { target: 395, suffix: '+', label: tHero('stats.childrenLabel') },
     { target: 60, suffix: '+', label: tHero('stats.familiesLabel') },
     { target: 1000, suffix: '+', label: tHero('stats.youthLabel') },

@@ -20,12 +20,6 @@ export default function HeroSection() {
     });
   }, []);
 
-  const stats = [
-    { value: t('stats.years'), label: t('stats.yearsLabel') },
-    { value: t('stats.children'), label: t('stats.childrenLabel') },
-    { value: t('stats.families'), label: t('stats.familiesLabel') },
-    { value: t('stats.youth'), label: t('stats.youthLabel') },
-  ];
 
   return (
     <section
@@ -83,7 +77,7 @@ export default function HeroSection() {
             marginBottom: 8,
           }}
         >
-          Fundación Underlife
+          {t('brand')}
         </p>
 
         {/* Main Headline */}
@@ -123,35 +117,6 @@ export default function HeroSection() {
           </a>
         </div>
 
-        {/* Stats Grid */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
-            gap: 16,
-          }}
-        >
-          {stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="glass-card"
-              style={{
-                padding: '24px 16px',
-                textAlign: 'center',
-              }}
-            >
-              <span
-                className="gradient-text-primary"
-                style={{ fontSize: '1.8rem', fontWeight: 800, display: 'block' }}
-              >
-                {stat.value}
-              </span>
-              <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: 4, display: 'block' }}>
-                {stat.label}
-              </span>
-            </div>
-          ))}
-        </div>
       </div>
 
       {/* Scroll indicator */}

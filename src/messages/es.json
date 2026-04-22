@@ -9,6 +9,7 @@
     "donate": "¡Hazte Héroe!"
   },
   "hero": {
+    "brand": "Fundación Underlife",
     "headline": "No solo asistimos a la vulnerabilidad;",
     "headlineAccent": "innovamos para erradicarla.",
     "subheadline": "Transformando el futuro de Ecuador mediante la protección infantil, el acceso tecnológico a la justicia y el pensamiento divergente.",
@@ -16,14 +17,14 @@
     "ctaPrimary": "Hazte Héroe Ahora",
     "ctaSecondary": "Conoce Nuestro Impacto",
     "stats": {
-      "years": "+6 Años",
-      "yearsLabel": "de innovación social",
+      "years": "+2,300",
+      "yearsLabel": "Días trabajando",
       "children": "+395",
       "childrenLabel": "Infantes protegidos",
-      "families": "+60",
-      "familiesLabel": "Familias restauradas",
-      "youth": "+1,000",
-      "youthLabel": "Jóvenes empoderados"
+      "families": "+100",
+      "familiesLabel": "Familias asistidas",
+      "youth": "+1,500",
+      "youthLabel": "Jóvenes impactados"
     }
   },
   "dna": {
@@ -71,19 +72,19 @@
   },
   "galleries": {
     "innovation": {
-      "title": "Tecnología al Servicio Social",
+      "title": "Tecnologia transformadora",
       "body": "Ecosistemas de desarrollo donde la IA y la capacitación digital empoderan a nuestra comunidad."
     },
     "hiphop": {
-      "title": "Cultura Hip-Hop como Transformación",
+      "title": "Activismo cultural",
       "body": "Convertimos el riesgo de las calles en energía creativa, arte y liderazgo juvenil activo."
     },
     "children": {
-      "title": "Infancia Protegida",
+      "title": "Protegiendo la infancia",
       "body": "Galería de momentos que reflejan la restitución de derechos y la vitalidad de nuestra niñez."
     },
     "workshops": {
-      "title": "Talleres Comunitarios",
+      "title": "Talleres comuntarios",
       "body": "Desarrollo de habilidades y aprendizaje participativo para empoderar a nuestras comunidades locales."
     },
     "reels": {
@@ -117,9 +118,11 @@
     "slider": {
       "low": "Alimentación integral y cuidados educativos para nuestros infantes.",
       "mid": "Prevención juvenil, cultura artística y aulas tecnológicas.",
-      "high": "Soporte terapéutico y salvaguarda permanente de vidas."
+      "high": "Soporte terapéutico y salvaguarda permanente de vidas.",
+      "next": "Continuar →"
     },
     "ctaPay": "Proceder al Pago Seguro",
+    "back": "← Volver",
     "securityBadge": "Pagos seguros procesados por dLocal Go y PayPal"
   },
   "contact": {
@@ -139,7 +142,8 @@
     }
   },
   "footer": {
-    "tagline": "Del barrio a la nube. Transformando vidas en Milagro y Santa Elena a través de la innovación y la empatía social.",
+    "brand": "Fundación Underlife",
+    "tagline": "Del barrio a la nube. Transformando vidas en todo el Ecuador a través de la innovación y la empatía social.",
     "quickLinks": "Enlaces Rápidos",
     "contactTitle": "Contacto",
     "location": "Milagro, Ecuador",

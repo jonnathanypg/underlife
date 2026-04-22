@@ -58,11 +58,21 @@ export default function Header() {
     >
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
         {/* Logo */}
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ fontSize: '1.6rem', fontWeight: 900, letterSpacing: '-0.03em' }}>
-            <span className="gradient-text">Under</span>
-            <span style={{ color: 'var(--text-primary)' }}>life</span>
-          </span>
+        <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
+          <img
+            src={theme === 'dark'
+              ? '/logos/logo-fundacionunderlife-dark.png'
+              : '/logos/logo-fundacionunderlife-ligth.png'
+            }
+            alt="Fundación Underlife"
+            className="site-logo"
+            style={{
+              height: 'var(--logo-height, 48px)',
+              width: 'auto',
+              transition: 'all var(--duration-normal) var(--ease-out)',
+              display: 'block'
+            }}
+          />
         </Link>
 
         {/* Desktop Nav */}
@@ -94,19 +104,19 @@ export default function Header() {
 
           <button
             onClick={() => {
-              // Override next-intl cookie memory explicitly to prevent sticky locales
+              // Override next-intl cookie memory explicitly
               document.cookie = `NEXT_LOCALE=${nextLocale}; path=/; max-age=31536000`;
-              window.location.href = isEn ? '/' : '/en';
+              window.location.href = `/${nextLocale}${pathname}`;
             }}
             style={{
               width: 28,
               height: 28,
               borderRadius: '50%',
               background: `url(${isEn ? 'https://flagcdn.com/ec.svg' : 'https://flagcdn.com/us.svg'})`,
-              backgroundSize: '150%',
+              backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
-              border: '2px solid var(--border-color)',
+              border: theme === 'dark' ? 'solid 3px white' : 'solid 3px #1e1e38',
               transition: 'transform var(--duration-fast) var(--ease-out), filter var(--duration-fast)',
               cursor: 'pointer',
               padding: 0,
@@ -118,26 +128,43 @@ export default function Header() {
             aria-label="Toggle Language"
           />
 
-          {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
             aria-label={theme === 'dark' ? tTheme('light') : tTheme('dark')}
             style={{
-              width: 36,
-              height: 36,
+              width: 38,
+              height: 38,
               borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               background: 'var(--border-color)',
               color: 'var(--text-primary)',
-              fontSize: '1.1rem',
               transition: 'all var(--duration-fast) var(--ease-out)',
               cursor: 'pointer',
               border: 'none',
+              padding: 0,
             }}
+            onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.background = 'var(--divider)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.background = 'var(--border-color)'; }}
           >
-            {theme === 'dark' ? '☀️' : '🌙'}
+            {theme === 'dark' ? (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style={{ width: 18, height: 18 }}>
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style={{ width: 18, height: 18 }}>
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+              </svg>
+            )}
           </button>
 
           {/* Donate CTA */}
@@ -172,23 +199,35 @@ export default function Header() {
       {mobileOpen && (
         <div
           className="mobile-nav-overlay"
+          onClick={() => setMobileOpen(false)}
           style={{
             position: 'fixed',
             inset: 0,
-            background: 'rgba(10, 10, 15, 0.98)', // Forced solid dark base 
-            backdropFilter: 'blur(30px)',
-            WebkitBackdropFilter: 'blur(30px)',
+            background: theme === 'dark' ? 'rgba(10, 10, 20, 0.98)' : 'rgba(248, 250, 252, 0.98)',
+            backdropFilter: 'blur(15px)',
+            WebkitBackdropFilter: 'blur(15px)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: 28,
-            paddingTop: 'var(--header-height)',
+            gap: 20,
+            padding: '40px 20px',
             zIndex: ('var(--z-sticky)' as unknown as number) - 1,
             height: '100vh',
             width: '100vw',
           }}
         >
+          {/* Prevent click propagation on menu items so we can click overlay to close */}
+          <div 
+            onClick={(e) => e.stopPropagation()} 
+            style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              alignItems: 'center', 
+              gap: 24,
+              width: '100%' 
+            }}
+          >
           {navItems.map((item) => (
             <a
               key={item.key}
@@ -212,21 +251,21 @@ export default function Header() {
             {t('donate')}
           </a>
           <div style={{ display: 'flex', gap: 20, marginTop: 16 }}>
-            <button 
+            <button
               onClick={() => {
                 setMobileOpen(false);
                 document.cookie = `NEXT_LOCALE=${nextLocale}; path=/; max-age=31536000`;
-                window.location.href = isEn ? '/' : '/en';
-              }} 
+                window.location.href = `/${nextLocale}${pathname}`;
+              }}
               style={{
                 width: 34,
                 height: 34,
                 borderRadius: '50%',
                 background: `url(${isEn ? 'https://flagcdn.com/ec.svg' : 'https://flagcdn.com/us.svg'})`,
-                backgroundSize: '150%',
+                backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
-                border: '2px solid var(--border-color)',
+                border: theme === 'dark' ? 'solid 3px white' : 'solid 3px #1e1e38',
                 cursor: 'pointer',
                 padding: 0,
                 marginTop: 2,
@@ -235,17 +274,61 @@ export default function Header() {
               title={isEn ? 'Cambiar a Español' : 'Switch to English'}
               aria-label="Toggle Language"
             />
-            <button onClick={toggleTheme} style={{ fontSize: '1.7rem', background: 'transparent', border: 'none', cursor: 'pointer' }}>
-              {theme === 'dark' ? '☀️' : '🌙'}
+            <button 
+              onClick={toggleTheme} 
+              style={{ 
+                width: 44,
+                height: 44,
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)',
+                border: 'none',
+                color: 'var(--text-primary)',
+                cursor: 'pointer' 
+              }}
+            >
+              {theme === 'dark' ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style={{ width: 22, height: 22 }}>
+                  <circle cx="12" cy="12" r="5"></circle>
+                  <line x1="12" y1="1" x2="12" y2="3"></line>
+                  <line x1="12" y1="21" x2="12" y2="23"></line>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                  <line x1="1" y1="12" x2="3" y2="12"></line>
+                  <line x1="21" y1="12" x2="23" y2="12"></line>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style={{ width: 22, height: 22 }}>
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+              )}
             </button>
+          </div>
           </div>
         </div>
       )}
 
       <style>{`
+        :root {
+          --logo-height: 48px;
+        }
+
         @media (max-width: 900px) {
+          :root {
+            --logo-height: 42px;
+          }
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
+        }
+
+        @media (max-width: 600px) {
+          :root {
+            --logo-height: 36px;
+          }
         }
       `}</style>
     </header>
