@@ -1,0 +1,156 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "dna": "Nuestro ADN",
+    "projects": "Proyectos",
+    "impact": "Impacto",
+    "volunteer": "Voluntariado",
+    "contact": "Contacto",
+    "donate": "¡Hazte Héroe!"
+  },
+  "hero": {
+    "headline": "No solo asistimos a la vulnerabilidad;",
+    "headlineAccent": "innovamos para erradicarla.",
+    "subheadline": "Transformando el futuro de Ecuador mediante la protección infantil, el acceso tecnológico a la justicia y el pensamiento divergente.",
+    "body": "En el corazón del Ecuador profundo, donde las adversidades a menudo desafían nuestra resiliencia, nace un ecosistema de agentes de cambio con años de experiencia en el territorio. No somos una organización convencional; somos un laboratorio de innovación social integral.",
+    "ctaPrimary": "Hazte Héroe Ahora",
+    "ctaSecondary": "Conoce Nuestro Impacto",
+    "stats": {
+      "years": "+6 Años",
+      "yearsLabel": "de innovación social",
+      "children": "+395",
+      "childrenLabel": "Infantes protegidos",
+      "families": "+60",
+      "familiesLabel": "Familias restauradas",
+      "youth": "+1,000",
+      "youthLabel": "Jóvenes empoderados"
+    }
+  },
+  "dna": {
+    "headline": "Pensamiento Divergente:",
+    "headlineAccent": "La Arquitectura de una Nueva Sociedad.",
+    "intro": "Nacimos en 2018 como un espacio indispensable para los históricamente invisibilizados. Nuestra experiencia se fundamenta en cinco pilares estratégicos:",
+    "pillars": {
+      "childhood": {
+        "title": "Primera Infancia",
+        "text": "Los primeros 1,000 días definen el futuro. Nuestros CDIs ofrecen excelencia nutricional, estimulación temprana y cuidado seguro."
+      },
+      "rights": {
+        "title": "Restitución de Derechos",
+        "text": "Proyecto AFACUFA: Intervenimos en crisis familiares de alta complejidad, asegurando un entorno protector para cada menor."
+      },
+      "tech": {
+        "title": "Democratización Tecnológica",
+        "text": "Plataforma LeFri impulsada por IA: orientación legal gratuita como derecho universal al alcance de un clic."
+      },
+      "culture": {
+        "title": "Prevención Juvenil",
+        "text": "Urban Fest transforma los riesgos de la vulnerabilidad en poder de expresión artística, habilidades y liderazgo."
+      },
+      "climate": {
+        "title": "Resiliencia Climática",
+        "text": "Equipos de respuesta inmediata ante contingencias y eventos naturales que afectan nuestra región costera."
+      }
+    }
+  },
+  "impact": {
+    "headline": "Trazabilidad del Impacto:",
+    "headlineAccent": "Historias avaladas por números reales.",
+    "body": "Detrás de cada métrica hay nombres, familias y futuros rescatados. Contamos con años de riguroso trabajo en los sectores más desafiantes, asegurando que cada esfuerzo converja donde más se necesita: en el ser humano."
+  },
+  "cdi": {
+    "headline": "Espacios Reales de",
+    "headlineAccent": "Cuidado Integral",
+    "body": "Cada sonrisa capturada es el resultado de un compromiso que dignifica la infancia. Conoce la labor activa en nuestros centros aliados.",
+    "centers": {
+      "caritas": "CDI Caritas Alegres — San Emilio",
+      "pedacitos": "CDI Pedacitos de Amor — Vergeles",
+      "gotitas": "CDI Gotitas del Saber — San Miguel",
+      "amiguitos": "CDI Amiguitos a Jugar — Unida Norte"
+    }
+  },
+  "galleries": {
+    "innovation": {
+      "title": "Tecnología al Servicio Social",
+      "body": "Ecosistemas de desarrollo donde la IA y la capacitación digital empoderan a nuestra comunidad."
+    },
+    "hiphop": {
+      "title": "Cultura Hip-Hop como Transformación",
+      "body": "Convertimos el riesgo de las calles en energía creativa, arte y liderazgo juvenil activo."
+    },
+    "children": {
+      "title": "Infancia Protegida",
+      "body": "Galería de momentos que reflejan la restitución de derechos y la vitalidad de nuestra niñez."
+    },
+    "workshops": {
+      "title": "Talleres Comunitarios",
+      "body": "Desarrollo de habilidades y aprendizaje participativo para empoderar a nuestras comunidades locales."
+    },
+    "reels": {
+      "title": "Historias en Movimiento",
+      "body": "Siente el impacto latente. Testimonios inmersivos que demuestran que la solidaridad tiene rostro y voz."
+    }
+  },
+  "volunteer": {
+    "headline": "Movilizando el",
+    "headlineAccent": "Talento Divergente.",
+    "body": "No buscamos simple presencia, buscamos coautores del cambio; tecnólogos creativos, especialistas y emprendedores dispuestos a multiplicar el impacto. Tu talento y voluntad son herramientas indispensables para romper el ciclo de la pobreza.",
+    "cta": "Únete al Movimiento"
+  },
+  "donation": {
+    "headline": "Tu generosidad es la plataforma que",
+    "headlineAccent": "levanta vidas.",
+    "types": {
+      "anonymous": {
+        "label": "Héroe Silencioso",
+        "desc": "Impacto social sin rastro público. Tu causa lidera."
+      },
+      "personal": {
+        "label": "Héroe del Barrio",
+        "desc": "Pon tu nombre junto a quienes transforman comunidades."
+      },
+      "institutional": {
+        "label": "Aliado Corporativo",
+        "desc": "RSE y alianza empresarial como pilar contra la pobreza."
+      }
+    },
+    "slider": {
+      "low": "Alimentación integral y cuidados educativos para nuestros infantes.",
+      "mid": "Prevención juvenil, cultura artística y aulas tecnológicas.",
+      "high": "Soporte terapéutico y salvaguarda permanente de vidas."
+    },
+    "ctaPay": "Proceder al Pago Seguro",
+    "securityBadge": "Pagos seguros procesados por dLocal Go y PayPal"
+  },
+  "contact": {
+    "headline": "Conecta con",
+    "headlineAccent": "Underlife",
+    "name": "Nombre Completo",
+    "email": "Correo Electrónico",
+    "subject": "Asunto",
+    "message": "Mensaje",
+    "send": "Enviar Mensaje",
+    "subjects": {
+      "info": "Información General",
+      "donations": "Donaciones",
+      "volunteering": "Voluntariado",
+      "alliances": "Alianzas Estratégicas",
+      "other": "Otro"
+    }
+  },
+  "footer": {
+    "tagline": "Del barrio a la nube. Transformando vidas en Milagro y Santa Elena a través de la innovación y la empatía social.",
+    "quickLinks": "Enlaces Rápidos",
+    "contactTitle": "Contacto",
+    "location": "Milagro, Ecuador",
+    "copyright": "© 2026 Fundación Underlife. Todos los derechos reservados.",
+    "developer": "Desarrollado por"
+  },
+  "theme": {
+    "light": "Modo Claro",
+    "dark": "Modo Oscuro"
+  },
+  "lang": {
+    "switch": "English"
+  }
+}

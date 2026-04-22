@@ -1,0 +1,156 @@
+{
+  "nav": {
+    "home": "Home",
+    "dna": "Our DNA",
+    "projects": "Projects",
+    "impact": "Impact",
+    "volunteer": "Volunteer",
+    "contact": "Contact",
+    "donate": "Become a Hero!"
+  },
+  "hero": {
+    "headline": "We don't just assist vulnerability;",
+    "headlineAccent": "we innovate to eradicate it.",
+    "subheadline": "Transforming Ecuador's future through child protection, technological access to justice, and divergent thinking.",
+    "body": "In the heart of deep Ecuador, where adversities often challenge our resilience, an ecosystem of changemakers with years of territorial experience was born. We are not a conventional organization; we are a comprehensive social innovation lab.",
+    "ctaPrimary": "Become a Hero Now",
+    "ctaSecondary": "See Our Impact",
+    "stats": {
+      "years": "+6 Years",
+      "yearsLabel": "of social innovation",
+      "children": "+395",
+      "childrenLabel": "Children protected",
+      "families": "+60",
+      "familiesLabel": "Families restored",
+      "youth": "+1,000",
+      "youthLabel": "Youth empowered"
+    }
+  },
+  "dna": {
+    "headline": "Divergent Thinking:",
+    "headlineAccent": "The Architecture of a New Society.",
+    "intro": "We were founded in 2018 as an essential space for the historically marginalized. Our experience is based on five strategic pillars:",
+    "pillars": {
+      "childhood": {
+        "title": "Early Childhood",
+        "text": "The first 1,000 days shape a lifetime. Our CDIs provide nutritional excellence, early stimulation, and safe daily care."
+      },
+      "rights": {
+        "title": "Restitution of Rights",
+        "text": "AFACUFA Project: We intervene in complex family crises, ensuring a protective environment for every child."
+      },
+      "tech": {
+        "title": "Tech Democratization",
+        "text": "LeFri Platform powered by AI: free legal guidance as a universal right, just a click away."
+      },
+      "culture": {
+        "title": "Youth Prevention",
+        "text": "Urban Fest transforms vulnerability risks into artistic power, creative skills, and neighborhood leadership."
+      },
+      "climate": {
+        "title": "Climate Resilience",
+        "text": "Immediate response teams during contingencies and natural events affecting our coastal region."
+      }
+    }
+  },
+  "impact": {
+    "headline": "Impact Traceability:",
+    "headlineAccent": "Stories backed by real numbers.",
+    "body": "Behind every metric, there are names, families, and rescued futures. We have years of rigorous work in the most challenging sectors, ensuring every effort focuses where it is needed most: the human being."
+  },
+  "cdi": {
+    "headline": "Real Spaces of",
+    "headlineAccent": "Comprehensive Care",
+    "body": "Every captured smile is the result of a commitment that dignifies childhood. Explore the active work within our allied centers.",
+    "centers": {
+      "caritas": "CDI Caritas Alegres — San Emilio",
+      "pedacitos": "CDI Pedacitos de Amor — Vergeles",
+      "gotitas": "CDI Gotitas del Saber — San Miguel",
+      "amiguitos": "CDI Amiguitos a Jugar — Unida Norte"
+    }
+  },
+  "galleries": {
+    "innovation": {
+      "title": "Technology at the Service of Society",
+      "body": "Development ecosystems where AI and digital training empower our community."
+    },
+    "hiphop": {
+      "title": "Hip-Hop Culture as Transformation",
+      "body": "We turn street risks into creative energy, art, and active youth leadership."
+    },
+    "children": {
+      "title": "Protected Childhood",
+      "body": "A gallery of moments reflecting the restitution of rights and the vitality of our childhood."
+    },
+    "workshops": {
+      "title": "Community Workshops",
+      "body": "Skill development and participatory learning to empower our local communities."
+    },
+    "reels": {
+      "title": "Stories in Motion",
+      "body": "Feel the lingering impact. Immersive testimonies proving solidarity has a face and a voice."
+    }
+  },
+  "volunteer": {
+    "headline": "Mobilizing",
+    "headlineAccent": "Divergent Talent.",
+    "body": "We don't just seek presence; we seek co-authors of change—creative technologists, specialists, and entrepreneurs ready to multiply the impact. Your talent is the tool that breaks the cycle of poverty.",
+    "cta": "Join the Movement"
+  },
+  "donation": {
+    "headline": "Your generosity is the platform that",
+    "headlineAccent": "uplifts lives.",
+    "types": {
+      "anonymous": {
+        "label": "Silent Hero",
+        "desc": "Social impact without a public trace. Your cause leads."
+      },
+      "personal": {
+        "label": "Neighborhood Hero",
+        "desc": "Put your name alongside those transforming communities."
+      },
+      "institutional": {
+        "label": "Corporate Ally",
+        "desc": "CSR and business alliances as a backbone against poverty."
+      }
+    },
+    "slider": {
+      "low": "Comprehensive nutrition and educational care for our infants.",
+      "mid": "Youth prevention, artistic culture, and tech classrooms.",
+      "high": "Therapeutic support and permanent safeguard of lives."
+    },
+    "ctaPay": "Proceed to Secure Payment",
+    "securityBadge": "Secure payments processed by dLocal Go and PayPal"
+  },
+  "contact": {
+    "headline": "Connect with",
+    "headlineAccent": "Underlife",
+    "name": "Full Name",
+    "email": "Email Address",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send Message",
+    "subjects": {
+      "info": "General Information",
+      "donations": "Donations",
+      "volunteering": "Volunteering",
+      "alliances": "Strategic Alliances",
+      "other": "Other"
+    }
+  },
+  "footer": {
+    "tagline": "From the neighborhood to the cloud. Transforming lives in Milagro and Santa Elena through innovation and social empathy.",
+    "quickLinks": "Quick Links",
+    "contactTitle": "Contact",
+    "location": "Milagro, Ecuador",
+    "copyright": "© 2026 Underlife Foundation. All rights reserved.",
+    "developer": "Developed by"
+  },
+  "theme": {
+    "light": "Light Mode",
+    "dark": "Dark Mode"
+  },
+  "lang": {
+    "switch": "Español"
+  }
+}
