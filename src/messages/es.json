@@ -33,24 +33,24 @@
     "intro": "Nacimos en 2018 como un espacio indispensable para los históricamente invisibilizados. Nuestra experiencia se fundamenta en cinco pilares estratégicos:",
     "pillars": {
       "childhood": {
-        "title": "Primera Infancia",
-        "text": "Los primeros 1,000 días definen el futuro. Nuestros CDIs ofrecen excelencia nutricional, estimulación temprana y cuidado seguro."
+        "title": "Desarrollo Infantil Integral",
+        "text": "Los primeros 1,000 días definen el futuro de una nación. Diseñamos la arquitectura del desarrollo cognitivo y nutricional como cimiento de la sociedad."
       },
       "rights": {
-        "title": "Restitución de Derechos",
-        "text": "Proyecto AFACUFA: Intervenimos en crisis familiares de alta complejidad, asegurando un entorno protector para cada menor."
+        "title": "Protección de Derechos y Equidad",
+        "text": "Garantizamos entornos de afecto y seguridad, interviniendo en crisis familiares con un enfoque técnico para asegurar la dignidad y la restitución plena de derechos."
       },
       "tech": {
-        "title": "Democratización Tecnológica",
-        "text": "Plataforma LeFri impulsada por IA: orientación legal gratuita como derecho universal al alcance de un clic."
+        "title": "Justicia y Democratización Digital",
+        "text": "Eliminamos las barreras económicas al acceso jurídico mediante innovación tecnológica e IA, convirtiendo la defensa legal en un derecho universal al alcance de un clic."
       },
-      "culture": {
-        "title": "Prevención Juvenil",
-        "text": "Urban Fest transforma los riesgos de la vulnerabilidad en poder de expresión artística, habilidades y liderazgo."
+      "leadership": {
+        "title": "Liderazgo y Empoderamiento Juvenil",
+        "text": "Transformamos los riesgos sociales en poder de expresión artística, liderazgo comunitario y habilidades técnicas para la construcción de proyectos de vida sostenibles."
       },
-      "climate": {
-        "title": "Resiliencia Climática",
-        "text": "Equipos de respuesta inmediata ante contingencias y eventos naturales que afectan nuestra región costera."
+      "innovation": {
+        "title": "Innovación Social y Resiliencia Sistémica",
+        "text": "Laboratorio de pensamiento divergente capacitado para la respuesta técnica inmediata ante crisis sociales y naturales, escalando el impacto real con solvencia administrativa."
       }
     }
   },
@@ -103,24 +103,24 @@
     "headlineAccent": "levanta vidas.",
     "types": {
       "anonymous": {
-        "label": "Héroe Silencioso",
+        "label": "Donación Anónima",
         "desc": "Impacto social sin rastro público. Tu causa lidera."
       },
       "personal": {
-        "label": "Héroe del Barrio",
+        "label": "Donación Personal",
         "desc": "Pon tu nombre junto a quienes transforman comunidades."
       },
       "institutional": {
-        "label": "Aliado Corporativo",
-        "desc": "RSE y alianza empresarial como pilar contra la pobreza."
+        "label": "Donación Corporativa",
+        "desc": "RSE y alianza empresarial como pilar para la equidad social."
       }
     },
     "slider": {
       "low": "Alimentación integral y cuidados educativos para nuestros infantes.",
       "mid": "Prevención juvenil, cultura artística y aulas tecnológicas.",
-      "high": "Soporte terapéutico y salvaguarda permanente de vidas.",
-      "next": "Continuar →"
+      "high": "Soporte terapéutico y salvaguarda permanente de vidas."
     },
+    "next": "Siguiente →",
     "ctaPay": "Proceder al Pago Seguro",
     "back": "← Volver",
     "securityBadge": "Pagos seguros procesados por dLocal Go y PayPal"
@@ -155,6 +155,8 @@
     "dark": "Modo Oscuro"
   },
   "lang": {
-    "switch": "English"
+    "switch": "English",
+    "switchEn": "English",
+    "switchPt": "Português"
   }
 }

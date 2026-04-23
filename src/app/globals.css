@@ -440,3 +440,27 @@ ul, ol {
     font-size: 1.75rem;
   }
 }
+/* ============================================================
+   11. SWIPER / CAROUSEL CUSTOM STYLES
+   ============================================================ */
+.swiper-pagination-bullet {
+  background: var(--text-primary) !important;
+  opacity: 0.2 !important;
+  transition: all 0.3s ease !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--color-primary) !important;
+  opacity: 1 !important;
+  transform: scale(1.2);
+}
+
+[data-theme="dark"] .swiper-pagination-bullet {
+  background: #ffffff !important;
+  opacity: 0.3 !important;
+}
+
+[data-theme="dark"] .swiper-pagination-bullet-active {
+  background: var(--color-primary-light) !important;
+  box-shadow: 0 0 12px var(--color-primary-light);
+}

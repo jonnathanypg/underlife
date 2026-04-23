@@ -33,24 +33,24 @@
     "intro": "We were founded in 2018 as an essential space for the historically marginalized. Our experience is based on five strategic pillars:",
     "pillars": {
       "childhood": {
-        "title": "Early Childhood",
-        "text": "The first 1,000 days shape a lifetime. Our CDIs provide nutritional excellence, early stimulation, and safe daily care."
+        "title": "Comprehensive Child Development",
+        "text": "The first 1,000 days define a nation's future. We design the architecture of cognitive and nutritional development as a foundational social pillar."
       },
       "rights": {
-        "title": "Restitution of Rights",
-        "text": "AFACUFA Project: We intervene in complex family crises, ensuring a protective environment for every child."
+        "title": "Rights Protection & Equity",
+        "text": "We guarantee environments of affection and safety, intervening in family crises with a technical focus to ensure dignity and the full restoration of rights."
       },
       "tech": {
-        "title": "Tech Democratization",
-        "text": "LeFri Platform powered by AI: free legal guidance as a universal right, just a click away."
+        "title": "Digital Justice & Democratization",
+        "text": "We eliminate economic barriers to legal access through technological innovation and AI, turning legal defense into a universal right just a click away."
       },
-      "culture": {
-        "title": "Youth Prevention",
-        "text": "Urban Fest transforms vulnerability risks into artistic power, creative skills, and neighborhood leadership."
+      "leadership": {
+        "title": "Youth Leadership & Empowerment",
+        "text": "We transform social risks into artistic expression, community leadership, and technical skills for the construction of sustainable life projects."
       },
-      "climate": {
-        "title": "Climate Resilience",
-        "text": "Immediate response teams during contingencies and natural events affecting our coastal region."
+      "innovation": {
+        "title": "Social Innovation & Systemic Resilience",
+        "text": "A divergent thinking laboratory trained for immediate technical response to social and natural crises, scaling real impact with administrative solvency."
       }
     }
   },
@@ -103,24 +103,24 @@
     "headlineAccent": "uplifts lives.",
     "types": {
       "anonymous": {
-        "label": "Silent Hero",
+        "label": "Anonymous Donation",
         "desc": "Social impact without a public trace. Your cause leads."
       },
       "personal": {
-        "label": "Neighborhood Hero",
+        "label": "Personal Donation",
         "desc": "Put your name alongside those transforming communities."
       },
       "institutional": {
-        "label": "Corporate Ally",
-        "desc": "CSR and business alliances as a backbone against poverty."
+        "label": "Corporate Donation",
+        "desc": "CSR and corporate alliance as a pillar for social equity."
       }
     },
     "slider": {
       "low": "Comprehensive nutrition and educational care for our infants.",
       "mid": "Youth prevention, artistic culture, and tech classrooms.",
-      "high": "Therapeutic support and permanent safeguard of lives.",
-      "next": "Next →"
+      "high": "Therapeutic support and permanent safeguard of lives."
     },
+    "next": "Next →",
     "ctaPay": "Proceed to Secure Payment",
     "back": "← Back",
     "securityBadge": "Secure payments processed by dLocal Go and PayPal"
@@ -155,6 +155,8 @@
     "dark": "Dark Mode"
   },
   "lang": {
-    "switch": "Español"
+    "switch": "Español",
+    "switchEn": "English",
+    "switchPt": "Português"
   }
 }

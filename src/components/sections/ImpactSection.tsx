@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 
-function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: string }) {
+function AnimatedCounter({ target, prefix = '', suffix = '' }: { target: number; prefix?: string; suffix?: string }) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const hasAnimated = useRef(false);
@@ -39,7 +39,7 @@ function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: str
 
   return (
     <span ref={ref} className="gradient-text-primary" style={{ fontSize: '2.8rem', fontWeight: 900 }}>
-      {count.toLocaleString()}{suffix}
+      {prefix}{count.toLocaleString()}{suffix}
     </span>
   );
 }
@@ -49,10 +49,10 @@ export default function ImpactSection() {
   const tHero = useTranslations('hero');
 
   const metrics = [
-    { target: 2300, suffix: '+', label: tHero('stats.yearsLabel') },
-    { target: 395, suffix: '+', label: tHero('stats.childrenLabel') },
-    { target: 60, suffix: '+', label: tHero('stats.familiesLabel') },
-    { target: 1000, suffix: '+', label: tHero('stats.youthLabel') },
+    { target: 2300, prefix: '+', label: tHero('stats.yearsLabel') },
+    { target: 395, prefix: '+', label: tHero('stats.childrenLabel') },
+    { target: 100, prefix: '+', label: tHero('stats.familiesLabel') },
+    { target: 1500, prefix: '+', label: tHero('stats.youthLabel') },
   ];
 
   return (
@@ -82,7 +82,7 @@ export default function ImpactSection() {
                 textAlign: 'center',
               }}
             >
-              <AnimatedCounter target={m.target} suffix={m.suffix} />
+              <AnimatedCounter target={m.target} prefix={m.prefix} />
               <p style={{ color: 'var(--text-secondary)', marginTop: 8, fontSize: '0.9rem', fontWeight: 500 }}>
                 {m.label}
               </p>

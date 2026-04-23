@@ -1,0 +1,162 @@
+{
+  "nav": {
+    "home": "Home",
+    "dna": "Nosso DNA",
+    "projects": "Projetos",
+    "impact": "Impacto",
+    "volunteer": "Voluntariado",
+    "contact": "Contato",
+    "donate": "Torne-se um Herói!"
+  },
+  "hero": {
+    "brand": "Fundação Underlife",
+    "headline": "Não apenas assistimos a vulnerabilidade;",
+    "headlineAccent": "inovamos para erradicá-la.",
+    "subheadline": "Transformando o futuro do Equador por meio da proteção à infância, acesso tecnológico à justiça e pensamento divergente.",
+    "body": "No coração do Equador profundo, onde as adversidades frequentemente desafiam nossa resiliência, nasceu um ecossistema de agentes de mudança com anos de experiência territorial. Não somos uma organização convencional; somos um laboratório integral de inovação social.",
+    "ctaPrimary": "Torne-se um Herói Agora",
+    "ctaSecondary": "Veja Nosso Impacto",
+    "stats": {
+      "years": "+2.300",
+      "yearsLabel": "Dias trabalhando",
+      "children": "+395",
+      "childrenLabel": "Crianças protegidas",
+      "families": "+100",
+      "familiesLabel": "Famílias assistidas",
+      "youth": "+1.500",
+      "youthLabel": "Jovens impactados"
+    }
+  },
+  "dna": {
+    "headline": "Pensamento Divergente:",
+    "headlineAccent": "A Arquitetura de uma Nova Sociedade.",
+    "intro": "Fomos fundados em 2018 como um espaço essencial para os historicamente marginalizados. Nossa experiência baseia-se em cinco pilares estratégicos:",
+    "pillars": {
+      "childhood": {
+        "title": "Desenvolvimento Infantil Integral",
+        "text": "Os primeiros 1.000 dias definem o futuro de uma nação. Projetamos a arquitetura do desenvolvimento cognitivo e nutricional como alicerce da sociedade."
+      },
+      "rights": {
+        "title": "Proteção de Direitos e Equidade",
+        "text": "Garantimos ambientes de afeto e segurança, intervindo em crises familiares com foco técnico para assegurar a dignidade e a restituição plena de direitos."
+      },
+      "tech": {
+        "title": "Justiça e Democratização Digital",
+        "text": "Eliminamos as barreiras económicas ao acesso jurídico através da inovação tecnológica e IA, convertendo a defesa legal num direito universal ao alcance de um clique."
+      },
+      "leadership": {
+        "title": "Liderança e Empoderamento Juvenil",
+        "text": "Transformamos riscos sociais em poder de expressão artística, liderança comunitária e competências técnicas para a construção de projetos de vida sustentáveis."
+      },
+      "innovation": {
+        "title": "Inovação Social e Resiliência Sistémica",
+        "text": "Laboratório de pensamento divergente capacitado para resposta técnica imediata a crises sociais e naturais, escalando o impacto real com solvência administrativa."
+      }
+    }
+  },
+  "impact": {
+    "headline": "Rastreabilidade de Impacto:",
+    "headlineAccent": "Histórias apoiadas por números reais.",
+    "body": "Por trás de cada métrica, há nomes, famílias e futuros resgatados. Temos anos de trabalho rigoroso nos setores mais desafiadores, garantindo que cada esforço se concentre onde é mais necessário: o ser humano."
+  },
+  "cdi": {
+    "headline": "Espaços Reais de",
+    "headlineAccent": "Cuidado Integral",
+    "body": "Cada sorriso capturado é resultado de um compromisso que dignifica a infância. Explore o trabalho ativo em nossos centros parceiros.",
+    "centers": {
+      "caritas": "CDI Caritas Alegres — San Emilio",
+      "pedacitos": "CDI Pedacitos de Amor — Vergeles",
+      "gotitas": "CDI Gotitas del Saber — San Miguel",
+      "amiguitos": "CDI Amiguitos a Jugar — Unida Norte"
+    }
+  },
+  "galleries": {
+    "innovation": {
+      "title": "Tecnologia transformadora",
+      "body": "Ecossistemas de desenvolvimento onde a IA e a capacitação digital empoderam nossa comunidade."
+    },
+    "hiphop": {
+      "title": "Ativismo cultural",
+      "body": "Transformamos os riscos das ruas em energia criativa, arte e liderança juvenil ativa."
+    },
+    "children": {
+      "title": "Protegendo a infância",
+      "body": "Uma galeria de momentos que refletem a restituição de direitos e a vitalidade de nossa infância."
+    },
+    "workshops": {
+      "title": "Oficinas comunitárias",
+      "body": "Desenvolvimento de habilidades e aprendizagem participativa para capacitar nossas comunidades locais."
+    },
+    "reels": {
+      "title": "Histórias em Movimento",
+      "body": "Sinta o impacto duradouro. Depoimentos imersivos provando que a solidariedade tem rosto e voz."
+    }
+  },
+  "volunteer": {
+    "headline": "Mobilizando",
+    "headlineAccent": "Talento Divergente.",
+    "body": "Não buscamos apenas presença; buscamos coautores de mudança — tecnólogos criativos, especialistas e empreendedores prontos para multiplicar o impacto. Seu talento é a ferramenta que quebra o ciclo da pobreza.",
+    "cta": "Junte-se ao Movimento"
+  },
+  "donation": {
+    "headline": "Sua generosidade é a plataforma que",
+    "headlineAccent": "eleva vidas.",
+    "types": {
+      "anonymous": {
+        "label": "Doação Anônima",
+        "desc": "Impacto social sem rastro público. Sua causa lidera."
+      },
+      "personal": {
+        "label": "Doação Pessoal",
+        "desc": "Coloque seu nome ao lado de quem transforma comunidades."
+      },
+      "institutional": {
+        "label": "Doação Corporativa",
+        "desc": "RSE e aliança empresarial como pilar para a equidade social."
+      }
+    },
+    "slider": {
+      "low": "Nutrição integral e cuidado educacional para nossos bebês.",
+      "mid": "Prevenção juvenil, cultura artística e salas de aula tecnológicas.",
+      "high": "Suporte terapêutico e salvaguarda permanente de vidas."
+    },
+    "next": "Próximo →",
+    "ctaPay": "Prosseguir para Pagamento Seguro",
+    "back": "← Voltar",
+    "securityBadge": "Pagamentos seguros processados por dLocal Go e PayPal"
+  },
+  "contact": {
+    "headline": "Conecte-se com a",
+    "headlineAccent": "Underlife",
+    "name": "Nome Completo",
+    "email": "Endereço de E-mail",
+    "subject": "Assunto",
+    "message": "Mensagem",
+    "send": "Enviar Mensagem",
+    "subjects": {
+      "info": "Informações Gerais",
+      "donations": "Doações",
+      "volunteering": "Voluntariado",
+      "alliances": "Alianças Estratégicas",
+      "other": "Outro"
+    }
+  },
+  "footer": {
+    "brand": "Fundação Underlife",
+    "tagline": "Do bairro para a nuvem. Transformando vidas em todo o Equador por meio da inovação e empatia social.",
+    "quickLinks": "Links Rápidos",
+    "contactTitle": "Contato",
+    "location": "Milagro, Equador",
+    "copyright": "© 2026 Fundação Underlife. Todos os direitos reservados.",
+    "developer": "Desenvolvido por"
+  },
+  "theme": {
+    "light": "Modo Claro",
+    "dark": "Modo Escuro"
+  },
+  "lang": {
+    "switch": "Español",
+    "switchEn": "English",
+    "switchPt": "Português"
+  }
+}

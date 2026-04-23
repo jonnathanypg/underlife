@@ -1,10 +1,4 @@
 import type { Metadata } from 'next';
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, getLocale } from 'next-intl/server';
-import { ThemeProvider } from '@/components/ui/ThemeProvider';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import CustomCursor from '@/components/ui/CustomCursor';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -21,45 +15,10 @@ export const metadata: Metadata = {
   ],
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const locale = await getLocale();
-  const messages = await getMessages();
-
-  return (
-    <html lang={locale} data-theme="dark" suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var theme = localStorage.getItem('underlife-theme');
-                  if (theme) {
-                    document.documentElement.setAttribute('data-theme', theme);
-                  } else {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                  }
-                } catch (e) {}
-              })();
-            `,
-          }}
-        />
-      </head>
-      <body>
-        <NextIntlClientProvider messages={messages}>
-          <ThemeProvider>
-            <div className="animated-bg" aria-hidden="true" />
-            <CustomCursor />
-            <Header />
-            <main style={{ minHeight: '100vh' }}>{children}</main>
-            <Footer />
-          </ThemeProvider>
-        </NextIntlClientProvider>
-      </body>
-    </html>
-  );
+  return children;
 }

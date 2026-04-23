@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { useTheme } from '@/components/ui/ThemeProvider';
 import { Link, usePathname, useRouter } from '@/i18n/navigation';
@@ -14,16 +14,37 @@ export default function Header() {
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement>(null);
+  const mobileLangRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    
+    const handleClickOutside = (event: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(event.target as Node)) {
+        setLangOpen(false);
+      }
+      if (mobileLangRef.current && !mobileLangRef.current.contains(event.target as Node)) {
+        // We only close mobile lang dropdown if clicked outside its area
+        // but mobileOpen state is handled by the main overlay
+      }
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   const locale = useLocale();
-  const isEn = locale === 'en';
-  const nextLocale = isEn ? 'es' : 'en';
+  const languages = [
+    { code: 'es', flag: 'https://flagcdn.com/ec.svg', label: tLang('switch') },
+    { code: 'en', flag: 'https://flagcdn.com/us.svg', label: tLang('switchEn') },
+    { code: 'pt', flag: 'https://flagcdn.com/br.svg', label: tLang('switchPt') },
+  ];
 
   const navItems = [
     { key: 'home', href: '#inicio' },
@@ -102,31 +123,88 @@ export default function Header() {
             </a>
           ))}
 
-          <button
-            onClick={() => {
-              // Override next-intl cookie memory explicitly
-              document.cookie = `NEXT_LOCALE=${nextLocale}; path=/; max-age=31536000`;
-              window.location.href = `/${nextLocale}${pathname}`;
-            }}
-            style={{
-              width: 28,
-              height: 28,
-              borderRadius: '50%',
-              background: `url(${isEn ? 'https://flagcdn.com/ec.svg' : 'https://flagcdn.com/us.svg'})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              border: theme === 'dark' ? 'solid 3px white' : 'solid 3px #1e1e38',
-              transition: 'transform var(--duration-fast) var(--ease-out), filter var(--duration-fast)',
-              cursor: 'pointer',
-              padding: 0,
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.15)'; e.currentTarget.style.filter = 'brightness(1.1)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.filter = 'brightness(1)'; }}
-            title={isEn ? 'Cambiar a Español' : 'Switch to English'}
-            aria-label="Toggle Language"
-          />
+          <div className="lang-selector-container" ref={langRef} style={{ position: 'relative' }}>
+            <button
+              onClick={() => setLangOpen(!langOpen)}
+              style={{
+                width: 32,
+                height: 32,
+                borderRadius: '50%',
+                background: `url(${languages.find(l => l.code === locale)?.flag})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                border: theme === 'dark' ? 'solid 2.5px white' : 'solid 2.5px #1e1e38',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                boxShadow: langOpen ? '0 0 12px var(--color-primary)' : '0 2px 6px rgba(0,0,0,0.1)',
+                padding: 0,
+              }}
+              title={tLang('switch')}
+            />
+            
+            {langOpen && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 'calc(100% + 12px)',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  background: 'var(--glass-bg)',
+                  backdropFilter: 'blur(12px)',
+                  WebkitBackdropFilter: 'blur(12px)',
+                  border: '1px solid var(--glass-border)',
+                  borderRadius: 'var(--radius-md)',
+                  padding: '8px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 8,
+                  boxShadow: 'var(--glass-shadow)',
+                  zIndex: 100,
+                  minWidth: 120,
+                }}
+              >
+                {languages.filter(l => l.code !== locale).map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => {
+                      document.cookie = `NEXT_LOCALE=${lang.code}; path=/; max-age=31536000`;
+                      // Defensive: ensure pathname doesn't contain current locale prefix
+                      const cleanPath = pathname.replace(/^\/(es|en|pt)(\/|$)/, '/') || '/';
+                      router.replace(cleanPath, { locale: lang.code, scroll: false });
+                      setLangOpen(false);
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 10,
+                      padding: '8px 12px',
+                      borderRadius: 'var(--radius-sm)',
+                      background: 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                      width: '100%',
+                      transition: 'background 0.2s ease',
+                      textAlign: 'left',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                  >
+                    <div style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: '50%',
+                      background: `url(${lang.flag})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }} />
+                    <span style={{ fontSize: '0.8rem', color: 'var(--text-primary)', fontWeight: 500 }}>
+                      {lang.label}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
 
           <button
             onClick={toggleTheme}
@@ -250,30 +328,47 @@ export default function Header() {
           >
             {t('donate')}
           </a>
-          <div style={{ display: 'flex', gap: 20, marginTop: 16 }}>
-            <button
-              onClick={() => {
-                setMobileOpen(false);
-                document.cookie = `NEXT_LOCALE=${nextLocale}; path=/; max-age=31536000`;
-                window.location.href = `/${nextLocale}${pathname}`;
+          <div style={{ marginTop: 12, width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <div 
+              style={{ 
+                display: 'flex', 
+                gap: 16, 
+                padding: '10px 20px', 
+                background: 'rgba(255,255,255,0.05)', 
+                borderRadius: 'var(--radius-full)',
+                border: '1px solid var(--border-color)'
               }}
-              style={{
-                width: 34,
-                height: 34,
-                borderRadius: '50%',
-                background: `url(${isEn ? 'https://flagcdn.com/ec.svg' : 'https://flagcdn.com/us.svg'})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                border: theme === 'dark' ? 'solid 3px white' : 'solid 3px #1e1e38',
-                cursor: 'pointer',
-                padding: 0,
-                marginTop: 2,
-                boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-              }}
-              title={isEn ? 'Cambiar a Español' : 'Switch to English'}
-              aria-label="Toggle Language"
-            />
+            >
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  onClick={() => {
+                    setMobileOpen(false);
+                    document.cookie = `NEXT_LOCALE=${lang.code}; path=/; max-age=31536000`;
+                    const cleanPath = pathname.replace(/^\/(es|en|pt)(\/|$)/, '/') || '/';
+                    router.replace(cleanPath, { locale: lang.code, scroll: false });
+                  }}
+                  style={{
+                    width: 36,
+                    height: 36,
+                    borderRadius: '50%',
+                    background: `url(${lang.flag})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    border: locale === lang.code
+                      ? (theme === 'dark' ? 'solid 3px var(--color-accent)' : 'solid 3px var(--color-primary)')
+                      : (theme === 'dark' ? 'solid 2px white' : 'solid 2px #1e1e38'),
+                    cursor: 'pointer',
+                    opacity: locale === lang.code ? 1 : 0.5,
+                    transform: locale === lang.code ? 'scale(1.15)' : 'scale(1)',
+                    transition: 'all 0.2s ease',
+                    boxShadow: locale === lang.code ? '0 4px 10px var(--color-primary)' : 'none',
+                    padding: 0,
+                  }}
+                />
+              ))}
+            </div>
+          </div>
             <button 
               onClick={toggleTheme} 
               style={{ 
@@ -307,7 +402,6 @@ export default function Header() {
                 </svg>
               )}
             </button>
-          </div>
           </div>
         </div>
       )}
