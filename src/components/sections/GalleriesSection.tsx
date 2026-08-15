@@ -18,70 +18,72 @@ interface GalleryGroup {
 const galleries: GalleryGroup[] = [
   {
     key: 'children',
-    folder: 'niños',
+    folder: 'ninos',
     images: [
-      'fundacion-underlife-ninos-1.jpg',
-      'fundacion-underlife-ninos-10.jpg',
-      'fundacion-underlife-ninos-11.jpg',
-      'fundacion-underlife-ninos-12.jpg',
-      'fundacion-underlife-ninos-14.jpg',
-      'fundacion-underlife-ninos-15.jpg',
-      'fundacion-underlife-ninos-16.jpg',
-      'fundacion-underlife-ninos-17.jpg',
-      'fundacion-underlife-ninos-18.jpg',
-      'fundacion-underlife-ninos-2.jpg',
-      'fundacion-underlife-ninos-3.jpg',
-      'fundacion-underlife-ninos-4.jpg',
-      'fundacion-underlife-ninos-5.jpg',
-      'fundacion-underlife-ninos-6.jpg',
-      'fundacion-underlife-ninos-7.jpg',
-      'fundacion-underlife-ninos-8.jpg',
-      'fundacion-underlife-ninos-9.jpg'
+      'fundacion-underlife-ninos-proteccion-1.webp',
+      'fundacion-underlife-ninos-proteccion-2.webp',
+      'fundacion-underlife-ninos-proteccion-3.webp',
+      'fundacion-underlife-ninos-proteccion-4.webp',
+      'fundacion-underlife-ninos-proteccion-5.webp',
+      'fundacion-underlife-ninos-proteccion-6.webp',
+      'fundacion-underlife-ninos-proteccion-7.webp',
+      'fundacion-underlife-ninos-proteccion-8.webp',
+      'fundacion-underlife-ninos-proteccion-9.webp',
+      'fundacion-underlife-ninos-proteccion-10.webp',
+      'fundacion-underlife-ninos-proteccion-11.webp',
+      'fundacion-underlife-ninos-proteccion-12.webp',
+      'fundacion-underlife-ninos-proteccion-13.webp',
+      'fundacion-underlife-ninos-proteccion-14.webp',
+      'fundacion-underlife-ninos-proteccion-15.webp',
+      'fundacion-underlife-ninos-proteccion-16.webp',
+      'fundacion-underlife-ninos-proteccion-17.webp',
+      'fundacion-underlife-ninos-proteccion-18.webp'
     ]
   },
   {
     key: 'hiphop',
     folder: 'hiphop',
     images: [
-      'fundacion-underlife-urban-fest-hiphop-1.jpg',
-      'fundacion-underlife-urban-fest-hiphop-10.jpg',
-      'fundacion-underlife-urban-fest-hiphop-11.jpg',
-      'fundacion-underlife-urban-fest-hiphop-12.jpg',
-      'fundacion-underlife-urban-fest-hiphop-13.jpg',
-      'fundacion-underlife-urban-fest-hiphop-14.jpg',
-      'fundacion-underlife-urban-fest-hiphop-15.jpg',
-      'fundacion-underlife-urban-fest-hiphop-16.jpg',
-      'fundacion-underlife-urban-fest-hiphop-17.jpg',
-      'fundacion-underlife-urban-fest-hiphop-2.jpg',
-      'fundacion-underlife-urban-fest-hiphop-3.jpg',
-      'fundacion-underlife-urban-fest-hiphop-4.jpg',
-      'fundacion-underlife-urban-fest-hiphop-5.jpg',
-      'fundacion-underlife-urban-fest-hiphop-6.jpg',
-      'fundacion-underlife-urban-fest-hiphop-7.jpg',
-      'fundacion-underlife-urban-fest-hiphop-8.jpg',
-      'fundacion-underlife-urban-fest-hiphop-9.jpg'
+      'fundacion-underlife-urban-fest-hiphop-1.webp',
+      'fundacion-underlife-urban-fest-hiphop-2.webp',
+      'fundacion-underlife-urban-fest-hiphop-3.webp',
+      'fundacion-underlife-urban-fest-hiphop-4.webp',
+      'fundacion-underlife-urban-fest-hiphop-5.webp',
+      'fundacion-underlife-urban-fest-hiphop-6.webp',
+      'fundacion-underlife-urban-fest-hiphop-7.webp',
+      'fundacion-underlife-urban-fest-hiphop-8.webp',
+      'fundacion-underlife-urban-fest-hiphop-9.webp',
+      'fundacion-underlife-urban-fest-hiphop-10.webp',
+      'fundacion-underlife-urban-fest-hiphop-11.webp',
+      'fundacion-underlife-urban-fest-hiphop-12.webp',
+      'fundacion-underlife-urban-fest-hiphop-13.webp',
+      'fundacion-underlife-urban-fest-hiphop-14.webp',
+      'fundacion-underlife-urban-fest-hiphop-15.webp',
+      'fundacion-underlife-urban-fest-hiphop-16.webp',
+      'fundacion-underlife-urban-fest-hiphop-17.webp'
     ]
   },
   {
     key: 'innovation',
-    folder: 'hackaton',
+    folder: 'hackathon',
     images: [
-      'fundacion-underlife-hackathon-tecnologia-1.jpg',
-      'fundacion-underlife-hackathon-tecnologia-2.jpg',
-      'fundacion-underlife-hackathon-tecnologia-4.jpg',
-      'fundacion-underlife-hackathon-tecnologia-5.jpg',
-      'fundacion-underlife-hackathon-tecnologia-6.jpg',
-      'fundacion-underlife-hackathon-tecnologia-7.jpg'
+      'fundacion-underlife-hackathon-tecnologia-1.webp',
+      'fundacion-underlife-hackathon-tecnologia-2.webp',
+      'fundacion-underlife-hackathon-tecnologia-3.webp',
+      'fundacion-underlife-hackathon-tecnologia-4.webp',
+      'fundacion-underlife-hackathon-tecnologia-5.webp',
+      'fundacion-underlife-hackathon-tecnologia-6.webp',
+      'fundacion-underlife-hackathon-tecnologia-7.webp'
     ]
   },
   {
     key: 'workshops',
     folder: 'talleres',
     images: [
-      'fundacion-underlife-talleres-capacitacion-1.jpg',
-      'fundacion-underlife-talleres-capacitacion-2.jpg',
-      'fundacion-underlife-talleres-capacitacion-3.jpg',
-      'fundacion-underlife-talleres-capacitacion-4.jpg'
+      'fundacion-underlife-talleres-comunitarios-1.webp',
+      'fundacion-underlife-talleres-comunitarios-2.webp',
+      'fundacion-underlife-talleres-comunitarios-3.webp',
+      'fundacion-underlife-talleres-comunitarios-4.webp'
     ]
   },
 ];
@@ -174,8 +176,10 @@ export default function GalleriesSection() {
               <SwiperSlide key={i} style={{ width: '300px', height: '350px', backgroundPosition: 'center', backgroundSize: 'cover' }}>
                 <img
                   src={`/recursos_opt/${active.folder}/${img}`}
-                  alt={`${active.key} slide ${i}`}
+                  alt={`Fundación Underlife — ${t(`${active.key}.title`)} (${i + 1})`}
                   loading="lazy"
+                  width={300}
+                  height={350}
                   style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}
                 />
               </SwiperSlide>

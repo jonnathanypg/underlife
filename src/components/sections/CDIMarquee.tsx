@@ -11,67 +11,73 @@ import 'swiper/css/free-mode';
 const cdiCenters = [
   {
     key: 'caritas',
-    folder: 'CDI CARITAS ALEGRES - SAN EMILIO',
+    folder: 'cdi-caritas-alegres',
     images: [
-      'fundacion-underlife-cdi-caritas-alegres-san-emilio-1.jpeg',
-      'fundacion-underlife-cdi-caritas-alegres-san-emilio-2.jpg',
-      'fundacion-underlife-cdi-caritas-alegres-san-emilio-3.jpeg',
-      'fundacion-underlife-cdi-caritas-alegres-san-emilio-4.jpg',
-      'fundacion-underlife-cdi-caritas-alegres-san-emilio-7.jpg',
-      'fundacion-underlife-cdi-caritas-alegres-san-emilio-8.jpg'
+      'fundacion-underlife-cdi-caritas-1.webp',
+      'fundacion-underlife-cdi-caritas-2.webp',
+      'fundacion-underlife-cdi-caritas-3.webp',
+      'fundacion-underlife-cdi-caritas-4.webp',
+      'fundacion-underlife-cdi-caritas-5.webp',
+      'fundacion-underlife-cdi-caritas-6.webp',
+      'fundacion-underlife-cdi-caritas-7.webp',
+      'fundacion-underlife-cdi-caritas-8.webp',
+      'fundacion-underlife-cdi-caritas-9.webp'
     ]
   },
   {
     key: 'pedacitos',
-    folder: 'CDI PEDACITOS DE AMOR - VERGELES',
+    folder: 'cdi-pedacitos-de-amor',
     images: [
-      'fundacion-underlife-cdi-pedacitos-de-amor-vergeles-10.jpg',
-      'fundacion-underlife-cdi-pedacitos-de-amor-vergeles-2.jpg',
-      'fundacion-underlife-cdi-pedacitos-de-amor-vergeles-3.jpg',
-      'fundacion-underlife-cdi-pedacitos-de-amor-vergeles-4.jpg',
-      'fundacion-underlife-cdi-pedacitos-de-amor-vergeles-5.jpg',
-      'fundacion-underlife-cdi-pedacitos-de-amor-vergeles-6.jpg',
-      'fundacion-underlife-cdi-pedacitos-de-amor-vergeles-7.jpg',
-      'fundacion-underlife-cdi-pedacitos-de-amor-vergeles-8.jpg',
-      'fundacion-underlife-cdi-pedacitos-de-amor-vergeles-9.jpg'
+      'fundacion-underlife-cdi-pedacitos-1.webp',
+      'fundacion-underlife-cdi-pedacitos-2.webp',
+      'fundacion-underlife-cdi-pedacitos-3.webp',
+      'fundacion-underlife-cdi-pedacitos-4.webp',
+      'fundacion-underlife-cdi-pedacitos-5.webp',
+      'fundacion-underlife-cdi-pedacitos-6.webp',
+      'fundacion-underlife-cdi-pedacitos-7.webp',
+      'fundacion-underlife-cdi-pedacitos-8.webp',
+      'fundacion-underlife-cdi-pedacitos-9.webp',
+      'fundacion-underlife-cdi-pedacitos-10.webp'
     ]
   },
   {
     key: 'gotitas',
-    folder: 'CDI GOTITAS DEL SABER - SAN MIGUEL',
+    folder: 'cdi-gotitas-del-saber',
     images: [
-      'fundacion-underlife-cdi-gotitas-del-saber-san-miguel-1.jpg',
-      'fundacion-underlife-cdi-gotitas-del-saber-san-miguel-10.jpg',
-      'fundacion-underlife-cdi-gotitas-del-saber-san-miguel-11.jpg',
-      'fundacion-underlife-cdi-gotitas-del-saber-san-miguel-12.jpg',
-      'fundacion-underlife-cdi-gotitas-del-saber-san-miguel-13.jpg',
-      'fundacion-underlife-cdi-gotitas-del-saber-san-miguel-14.jpg',
-      'fundacion-underlife-cdi-gotitas-del-saber-san-miguel-15.jpg',
-      'fundacion-underlife-cdi-gotitas-del-saber-san-miguel-16.jpg',
-      'fundacion-underlife-cdi-gotitas-del-saber-san-miguel-17.jpg',
-      'fundacion-underlife-cdi-gotitas-del-saber-san-miguel-18.jpg',
-      'fundacion-underlife-cdi-gotitas-del-saber-san-miguel-2.jpg',
-      'fundacion-underlife-cdi-gotitas-del-saber-san-miguel-3.jpg',
-      'fundacion-underlife-cdi-gotitas-del-saber-san-miguel-4.jpg',
-      'fundacion-underlife-cdi-gotitas-del-saber-san-miguel-5.jpg',
-      'fundacion-underlife-cdi-gotitas-del-saber-san-miguel-6.jpg',
-      'fundacion-underlife-cdi-gotitas-del-saber-san-miguel-7.jpg',
-      'fundacion-underlife-cdi-gotitas-del-saber-san-miguel-8.jpg',
-      'fundacion-underlife-cdi-gotitas-del-saber-san-miguel-9.jpg'
+      'fundacion-underlife-cdi-gotitas-1.webp',
+      'fundacion-underlife-cdi-gotitas-2.webp',
+      'fundacion-underlife-cdi-gotitas-3.webp',
+      'fundacion-underlife-cdi-gotitas-4.webp',
+      'fundacion-underlife-cdi-gotitas-5.webp',
+      'fundacion-underlife-cdi-gotitas-6.webp',
+      'fundacion-underlife-cdi-gotitas-7.webp',
+      'fundacion-underlife-cdi-gotitas-8.webp',
+      'fundacion-underlife-cdi-gotitas-9.webp',
+      'fundacion-underlife-cdi-gotitas-10.webp',
+      'fundacion-underlife-cdi-gotitas-11.webp',
+      'fundacion-underlife-cdi-gotitas-12.webp',
+      'fundacion-underlife-cdi-gotitas-13.webp',
+      'fundacion-underlife-cdi-gotitas-14.webp',
+      'fundacion-underlife-cdi-gotitas-15.webp',
+      'fundacion-underlife-cdi-gotitas-16.webp',
+      'fundacion-underlife-cdi-gotitas-17.webp',
+      'fundacion-underlife-cdi-gotitas-18.webp'
     ]
   },
   {
     key: 'amiguitos',
-    folder: 'CDI AMIGUITOS A JUGAR - UNIDA NORTE',
+    folder: 'cdi-amiguitos-a-jugar',
     images: [
-      'fundacion-underlife-cdi-amiguitos-a-jugar-unida-norte-1.jpeg',
-      'fundacion-underlife-cdi-amiguitos-a-jugar-unida-norte-10.jpeg',
-      'fundacion-underlife-cdi-amiguitos-a-jugar-unida-norte-2.jpg',
-      'fundacion-underlife-cdi-amiguitos-a-jugar-unida-norte-3.jpeg',
-      'fundacion-underlife-cdi-amiguitos-a-jugar-unida-norte-3.jpg',
-      'fundacion-underlife-cdi-amiguitos-a-jugar-unida-norte-4.jpeg',
-      'fundacion-underlife-cdi-amiguitos-a-jugar-unida-norte-5.jpg',
-      'fundacion-underlife-cdi-amiguitos-a-jugar-unida-norte-7.jpg'
+      'fundacion-underlife-cdi-amiguitos-1.webp',
+      'fundacion-underlife-cdi-amiguitos-2.webp',
+      'fundacion-underlife-cdi-amiguitos-3.webp',
+      'fundacion-underlife-cdi-amiguitos-4.webp',
+      'fundacion-underlife-cdi-amiguitos-5.webp',
+      'fundacion-underlife-cdi-amiguitos-6.webp',
+      'fundacion-underlife-cdi-amiguitos-7.webp',
+      'fundacion-underlife-cdi-amiguitos-8.webp',
+      'fundacion-underlife-cdi-amiguitos-9.webp',
+      'fundacion-underlife-cdi-amiguitos-10.webp'
     ]
   },
 ];
@@ -81,14 +87,15 @@ export default function CDIMarquee() {
 
   const allImages = useMemo(() => {
     return cdiCenters.flatMap((c) =>
-      c.images.map((imgName) => ({
+      c.images.map((imgName, idx) => ({
         src: `/recursos_opt/${c.folder}/${imgName}`,
         label: t(`centers.${c.key}`),
+        alt: `Fundación Underlife — ${t(`centers.${c.key}`)} (${idx + 1})`,
       }))
     );
   }, [t]);
 
-  const [shuffledImages, setShuffledImages] = useState<{ src: string, label: string }[]>([]);
+  const [shuffledImages, setShuffledImages] = useState<{ src: string, label: string, alt: string }[]>([]);
 
   useEffect(() => {
     // Shuffle images on client to avoid server-client hydration mismatch
@@ -123,8 +130,10 @@ export default function CDIMarquee() {
                 <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden', borderRadius: 'inherit' }} className="media-frame">
                   <img
                     src={img.src}
-                    alt={img.label}
+                    alt={img.alt}
                     loading="lazy"
+                    width={220}
+                    height={220}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                   <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '12px 8px', background: 'linear-gradient(transparent, rgba(0,0,0,0.9))', color: '#fff', fontSize: '0.75rem', textAlign: 'center', fontWeight: 'bold' }}>
