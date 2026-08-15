@@ -148,7 +148,9 @@
     "contactTitle": "Contato",
     "location": "Milagro, Equador",
     "copyright": "© 2026 Fundação Underlife. Todos os direitos reservados.",
-    "developer": "Desenvolvido por"
+    "developer": "Desenvolvido por",
+    "transparency": "Transparência e Info Legal",
+    "privacy": "Política de Privacidade"
   },
   "theme": {
     "light": "Modo Claro",

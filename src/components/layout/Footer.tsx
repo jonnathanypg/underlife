@@ -2,11 +2,13 @@
 
 import { useTranslations } from 'next-intl';
 import { useTheme } from '@/components/ui/ThemeProvider';
+import { useLocale } from 'next-intl';
 
 export default function Footer() {
   const t = useTranslations('footer');
   const nav = useTranslations('nav');
   const { theme } = useTheme();
+  const locale = useLocale();
 
   return (
     <footer
@@ -34,50 +36,35 @@ export default function Footer() {
                 : '/logos/logo-fundacionunderlife-ligth.png'
               }
               alt={t('brand')}
-              style={{
-                height: 64,
-                width: 'auto',
-                marginBottom: 20,
-                display: 'block'
-              }}
+              width={159}
+              height={64}
+              style={{ height: 64, width: 'auto', marginBottom: 20, display: 'block' }}
             />
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.7 }}>
               {t('tagline')}
             </p>
             <div style={{ display: 'flex', gap: 16, marginTop: 16 }}>
-              {['facebook', 'instagram', 'linkedin'].map((social) => (
+              {(['facebook', 'instagram', 'linkedin'] as const).map((social) => (
                 <a
                   key={social}
                   href={
-                    social === 'facebook' 
-                      ? 'https://www.facebook.com/underlife.ong/' 
+                    social === 'facebook'
+                      ? 'https://www.facebook.com/underlife.ong/'
                       : social === 'instagram'
                       ? 'https://www.instagram.com/underlife_ong/'
                       : 'https://www.linkedin.com/company/underlife-ong/'
                   }
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={social}
+                  aria-label={`Fundación Underlife en ${social}`}
                   style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'var(--border-color)',
-                    color: 'var(--text-secondary)',
-                    fontSize: '1rem',
+                    width: 36, height: 36, borderRadius: '50%',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    background: 'var(--border-color)', color: 'var(--text-secondary)',
                     transition: 'all var(--duration-fast) var(--ease-out)',
                   }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'var(--color-primary)';
-                    e.currentTarget.style.color = '#fff';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'var(--border-color)';
-                    e.currentTarget.style.color = 'var(--text-secondary)';
-                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-primary)'; e.currentTarget.style.color = '#fff'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--border-color)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
                 >
                   {social === 'facebook' && (
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 18, height: 18 }}><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
@@ -95,19 +82,15 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h5 style={{ fontWeight: 700, marginBottom: 16, color: 'var(--text-primary)' }}>
+            <h4 style={{ fontWeight: 700, marginBottom: 16, color: 'var(--text-primary)' }}>
               {t('quickLinks')}
-            </h5>
+            </h4>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {['home', 'dna', 'projects', 'impact', 'volunteer'].map((key) => (
+              {(['home', 'dna', 'projects', 'impact', 'volunteer'] as const).map((key) => (
                 <li key={key}>
                   <a
                     href={`#${key === 'home' ? 'inicio' : key === 'dna' ? 'adn' : key === 'projects' ? 'proyectos' : key}`}
-                    style={{
-                      color: 'var(--text-secondary)',
-                      fontSize: '0.9rem',
-                      transition: 'color var(--duration-fast)',
-                    }}
+                    style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', transition: 'color var(--duration-fast)' }}
                     onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
                     onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
                   >
@@ -115,26 +98,60 @@ export default function Footer() {
                   </a>
                 </li>
               ))}
+              <li>
+                <a
+                  href={`/${locale}/transparencia`}
+                  style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', transition: 'color var(--duration-fast)' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
+                >
+                  {t('transparency')}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`/${locale}/privacidad`}
+                  style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', transition: 'color var(--duration-fast)' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
+                >
+                  {t('privacy')}
+                </a>
+              </li>
             </ul>
           </div>
 
           {/* Contact Info */}
           <div>
-            <h5 style={{ fontWeight: 700, marginBottom: 16, color: 'var(--text-primary)' }}>
+            <h4 style={{ fontWeight: 700, marginBottom: 16, color: 'var(--text-primary)' }}>
               {t('contactTitle')}
-            </h5>
+            </h4>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: 10, color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
               <li style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 18, height: 18, color: 'var(--color-primary)' }}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                {t('location')}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 18, height: 18, color: 'var(--color-primary)', flexShrink: 0 }}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                Milagro, Guayas, Ecuador
               </li>
               <li style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 18, height: 18, color: 'var(--color-primary)' }}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                info@fundacionunderlife.org
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 18, height: 18, color: 'var(--color-primary)', flexShrink: 0 }}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                <a
+                  href="mailto:info@fundacionunderlife.org"
+                  style={{ color: 'inherit', textDecoration: 'none' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-primary)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'inherit')}
+                >
+                  info@fundacionunderlife.org
+                </a>
               </li>
               <li style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 18, height: 18, color: 'var(--color-primary)' }}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                +593986020391
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 18, height: 18, color: 'var(--color-primary)', flexShrink: 0 }}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <a
+                  href="tel:+593986020391"
+                  style={{ color: 'inherit', textDecoration: 'none' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-primary)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'inherit')}
+                >
+                  +593 986 020 391
+                </a>
               </li>
             </ul>
           </div>

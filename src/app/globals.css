@@ -3,8 +3,7 @@
    100% Vanilla CSS | Dark/Light Themes | Glassmorphism
    ============================================================ */
 
-/* --- Google Fonts Import --- */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Caveat:wght@600;700&display=swap');
+/* --- Google Fonts (loaded via non-blocking link tags in head) --- */
 
 /* ============================================================
    1. CSS CUSTOM PROPERTIES — LIGHT THEME (Default)
@@ -40,7 +39,7 @@
 
   --text-primary: #0f172a;
   --text-secondary: #334155;
-  --text-muted: #64748b;
+  --text-muted: #475569;
   --text-inverse: #f1f5f9;
 
   --border-color: rgba(0, 0, 0, 0.06);
@@ -113,7 +112,7 @@
 
   --text-primary: #f1f5f9;
   --text-secondary: #cbd5e1;
-  --text-muted: #64748b;
+  --text-muted: #94a3b8;
   --text-inverse: #0f172a;
 
   --border-color: rgba(255, 255, 255, 0.06);

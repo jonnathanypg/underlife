@@ -43,7 +43,7 @@ export default function HeroSection() {
           position: 'absolute',
           inset: 0,
           background:
-            'radial-gradient(circle at 25% 30%, rgba(0,85,255,0.08), transparent 50%), radial-gradient(circle at 75% 70%, rgba(255,85,0,0.06), transparent 50%)',
+            'radial-gradient(circle at 25% 30%, rgba(0,85,255,0.08), transparent 50%), radial-gradient(circle at 75% 70%, rgba(255,85,0,0.06), transparent 50%), linear-gradient(135deg, rgba(0,85,255,0.15), rgba(255,85,0,0.10))',
           pointerEvents: 'none',
           zIndex: -1,
         }}
@@ -53,6 +53,8 @@ export default function HeroSection() {
           muted
           loop
           playsInline
+          preload="none"
+          data-fetchpriority="low"
           style={{
             position: 'absolute',
             width: '100%',

@@ -5,6 +5,55 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import CustomCursor from '@/components/ui/CustomCursor';
 import ScrollRestorer from '@/components/ui/ScrollRestorer';
+import type { Metadata } from 'next';
+
+const siteUrl = 'https://fundacionunderlife.org';
+
+const localeMetadata: Record<string, { title: string; description: string }> = {
+  es: {
+    title: 'Fundación Underlife — Pensamiento Divergente',
+    description:
+      'No solo asistimos a la vulnerabilidad; innovamos para erradicarla. Protección infantil, acceso tecnológico a la justicia y desarrollo comunitario en Ecuador. Fundada en 2018.',
+  },
+  en: {
+    title: 'Underlife Foundation — Divergent Thinking',
+    description:
+      'We don\'t just assist vulnerability; we innovate to eradicate it. Child protection, technological access to justice, and community development in Ecuador since 2018.',
+  },
+  pt: {
+    title: 'Fundação Underlife — Pensamento Divergente',
+    description:
+      'Não apenas assistimos à vulnerabilidade; inovamos para erradicá-la. Proteção infantil, acesso tecnológico à justiça e desenvolvimento comunitário no Equador desde 2018.',
+  },
+};
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const meta = localeMetadata[locale] ?? localeMetadata.en;
+  return {
+    title: meta.title,
+    description: meta.description,
+    alternates: {
+      canonical: `${siteUrl}/${locale}`,
+      languages: {
+        es: `${siteUrl}/es`,
+        en: `${siteUrl}/en`,
+        pt: `${siteUrl}/pt`,
+        'x-default': `${siteUrl}/en`,
+      },
+    },
+    openGraph: {
+      title: meta.title,
+      description: meta.description,
+      url: `${siteUrl}/${locale}`,
+      locale: locale === 'es' ? 'es_EC' : locale === 'pt' ? 'pt_BR' : 'en_US',
+    },
+  };
+}
 
 export default async function LocaleLayout({
   children,
@@ -19,6 +68,48 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} data-theme="dark" suppressHydrationWarning>
       <head>
+        {/* Preconnect to Google Fonts for ~750ms LCP improvement */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Caveat:wght@600;700&display=swap"
+          rel="stylesheet"
+        />
+        {/* JSON-LD Schema for NGO / Google Ad Grants Credibility */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'NGO',
+              name: 'Fundación Underlife',
+              alternateName: 'Underlife Foundation',
+              url: 'https://fundacionunderlife.org',
+              logo: 'https://fundacionunderlife.org/logos/logo-fundacionunderlife-dark.png',
+              description:
+                'Laboratorio integral de innovación social. Protección infantil, justicia digital, pensamiento divergente y desarrollo comunitario en Ecuador.',
+              foundingDate: '2018',
+              address: {
+                '@type': 'PostalAddress',
+                addressLocality: 'Milagro',
+                addressRegion: 'Guayas',
+                addressCountry: 'EC',
+              },
+              contactPoint: {
+                '@type': 'ContactPoint',
+                telephone: '+593986020391',
+                contactType: 'customer support',
+                email: 'info@fundacionunderlife.org',
+                availableLanguage: ['es', 'en', 'pt'],
+              },
+              sameAs: [
+                'https://www.facebook.com/underlife.ong/',
+                'https://www.instagram.com/underlife_ong/',
+                'https://www.linkedin.com/company/underlife-ong/',
+              ],
+            }),
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -51,3 +142,4 @@ export default async function LocaleLayout({
     </html>
   );
 }
+

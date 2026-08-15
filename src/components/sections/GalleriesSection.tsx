@@ -87,9 +87,9 @@ const galleries: GalleryGroup[] = [
 ];
 
 const videos = [
-  'fundacion-underlife-video-impacto-1.mp4',
-  'fundacion-underlife-video-impacto-2.mp4',
-  'fundacion-underlife-video-impacto-3.mp4',
+  { webm: 'fundacion-underlife-video-impacto-1.webm', mp4: 'fundacion-underlife-video-impacto-1.mp4' },
+  { webm: 'fundacion-underlife-video-impacto-2.webm' },
+  { webm: 'fundacion-underlife-video-impacto-3.webm', mp4: 'fundacion-underlife-video-impacto-3.mp4' },
 ];
 
 export default function GalleriesSection() {
@@ -223,15 +223,17 @@ export default function GalleriesSection() {
             {videos.map((vid, i) => (
               <div key={i} className="media-frame aspect-video" style={{ borderRadius: 'var(--radius-md)', background: '#000' }}>
                 <video
-                  ref={(el) => {
-                    videoRefs.current[i] = el;
-                  }}
-                  src={`/recursos_opt/Videos/${vid}`}
+                  ref={(el) => { videoRefs.current[i] = el; }}
                   controls
-                  preload="metadata"
+                  preload="none"
                   onPlay={() => handlePlay(i)}
                   style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                />
+                >
+                  <source src={`/recursos_opt/Videos/${vid.webm}`} type="video/webm" />
+                  {vid.mp4 && <source src={`/recursos_opt/Videos/${vid.mp4}`} type="video/mp4" />}
+                  <track kind="captions" srcLang="es" label="Español" src="/recursos_opt/Videos/captions-es.vtt" default />
+                  <track kind="captions" srcLang="en" label="English" src="/recursos_opt/Videos/captions-en.vtt" />
+                </video>
               </div>
             ))}
           </div>

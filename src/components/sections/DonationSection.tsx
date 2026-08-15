@@ -68,28 +68,31 @@ export default function DonationSection() {
 
   // Geolocation detection
   useEffect(() => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 3000);
+    
     const detectCountry = async () => {
       try {
-        const res = await fetch('https://ipapi.co/json/');
+        const res = await fetch('https://ipapi.co/json/', { signal: controller.signal });
+        if (!res.ok) return; // Fail silently on 429 or other errors
         const data = await res.json();
         if (data.country_code) {
           const code = data.country_code;
           setCountry(code);
-          
-          // Official dLocal Go supported countries
-          const supported = ['AR', 'BO', 'BR', 'CL', 'CO', 'CR', 'EC', 'GT', 'MX', 'PA', 'PE', 'UY', 'ID', 'MY', 'KE', 'NG'];
+          const supported = ['AR','BO','BR','CL','CO','CR','EC','GT','MX','PA','PE','UY','ID','MY','KE','NG'];
           const isSupported = supported.includes(code);
-          
           setShowDLocal(isSupported);
-          if (!isSupported) {
-            setPaymentMethod('paypal');
-          }
+          if (!isSupported) setPaymentMethod('paypal');
         }
-      } catch (error) {
-        console.error('Country detection failed:', error);
+      } catch {
+        // Silent fail - keep defaults (show both payment methods)
+      } finally {
+        clearTimeout(timeout);
       }
     };
+    
     detectCountry();
+    return () => { controller.abort(); clearTimeout(timeout); };
   }, []);
 
   const handleDonate = async (e: React.FormEvent<HTMLFormElement>) => {

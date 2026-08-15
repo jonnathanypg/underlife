@@ -148,7 +148,9 @@
     "contactTitle": "Contact",
     "location": "Milagro, Ecuador",
     "copyright": "© 2026 Underlife Foundation. All rights reserved.",
-    "developer": "Developed by"
+    "developer": "Developed by",
+    "transparency": "Transparency & Legal Info",
+    "privacy": "Privacy Policy"
   },
   "theme": {
     "light": "Light Mode",

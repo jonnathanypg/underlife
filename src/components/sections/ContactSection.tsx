@@ -68,7 +68,10 @@ export default function ContactSection() {
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <input name="name" type="text" required placeholder={t('name')} style={inputCSS} />
             <input name="email" type="email" required placeholder={t('email')} style={inputCSS} />
-            <select name="subject" required style={{ ...inputCSS, cursor: 'pointer' }} defaultValue="">
+            <label htmlFor="contact-subject" className="sr-only">
+              {t('subject')}
+            </label>
+            <select id="contact-subject" name="subject" required style={{ ...inputCSS, cursor: 'pointer' }} defaultValue="" aria-label={t('subject')}>
               <option value="" disabled style={{ color: '#999' }}>
                 {t('subject')}...
               </option>
@@ -107,7 +110,7 @@ export default function ContactSection() {
               )}
               {t('send')}
             </button>
-            <style jsx>{`
+            <style>{`
               @keyframes spin {
                 from { transform: rotate(0deg); }
                 to { transform: rotate(360deg); }

@@ -87,6 +87,8 @@ export default function Header() {
             }
             alt="Fundación Underlife"
             className="site-logo"
+            width={159}
+            height={48}
             style={{
               height: 'var(--logo-height, 48px)',
               width: 'auto',
