@@ -1,9 +1,19 @@
 'use client';
 
 import { useTranslations } from '@/lib/LanguageContext';
+import { useState, useEffect } from 'react';
 
 export default function HeroSection() {
   const t = useTranslations('hero');
+  const [loadVideo, setLoadVideo] = useState(false);
+
+  useEffect(() => {
+    // Only load background video on non-mobile screens after the page has rendered
+    if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+      const timer = setTimeout(() => setLoadVideo(true), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   return (
     <section
@@ -32,25 +42,42 @@ export default function HeroSection() {
           zIndex: -1,
         }}
       >
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="none"
-          poster="/recursos_opt/Videos/hero-bg-poster.webp"
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            opacity: 0.12,
-            filter: 'blur(10px)',
-          }}
-        >
-          <source src="/recursos_opt/Videos/underlife-hero-bg.webm" type="video/webm" />
-          <source src="/recursos_opt/Videos/underlife-hero-bg.mp4" type="video/mp4" />
-        </video>
+        {loadVideo ? (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="none"
+            poster="/recursos_opt/Videos/hero-bg-poster.webp"
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              opacity: 0.12,
+              filter: 'blur(10px)',
+            }}
+          >
+            <source src="/recursos_opt/Videos/underlife-hero-bg.webm" type="video/webm" />
+            <source src="/recursos_opt/Videos/underlife-hero-bg.mp4" type="video/mp4" />
+          </video>
+        ) : (
+          <img
+            src="/recursos_opt/Videos/hero-bg-poster.webp"
+            alt=""
+            aria-hidden="true"
+            fetchPriority="high"
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              opacity: 0.12,
+              filter: 'blur(10px)',
+            }}
+          />
+        )}
       </div>
 
       <div style={{ position: 'relative', maxWidth: 820, margin: '0 auto' }}>
