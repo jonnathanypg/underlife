@@ -59,8 +59,8 @@
   --gradient-card-shine: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
 
   /* --- Typography --- */
-  --font-display: 'Outfit', system-ui, -apple-system, sans-serif;
-  --font-accent: 'Caveat', cursive;
+  --font-display: var(--font-outfit), 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-accent: var(--font-caveat), 'Caveat', cursive;
   --font-mono: 'JetBrains Mono', monospace;
 
   /* --- Sizing & Spacing --- */
@@ -462,4 +462,22 @@ ul, ol {
 [data-theme="dark"] .swiper-pagination-bullet-active {
   background: var(--color-primary-light) !important;
   box-shadow: 0 0 12px var(--color-primary-light);
+}
+
+/* ============================================================
+   12. HERO ANIMATION (Zero Forced Reflows)
+   ============================================================ */
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-animate {
+  animation: heroFadeIn 0.85s var(--ease-out) forwards;
 }

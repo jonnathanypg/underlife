@@ -5,6 +5,21 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ScrollRestorer from '@/components/ui/ScrollRestorer';
 import type { Metadata } from 'next';
+import { Outfit, Caveat } from 'next/font/google';
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-outfit',
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+});
+
+const caveat = Caveat({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-caveat',
+  weight: ['600', '700'],
+});
 
 const siteUrl = 'https://fundacionunderlife.org';
 
@@ -76,15 +91,8 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} data-theme="dark" suppressHydrationWarning>
+    <html lang={locale} className={`${outfit.variable} ${caveat.variable}`} data-theme="dark" suppressHydrationWarning>
       <head>
-        {/* Preconnect to Google Fonts for ~750ms LCP improvement */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Caveat:wght@600;700&display=swap"
-          rel="stylesheet"
-        />
         {/* JSON-LD Schema for NGO / Google Ad Grants Credibility */}
         <script
           type="application/ld+json"

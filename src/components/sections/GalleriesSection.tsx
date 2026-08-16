@@ -89,9 +89,9 @@ const galleries: GalleryGroup[] = [
 ];
 
 const videos = [
-  { webm: 'fundacion-underlife-video-impacto-1.webm', mp4: 'fundacion-underlife-video-impacto-1.mp4' },
-  { webm: 'fundacion-underlife-video-impacto-2.webm', mp4: 'fundacion-underlife-video-impacto-2.mp4' },
-  { webm: 'fundacion-underlife-video-impacto-3.webm', mp4: 'fundacion-underlife-video-impacto-3.mp4' },
+  { webm: 'fundacion-underlife-video-impacto-1.webm', mp4: 'fundacion-underlife-video-impacto-1.mp4', poster: '/recursos_opt/Videos/impacto-1-poster.jpg' },
+  { webm: 'fundacion-underlife-video-impacto-2.webm', mp4: 'fundacion-underlife-video-impacto-2.mp4', poster: '/recursos_opt/Videos/impacto-2-poster.jpg' },
+  { webm: 'fundacion-underlife-video-impacto-3.webm', mp4: 'fundacion-underlife-video-impacto-3.mp4', poster: '/recursos_opt/Videos/impacto-3-poster.jpg' },
 ];
 
 export default function GalleriesSection() {
@@ -230,6 +230,7 @@ export default function GalleriesSection() {
                   ref={(el) => { videoRefs.current[i] = el; }}
                   controls
                   preload="none"
+                  poster={vid.poster}
                   onPlay={() => handlePlay(i)}
                   style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                 >

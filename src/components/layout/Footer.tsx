@@ -82,9 +82,9 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 style={{ fontWeight: 700, marginBottom: 16, color: 'var(--text-primary)' }}>
+            <h3 style={{ fontWeight: 700, marginBottom: 16, color: 'var(--text-primary)', fontSize: '1.05rem' }}>
               {t('quickLinks')}
-            </h4>
+            </h3>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {(['home', 'dna', 'projects', 'impact', 'volunteer'] as const).map((key) => (
                 <li key={key}>
@@ -123,9 +123,9 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h4 style={{ fontWeight: 700, marginBottom: 16, color: 'var(--text-primary)' }}>
+            <h3 style={{ fontWeight: 700, marginBottom: 16, color: 'var(--text-primary)', fontSize: '1.05rem' }}>
               {t('contactTitle')}
-            </h4>
+            </h3>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: 10, color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
               <li style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 18, height: 18, color: 'var(--color-primary)', flexShrink: 0 }}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
@@ -163,18 +163,18 @@ export default function Footer() {
             borderTop: '1px solid var(--divider)',
             paddingTop: 20,
             textAlign: 'center',
-            color: 'var(--text-muted)',
-            fontSize: '0.8rem',
+            color: 'var(--text-secondary)',
+            fontSize: '0.85rem',
           }}
         >
           <p>{t('copyright')}</p>
-          <p style={{ marginTop: 4 }}>
+          <p style={{ marginTop: 6 }}>
             {t('developer')}{' '}
             <a
               href="https://weblifetech.com"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: 'var(--color-accent)', fontWeight: 600 }}
+              style={{ color: 'var(--color-accent-light)', fontWeight: 600, textDecoration: 'underline' }}
             >
               WEBLIFETECH S.A.S.
             </a>

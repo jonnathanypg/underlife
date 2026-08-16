@@ -1,30 +1,14 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useEffect, useRef } from 'react';
 
 export default function HeroSection() {
   const t = useTranslations('hero');
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    // Simple fade-in on mount
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    requestAnimationFrame(() => {
-      el.style.transition = 'opacity 1s ease, transform 1s ease';
-      el.style.opacity = '1';
-      el.style.transform = 'translateY(0)';
-    });
-  }, []);
-
 
   return (
     <section
       id="inicio"
-      ref={sectionRef}
+      className="hero-animate"
       style={{
         minHeight: '100vh',
         display: 'flex',
@@ -54,6 +38,7 @@ export default function HeroSection() {
           loop
           playsInline
           preload="none"
+          poster="/recursos_opt/Videos/hero-bg-poster.jpg"
           data-fetchpriority="low"
           style={{
             position: 'absolute',

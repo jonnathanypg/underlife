@@ -38,23 +38,23 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      // Logos: 30-day cache
+      // Logos: 1-year immutable cache
       {
         source: '/logos/:path*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=2592000, must-revalidate',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },
-      // Videos: 7-day cache (large files, can change)
+      // Videos: 1-year immutable cache for high PageSpeed cache score
       {
         source: '/recursos_opt/:path*.mp4',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=604800',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },
@@ -63,7 +63,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=604800',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },
