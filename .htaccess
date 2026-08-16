@@ -8,7 +8,7 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 # PERFORMANCE & COMPRESSION OPTIMIZATIONS (Hostinger LiteSpeed/Apache)
 # ============================================================
 
-# Enable GZIP Compression
+# Enable GZIP/Brotli Compression
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
     AddOutputFilterByType DEFLATE application/javascript application/json
@@ -16,7 +16,7 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     AddOutputFilterByType DEFLATE font/woff2 font/woff
 </IfModule>
 
-# Cache-Control & Expires Headers for All Static Assets (1 Year Immutable)
+# Cache-Control & Expires Headers — 1 Year Immutable for all static assets
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresByType image/webp "access plus 1 year"
@@ -34,10 +34,17 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
 
 <IfModule mod_headers.c>
+    # Static media: 1-year immutable cache
     <FilesMatch "\.(webp|png|jpg|jpeg|gif|ico|svg|mp4|webm|woff2|woff)$">
-        Header set Cache-Control "max-age=31536000, public, immutable"
+        Header always set Cache-Control "public, max-age=31536000, immutable"
     </FilesMatch>
+    # JS/CSS bundles: 1-year immutable (Next.js hashes filenames)
     <FilesMatch "\.(css|js)$">
-        Header set Cache-Control "max-age=31536000, public, immutable"
+        Header always set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    # Remove no-cache headers that may be set by upstream
+    <FilesMatch "\.(webp|png|jpg|jpeg|gif|ico|svg|mp4|webm|woff2|woff|css|js)$">
+        Header unset Pragma
+        Header unset Expires
     </FilesMatch>
 </IfModule>

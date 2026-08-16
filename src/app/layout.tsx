@@ -70,9 +70,9 @@ export const metadata: Metadata = {
     alternateLocale: ['en_US', 'pt_BR'],
     images: [
       {
-        url: '/logos/logotipo-fundacionunderlife-dark.png',
-        width: 786,
-        height: 317,
+        url: '/logos/logotipo-fundacionunderlife-dark.webp',
+        width: 400,
+        height: 139,
         alt: 'Fundación Underlife',
       },
     ],
@@ -82,7 +82,7 @@ export const metadata: Metadata = {
     title: 'Fundación Underlife — Pensamiento Divergente',
     description:
       'Innovando para erradicar la vulnerabilidad. Protección infantil, acceso tecnológico a la justicia y desarrollo comunitario en Ecuador.',
-    images: ['/logos/logotipo-fundacionunderlife-dark.png'],
+    images: ['/logos/logotipo-fundacionunderlife-dark.webp'],
   },
   icons: {
     icon: [
@@ -119,7 +119,7 @@ export default function RootLayout({
               name: 'Fundación Underlife',
               alternateName: 'Underlife Foundation',
               url: 'https://fundacionunderlife.org',
-              logo: 'https://fundacionunderlife.org/logos/logotipo-fundacionunderlife-dark.png',
+              logo: 'https://fundacionunderlife.org/logos/logotipo-fundacionunderlife-dark.webp',
               description:
                 'Laboratorio integral de innovación social. Protección infantil, justicia digital, pensamiento divergente y desarrollo comunitario en Ecuador.',
               foundingDate: '2018',

@@ -86,6 +86,8 @@ export default function Header() {
             }
             alt="Fundación Underlife"
             className="site-logo"
+            fetchPriority="high"
+            decoding="async"
             width={159}
             height={48}
             style={{

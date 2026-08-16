@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   compress: true,
   experimental: {
-    optimizePackageImports: ['swiper'],
+    optimizePackageImports: ['swiper', 'gsap'],
   },
   typescript: {
     ignoreBuildErrors: true,
@@ -13,7 +13,8 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    unoptimized: true,
+    formats: ['image/webp', 'image/avif'],
+    minimumCacheTTL: 31536000,
   },
 
   async headers() {

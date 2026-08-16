@@ -1,18 +1,18 @@
+'use client';
+
 import dynamic from 'next/dynamic';
 import HeroSection from '@/components/sections/HeroSection';
 import DNASection from '@/components/sections/DNASection';
+import VolunteerSection from '@/components/sections/VolunteerSection';
 
 const ImpactSection = dynamic(() => import('@/components/sections/ImpactSection'), {
-  ssr: true,
+  ssr: false,
 });
 const GalleriesSection = dynamic(() => import('@/components/sections/GalleriesSection'), {
-  ssr: true,
-});
-const VolunteerSection = dynamic(() => import('@/components/sections/VolunteerSection'), {
-  ssr: true,
+  ssr: false,
 });
 const DonationSection = dynamic(() => import('@/components/sections/DonationSection'), {
-  ssr: true,
+  ssr: false,
 });
 
 export default function HomePage() {
@@ -27,4 +27,3 @@ export default function HomePage() {
     </>
   );
 }
-
