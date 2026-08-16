@@ -2,8 +2,9 @@ module.exports = {
   apps: [
     {
       name: 'underlife-prod',
-      script: 'server.js',
-      cwd: './',
+      script: './node_modules/next/dist/bin/next',
+      args: 'start -p ' + (process.env.PORT || 3000),
+      cwd: __dirname,
       instances: 1,
       exec_mode: 'fork',
       autorestart: true,
