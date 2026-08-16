@@ -186,15 +186,16 @@ export default function GalleriesSection() {
             slideToClickedSlide={true}
             slidesPerView="auto"
             coverflowEffect={{
-              rotate: 30,
+              rotate: 25,
               stretch: 0,
-              depth: 150,
+              depth: 120,
               modifier: 1,
-              slideShadows: true,
+              slideShadows: false,
             }}
             autoplay={{
-              delay: 3000,
+              delay: 3500,
               disableOnInteraction: false,
+              pauseOnMouseEnter: true,
             }}
             pagination={{ clickable: true }}
             modules={[EffectCoverflow, Pagination, Autoplay]}

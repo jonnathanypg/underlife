@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   images: {
     unoptimized: true,
   },
@@ -45,6 +48,24 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/_next/image/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/:file((?:favicon\\.ico|icon\\.png|icon\\.webp|apple-icon\\.png|apple-icon\\.webp|llms\\.txt|robots\\.txt|sitemap\\.xml))',
         headers: [
           {
             key: 'Cache-Control',

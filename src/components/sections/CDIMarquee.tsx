@@ -98,8 +98,8 @@ export default function CDIMarquee() {
   const [shuffledImages, setShuffledImages] = useState<{ src: string, label: string, alt: string }[]>([]);
 
   useEffect(() => {
-    // Shuffle images on client to avoid server-client hydration mismatch
-    const shuffled = [...allImages].sort(() => Math.random() - 0.5);
+    // Shuffle images on client and pick a representative subset of 16 images for optimal performance
+    const shuffled = [...allImages].sort(() => Math.random() - 0.5).slice(0, 16);
     setShuffledImages(shuffled);
   }, [allImages]);
 
