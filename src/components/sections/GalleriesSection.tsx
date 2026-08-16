@@ -37,8 +37,8 @@ const galleries: GalleryGroup[] = [
       'fundacion-underlife-ninos-proteccion-15.webp',
       'fundacion-underlife-ninos-proteccion-16.webp',
       'fundacion-underlife-ninos-proteccion-17.webp',
-      'fundacion-underlife-ninos-proteccion-18.webp'
-    ]
+      'fundacion-underlife-ninos-proteccion-18.webp',
+    ],
   },
   {
     key: 'hiphop',
@@ -60,8 +60,8 @@ const galleries: GalleryGroup[] = [
       'fundacion-underlife-urban-fest-hiphop-14.webp',
       'fundacion-underlife-urban-fest-hiphop-15.webp',
       'fundacion-underlife-urban-fest-hiphop-16.webp',
-      'fundacion-underlife-urban-fest-hiphop-17.webp'
-    ]
+      'fundacion-underlife-urban-fest-hiphop-17.webp',
+    ],
   },
   {
     key: 'innovation',
@@ -73,8 +73,8 @@ const galleries: GalleryGroup[] = [
       'fundacion-underlife-hackathon-tecnologia-4.webp',
       'fundacion-underlife-hackathon-tecnologia-5.webp',
       'fundacion-underlife-hackathon-tecnologia-6.webp',
-      'fundacion-underlife-hackathon-tecnologia-7.webp'
-    ]
+      'fundacion-underlife-hackathon-tecnologia-7.webp',
+    ],
   },
   {
     key: 'workshops',
@@ -83,8 +83,8 @@ const galleries: GalleryGroup[] = [
       'fundacion-underlife-talleres-comunitarios-1.webp',
       'fundacion-underlife-talleres-comunitarios-2.webp',
       'fundacion-underlife-talleres-comunitarios-3.webp',
-      'fundacion-underlife-talleres-comunitarios-4.webp'
-    ]
+      'fundacion-underlife-talleres-comunitarios-4.webp',
+    ],
   },
 ];
 
@@ -98,6 +98,16 @@ export default function GalleriesSection() {
   const t = useTranslations('galleries');
   const [activeGallery, setActiveGallery] = useState(0);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+  // Preload all gallery images in background for instant, zero-flicker tab navigation
+  useEffect(() => {
+    galleries.forEach((group) => {
+      group.images.forEach((imgName) => {
+        const img = new Image();
+        img.src = `/recursos_opt/${group.folder}/${imgName}`;
+      });
+    });
+  }, []);
 
   const active = galleries[activeGallery];
 
@@ -134,7 +144,7 @@ export default function GalleriesSection() {
                 background: activeGallery === i ? 'var(--gradient-accent)' : 'var(--glass-bg)',
                 color: activeGallery === i ? '#fff' : 'var(--text-secondary)',
                 border: activeGallery === i ? 'none' : '1px solid var(--border-color)',
-                cursor: 'pointer'
+                cursor: 'pointer',
               }}
             >
               {t(`${g.key}.title`)}
@@ -142,49 +152,74 @@ export default function GalleriesSection() {
           ))}
         </div>
 
-        {/* 3D Infinite Carousel */}
+        {/* Pre-rendered 3D Infinite Carousels for Zero-Flicker Transition */}
         <div style={{ padding: '20px 0', width: '100%', position: 'relative' }} className="slider3d-wrapper">
-          <Swiper
-            key={activeGallery} // Force remount on category change
-            effect={'coverflow'}
-            grabCursor={true}
-            centeredSlides={true}
-            loop={true}
-            slideToClickedSlide={true}
-            slidesPerView={'auto'}
-            coverflowEffect={{
-              rotate: 30,
-              stretch: 0,
-              depth: 150,
-              modifier: 1,
-              slideShadows: true,
-            }}
-            autoplay={{
-              delay: 3000,
-              disableOnInteraction: false,
-            }}
-            pagination={{ clickable: true }}
-            modules={[EffectCoverflow, Pagination, Autoplay]}
-            className="mySwiper"
-            style={{ width: '100%', paddingTop: '30px', paddingBottom: '60px' }}
-          >
-            {/* Duplicating images if count is low (< 10) to ensure smooth Swiper loop */}
-            {(active.images.length < 10
-              ? [...active.images, ...active.images, ...active.images]
-              : active.images
-            ).map((img, i) => (
-              <SwiperSlide key={i} style={{ width: '300px', height: '350px', backgroundPosition: 'center', backgroundSize: 'cover' }}>
-                <img
-                  src={`/recursos_opt/${active.folder}/${img}`}
-                  alt={`Fundación Underlife — ${t(`${active.key}.title`)} (${i + 1})`}
-                  loading="lazy"
-                  width={300}
-                  height={350}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          {galleries.map((galleryGroup, groupIndex) => {
+            const isGroupActive = activeGallery === groupIndex;
+            const imagesList =
+              galleryGroup.images.length < 10
+                ? [...galleryGroup.images, ...galleryGroup.images, ...galleryGroup.images]
+                : galleryGroup.images;
+
+            return (
+              <div
+                key={galleryGroup.key}
+                style={{
+                  display: isGroupActive ? 'block' : 'none',
+                  transition: 'opacity 0.25s ease',
+                  width: '100%',
+                }}
+              >
+                <Swiper
+                  effect={'coverflow'}
+                  grabCursor={true}
+                  centeredSlides={true}
+                  loop={true}
+                  slideToClickedSlide={true}
+                  slidesPerView={'auto'}
+                  coverflowEffect={{
+                    rotate: 30,
+                    stretch: 0,
+                    depth: 150,
+                    modifier: 1,
+                    slideShadows: true,
+                  }}
+                  autoplay={{
+                    delay: 3000,
+                    disableOnInteraction: false,
+                  }}
+                  pagination={{ clickable: true }}
+                  modules={[EffectCoverflow, Pagination, Autoplay]}
+                  className="mySwiper"
+                  style={{ width: '100%', paddingTop: '30px', paddingBottom: '60px' }}
+                >
+                  {imagesList.map((img, i) => (
+                    <SwiperSlide
+                      key={`${galleryGroup.key}-${i}`}
+                      style={{ width: '300px', height: '350px', backgroundPosition: 'center', backgroundSize: 'cover' }}
+                    >
+                      <img
+                        src={`/recursos_opt/${galleryGroup.folder}/${img}`}
+                        alt={`Fundación Underlife — ${t(`${galleryGroup.key}.title`)} (${i + 1})`}
+                        loading="eager"
+                        decoding="async"
+                        width={300}
+                        height={350}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          borderRadius: '16px',
+                          boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+                          display: 'block',
+                        }}
+                      />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            );
+          })}
 
           {/* Invisible Navigation Click Zones */}
           <div

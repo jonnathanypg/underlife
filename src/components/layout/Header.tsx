@@ -46,12 +46,12 @@ export default function Header() {
   ];
 
   const navItems = [
-    { key: 'home', href: '#inicio' },
-    { key: 'dna', href: '#adn' },
-    { key: 'projects', href: '#proyectos' },
-    { key: 'impact', href: '#impacto' },
-    { key: 'volunteer', href: '#voluntariado' },
-    { key: 'contact', href: '#contacto' },
+    { key: 'home', href: '/#inicio' },
+    { key: 'dna', href: '/#adn' },
+    { key: 'projects', href: '/#proyectos' },
+    { key: 'impact', href: '/#impacto' },
+    { key: 'volunteer', href: '/#voluntariado' },
+    { key: 'contact', href: '/contacto' },
   ];
 
   return (
@@ -274,9 +274,9 @@ export default function Header() {
           </button>
 
           {/* Donate CTA */}
-          <a href="#donar" className="btn btn-primary" style={{ fontSize: '0.85rem', padding: '10px 22px' }}>
+          <Link href="/#donar" className="btn btn-primary" style={{ fontSize: '0.85rem', padding: '10px 22px' }}>
             {t('donate')}
-          </a>
+          </Link>
         </nav>
 
         {/* Mobile Hamburger */}
@@ -348,14 +348,14 @@ export default function Header() {
               {t(item.key)}
             </a>
           ))}
-          <a
-            href="#donar"
+          <Link
+            href="/#donar"
             onClick={() => setMobileOpen(false)}
             className="btn btn-primary"
             style={{ marginTop: 16 }}
           >
             {t('donate')}
-          </a>
+          </Link>
           <div style={{ marginTop: 12, width: '100%', display: 'flex', justifyContent: 'center' }}>
             <div 
               style={{ 

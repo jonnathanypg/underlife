@@ -87,16 +87,26 @@ export default function Footer() {
             <ul style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {(['home', 'dna', 'projects', 'impact', 'volunteer'] as const).map((key) => (
                 <li key={key}>
-                  <a
-                    href={`#${key === 'home' ? 'inicio' : key === 'dna' ? 'adn' : key === 'projects' ? 'proyectos' : key}`}
+                  <Link
+                    href={`/#${key === 'home' ? 'inicio' : key === 'dna' ? 'adn' : key === 'projects' ? 'proyectos' : key}`}
                     style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', transition: 'color var(--duration-fast)' }}
                     onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
                     onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
                   >
                     {nav(key)}
-                  </a>
+                  </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  href="/contacto"
+                  style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', transition: 'color var(--duration-fast)' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
+                >
+                  {nav('contact')}
+                </Link>
+              </li>
               <li>
                 <Link
                   href="/transparencia"

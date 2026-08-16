@@ -4,7 +4,6 @@ import ImpactSection from '@/components/sections/ImpactSection';
 import GalleriesSection from '@/components/sections/GalleriesSection';
 import VolunteerSection from '@/components/sections/VolunteerSection';
 import DonationSection from '@/components/sections/DonationSection';
-import ContactSection from '@/components/sections/ContactSection';
 
 export default function HomePage() {
   return (
@@ -15,7 +14,6 @@ export default function HomePage() {
       <GalleriesSection />
       <VolunteerSection />
       <DonationSection />
-      <ContactSection />
     </>
   );
 }
