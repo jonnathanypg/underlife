@@ -1,5 +1,5 @@
-// This page should never be rendered directly.
-// The middleware redirects / to the locale-specific route.
+import { redirect } from 'next/navigation';
+
 export default function RootPage() {
-  return null;
+  redirect('/es');
 }
