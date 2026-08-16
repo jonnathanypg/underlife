@@ -40,9 +40,9 @@ export default function Header() {
 
   const locale = useLocale();
   const languages = [
-    { code: 'es', flag: 'https://flagcdn.com/ec.svg', label: tLang('switch') },
-    { code: 'en', flag: 'https://flagcdn.com/us.svg', label: tLang('switchEn') },
-    { code: 'pt', flag: 'https://flagcdn.com/br.svg', label: tLang('switchPt') },
+    { code: 'es', flag: '/icons/ec.svg', label: tLang('switch') },
+    { code: 'en', flag: '/icons/us.svg', label: tLang('switchEn') },
+    { code: 'pt', flag: '/icons/br.svg', label: tLang('switchPt') },
   ];
 
   const navItems = [
@@ -145,7 +145,7 @@ export default function Header() {
               title={tLang('switch')}
             >
               <img
-                src={languages.find((l) => l.code === locale)?.flag || 'https://flagcdn.com/ec.svg'}
+                src={languages.find((l) => l.code === locale)?.flag || '/icons/ec.svg'}
                 alt={locale}
                 style={{
                   width: '100%',

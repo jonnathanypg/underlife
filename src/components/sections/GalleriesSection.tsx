@@ -106,16 +106,6 @@ export default function GalleriesSection() {
   // Used to force a clean Swiper remount after each fade
   const [swiperKey, setSwiperKey] = useState(0);
 
-  // Preload all gallery images in background on mount
-  useEffect(() => {
-    galleries.forEach((group) => {
-      group.images.forEach((imgName) => {
-        const img = new Image();
-        img.src = `/recursos_opt/${group.folder}/${imgName}`;
-      });
-    });
-  }, []);
-
   const handleTabChange = (index: number) => {
     if (index === activeTab || fading) return;
     setActiveTab(index);
@@ -219,6 +209,8 @@ export default function GalleriesSection() {
                 <img
                   src={`/recursos_opt/${active.folder}/${img}`}
                   alt={`Fundación Underlife — ${t(`${active.key}.title`)} (${i + 1})`}
+                  loading="lazy"
+                  decoding="async"
                   width={300}
                   height={350}
                   style={{

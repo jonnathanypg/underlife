@@ -163,6 +163,13 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
+          href="/logos/logotipo-fundacionunderlife-dark.webp"
+          type="image/webp"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="image"
           href="/recursos_opt/Videos/hero-bg-poster.webp"
           type="image/webp"
           fetchPriority="high"

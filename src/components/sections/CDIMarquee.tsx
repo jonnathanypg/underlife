@@ -132,6 +132,7 @@ export default function CDIMarquee() {
                     src={img.src}
                     alt={img.alt}
                     loading="lazy"
+                    decoding="async"
                     width={220}
                     height={220}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}

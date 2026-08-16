@@ -37,7 +37,7 @@ export default function HeroSection() {
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="none"
           poster="/recursos_opt/Videos/hero-bg-poster.webp"
           style={{
             position: 'absolute',
