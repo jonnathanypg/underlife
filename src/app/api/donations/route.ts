@@ -17,8 +17,17 @@ export async function POST(req: Request) {
 
     // 2. Register Donation in Database (with safe offline fallback)
     let donationId = `UL-DON-${Date.now()}`;
-    try {
-      if (process.env.DATABASE_URL) {
+    const dbUrl = process.env.DATABASE_URL?.trim();
+    const hasRealDatabase = Boolean(
+      dbUrl &&
+      dbUrl.length > 15 &&
+      !dbUrl.includes('user:password') &&
+      !dbUrl.includes('localhost:3306/underlife') &&
+      (dbUrl.startsWith('mysql://') || dbUrl.startsWith('postgresql://'))
+    );
+
+    if (hasRealDatabase) {
+      try {
         const newDonation = await prisma.donation.create({
           data: {
             amount: parsedAmount,
@@ -32,9 +41,9 @@ export async function POST(req: Request) {
           },
         });
         donationId = newDonation.id;
+      } catch (dbError) {
+        console.warn('[Donations API] DB storage bypassed (offline or unavailable):', dbError);
       }
-    } catch (dbError) {
-      console.warn('[Donations API] DB storage bypassed (offline or unavailable):', dbError);
     }
 
     // 3. Initiate Payment Gateway Session (or direct PayPal donation URL fallback)
