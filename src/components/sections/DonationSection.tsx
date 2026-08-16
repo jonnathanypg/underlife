@@ -100,15 +100,16 @@ export default function DonationSection() {
     setIsSubmitting(true);
     
     const formData = new FormData(e.currentTarget);
+    const emailVal = formData.get('email')?.toString().trim();
     const data = {
       amount,
       donorType,
       method: paymentMethod,
-      email: formData.get('email'),
-      phone: formData.get('phone'),
-      firstName: formData.get('firstName') || 'Anónimo',
-      lastName: formData.get('lastName'),
-      documentId: formData.get('documentId'),
+      email: emailVal || (donorType === 'anonymous' ? 'anonimo@fundacionunderlife.org' : ''),
+      phone: formData.get('phone')?.toString().trim() || '',
+      firstName: formData.get('firstName')?.toString().trim() || (donorType === 'anonymous' ? 'Donante Anónimo' : 'Amigo de Underlife'),
+      lastName: formData.get('lastName')?.toString().trim() || '',
+      documentId: formData.get('documentId')?.toString().trim() || '',
     };
 
     try {
@@ -118,15 +119,16 @@ export default function DonationSection() {
         body: JSON.stringify(data),
       });
 
-      if (!response.ok) throw new Error('Error al procesar donación');
       const result = await response.json();
       
       if (result.paymentUrl) {
         window.location.href = result.paymentUrl;
+      } else {
+        window.location.href = `https://www.paypal.com/donate?business=info@fundacionunderlife.org&currency_code=USD&amount=${amount}&item_name=Donacion+Fundacion+Underlife`;
       }
     } catch (error) {
-      alert('❌ Ocurrió un error. Verifica tus datos o intenta más tarde.');
-      console.error(error);
+      console.warn('Redirecting to direct payment gateway:', error);
+      window.location.href = `https://www.paypal.com/donate?business=info@fundacionunderlife.org&currency_code=USD&amount=${amount}&item_name=Donacion+Fundacion+Underlife`;
     } finally {
       setIsSubmitting(false);
     }
@@ -351,18 +353,18 @@ export default function DonationSection() {
 
               {/* Dynamic Form Fields Based on Donor Type */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 24 }}>
-                {/* Always: Contact Info */}
+                {/* Contact Info */}
                 <input
                   name="email"
                   type="email"
-                  required
-                  placeholder="correo@ejemplo.com"
+                  required={donorType !== 'anonymous'}
+                  placeholder={donorType === 'anonymous' ? 'Correo electrónico (opcional para recibo)' : 'correo@ejemplo.com'}
                   style={inputStyle}
                 />
                 <input
                   name="phone"
                   type="tel"
-                  placeholder="+593 000 000 000"
+                  placeholder={donorType === 'anonymous' ? 'Teléfono (opcional)' : '+593 000 000 000'}
                   style={inputStyle}
                 />
 
