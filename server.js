@@ -32,7 +32,15 @@ app.prepare()
           IMMUTABLE_EXTS.test(pathname);
 
         if (isImmutable && !dev) {
-          res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+          // Lock Cache-Control so Next.js static file handlers cannot overwrite it
+          const originalSetHeader = res.setHeader.bind(res);
+          originalSetHeader('Cache-Control', 'public, max-age=31536000, immutable');
+          res.setHeader = function (name, value) {
+            if (typeof name === 'string' && name.toLowerCase() === 'cache-control') {
+              return originalSetHeader('Cache-Control', 'public, max-age=31536000, immutable');
+            }
+            return originalSetHeader(name, value);
+          };
         }
 
         handle(req, res, parsedUrl);
