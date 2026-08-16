@@ -96,10 +96,17 @@ const videos = [
 
 export default function GalleriesSection() {
   const t = useTranslations('galleries');
-  const [activeGallery, setActiveGallery] = useState(0);
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
-  // Preload all gallery images in background for instant, zero-flicker tab navigation
+  // activeTab = which tab button is highlighted
+  // displayGallery = which gallery the Swiper is actually showing (lags 250ms behind for fade)
+  const [activeTab, setActiveTab] = useState(0);
+  const [displayGallery, setDisplayGallery] = useState(0);
+  const [fading, setFading] = useState(false);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  // Used to force a clean Swiper remount after each fade
+  const [swiperKey, setSwiperKey] = useState(0);
+
+  // Preload all gallery images in background on mount
   useEffect(() => {
     galleries.forEach((group) => {
       group.images.forEach((imgName) => {
@@ -109,24 +116,40 @@ export default function GalleriesSection() {
     });
   }, []);
 
-  const active = galleries[activeGallery];
+  const handleTabChange = (index: number) => {
+    if (index === activeTab || fading) return;
+    setActiveTab(index);
+    setFading(true);
+    setTimeout(() => {
+      setDisplayGallery(index);
+      setSwiperKey((k) => k + 1); // remount Swiper with correct dimensions
+      setFading(false);
+    }, 220);
+  };
+
+  const active = galleries[displayGallery];
+  const imagesList =
+    active.images.length < 10
+      ? [...active.images, ...active.images, ...active.images]
+      : active.images;
 
   const handlePlay = (index: number) => {
     videoRefs.current.forEach((v, i) => {
-      if (i !== index && v) {
-        v.pause();
-      }
+      if (i !== index && v) v.pause();
     });
   };
 
   return (
     <section id="proyectos" className="section" style={{ overflow: 'hidden' }}>
       <div className="container">
+        {/* Section Header — updates instantly with activeTab for responsive feel */}
         <div className="section-header">
           <h2 className="section-title">
-            <span className="gradient-text" style={{ padding: '0 10px' }}>{t(`${active.key}.title`)}</span>
+            <span className="gradient-text" style={{ padding: '0 10px' }}>
+              {t(`${galleries[activeTab].key}.title`)}
+            </span>
           </h2>
-          <p className="section-subtitle">{t(`${active.key}.body`)}</p>
+          <p className="section-subtitle">{t(`${galleries[activeTab].key}.body`)}</p>
         </div>
 
         {/* Gallery Tabs */}
@@ -134,16 +157,16 @@ export default function GalleriesSection() {
           {galleries.map((g, i) => (
             <button
               key={g.key}
-              onClick={() => setActiveGallery(i)}
+              onClick={() => handleTabChange(i)}
               style={{
                 padding: '10px 24px',
                 borderRadius: 'var(--radius-full)',
                 fontWeight: 600,
                 fontSize: '0.85rem',
                 transition: 'all var(--duration-normal) var(--ease-out)',
-                background: activeGallery === i ? 'var(--gradient-accent)' : 'var(--glass-bg)',
-                color: activeGallery === i ? '#fff' : 'var(--text-secondary)',
-                border: activeGallery === i ? 'none' : '1px solid var(--border-color)',
+                background: activeTab === i ? 'var(--gradient-accent)' : 'var(--glass-bg)',
+                color: activeTab === i ? '#fff' : 'var(--text-secondary)',
+                border: activeTab === i ? 'none' : '1px solid var(--border-color)',
                 cursor: 'pointer',
               }}
             >
@@ -152,74 +175,64 @@ export default function GalleriesSection() {
           ))}
         </div>
 
-        {/* Pre-rendered 3D Infinite Carousels for Zero-Flicker Transition */}
-        <div style={{ padding: '20px 0', width: '100%', position: 'relative' }} className="slider3d-wrapper">
-          {galleries.map((galleryGroup, groupIndex) => {
-            const isGroupActive = activeGallery === groupIndex;
-            const imagesList =
-              galleryGroup.images.length < 10
-                ? [...galleryGroup.images, ...galleryGroup.images, ...galleryGroup.images]
-                : galleryGroup.images;
-
-            return (
-              <div
-                key={galleryGroup.key}
-                style={{
-                  display: isGroupActive ? 'block' : 'none',
-                  transition: 'opacity 0.25s ease',
-                  width: '100%',
-                }}
+        {/* 3D Carousel — single Swiper, fades out then remounts with correct dimensions */}
+        <div
+          className="slider3d-wrapper"
+          style={{
+            padding: '20px 0',
+            width: '100%',
+            position: 'relative',
+            opacity: fading ? 0 : 1,
+            transition: 'opacity 0.22s ease',
+            willChange: 'opacity',
+          }}
+        >
+          <Swiper
+            key={swiperKey}
+            effect="coverflow"
+            grabCursor={true}
+            centeredSlides={true}
+            loop={true}
+            slideToClickedSlide={true}
+            slidesPerView="auto"
+            coverflowEffect={{
+              rotate: 30,
+              stretch: 0,
+              depth: 150,
+              modifier: 1,
+              slideShadows: true,
+            }}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
+            pagination={{ clickable: true }}
+            modules={[EffectCoverflow, Pagination, Autoplay]}
+            className="mySwiper"
+            style={{ width: '100%', paddingTop: '30px', paddingBottom: '60px' }}
+          >
+            {imagesList.map((img, i) => (
+              <SwiperSlide
+                key={`${active.key}-${i}`}
+                style={{ width: '300px', height: '350px' }}
               >
-                <Swiper
-                  effect={'coverflow'}
-                  grabCursor={true}
-                  centeredSlides={true}
-                  loop={true}
-                  slideToClickedSlide={true}
-                  slidesPerView={'auto'}
-                  coverflowEffect={{
-                    rotate: 30,
-                    stretch: 0,
-                    depth: 150,
-                    modifier: 1,
-                    slideShadows: true,
+                <img
+                  src={`/recursos_opt/${active.folder}/${img}`}
+                  alt={`Fundación Underlife — ${t(`${active.key}.title`)} (${i + 1})`}
+                  width={300}
+                  height={350}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    borderRadius: '16px',
+                    boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+                    display: 'block',
                   }}
-                  autoplay={{
-                    delay: 3000,
-                    disableOnInteraction: false,
-                  }}
-                  pagination={{ clickable: true }}
-                  modules={[EffectCoverflow, Pagination, Autoplay]}
-                  className="mySwiper"
-                  style={{ width: '100%', paddingTop: '30px', paddingBottom: '60px' }}
-                >
-                  {imagesList.map((img, i) => (
-                    <SwiperSlide
-                      key={`${galleryGroup.key}-${i}`}
-                      style={{ width: '300px', height: '350px', backgroundPosition: 'center', backgroundSize: 'cover' }}
-                    >
-                      <img
-                        src={`/recursos_opt/${galleryGroup.folder}/${img}`}
-                        alt={`Fundación Underlife — ${t(`${galleryGroup.key}.title`)} (${i + 1})`}
-                        loading="eager"
-                        decoding="async"
-                        width={300}
-                        height={350}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                          borderRadius: '16px',
-                          boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
-                          display: 'block',
-                        }}
-                      />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
-            );
-          })}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
 
           {/* Invisible Navigation Click Zones */}
           <div
