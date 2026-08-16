@@ -128,20 +128,35 @@ export default function Header() {
             <button
               onClick={() => setLangOpen(!langOpen)}
               style={{
-                width: 32,
-                height: 32,
+                width: 34,
+                height: 34,
                 borderRadius: '50%',
-                background: `url(${languages.find(l => l.code === locale)?.flag})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                border: theme === 'dark' ? 'solid 2.5px white' : 'solid 2.5px #1e1e38',
+                overflow: 'hidden',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: theme === 'dark' ? '2.5px solid #ffffff' : '2.5px solid #1e1e38',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
-                boxShadow: langOpen ? '0 0 12px var(--color-primary)' : '0 2px 6px rgba(0,0,0,0.1)',
+                boxShadow: langOpen ? '0 0 12px var(--color-primary)' : '0 2px 6px rgba(0,0,0,0.15)',
                 padding: 0,
+                background: 'transparent',
               }}
               title={tLang('switch')}
-            />
+            >
+              <img
+                src={languages.find((l) => l.code === locale)?.flag || 'https://flagcdn.com/ec.svg'}
+                alt={locale}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  borderRadius: '50%',
+                  display: 'block',
+                  pointerEvents: 'none',
+                }}
+              />
+            </button>
             
             {langOpen && (
               <div
@@ -161,7 +176,7 @@ export default function Header() {
                   gap: 8,
                   boxShadow: 'var(--glass-shadow)',
                   zIndex: 100,
-                  minWidth: 120,
+                  minWidth: 130,
                 }}
               >
                 {languages.filter(l => l.code !== locale).map((lang) => (
@@ -184,18 +199,33 @@ export default function Header() {
                       transition: 'background 0.2s ease',
                       textAlign: 'left',
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.08)')}
                     onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
                   >
                     <div style={{
-                      width: 20,
-                      height: 20,
+                      width: 22,
+                      height: 22,
                       borderRadius: '50%',
-                      background: `url(${lang.flag})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                    }} />
-                    <span style={{ fontSize: '0.8rem', color: 'var(--text-primary)', fontWeight: 500 }}>
+                      overflow: 'hidden',
+                      flexShrink: 0,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                    }}>
+                      <img
+                        src={lang.flag}
+                        alt={lang.label}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          borderRadius: '50%',
+                          display: 'block',
+                        }}
+                      />
+                    </div>
+                    <span style={{ fontSize: '0.82rem', color: 'var(--text-primary)', fontWeight: 500 }}>
                       {lang.label}
                     </span>
                   </button>
@@ -348,20 +378,35 @@ export default function Header() {
                     width: 36,
                     height: 36,
                     borderRadius: '50%',
-                    background: `url(${lang.flag})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
+                    overflow: 'hidden',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                     border: locale === lang.code
-                      ? (theme === 'dark' ? 'solid 3px var(--color-accent)' : 'solid 3px var(--color-primary)')
-                      : (theme === 'dark' ? 'solid 2px white' : 'solid 2px #1e1e38'),
+                      ? (theme === 'dark' ? '3px solid var(--color-accent)' : '3px solid var(--color-primary)')
+                      : (theme === 'dark' ? '2px solid white' : '2px solid #1e1e38'),
                     cursor: 'pointer',
-                    opacity: locale === lang.code ? 1 : 0.5,
+                    opacity: locale === lang.code ? 1 : 0.6,
                     transform: locale === lang.code ? 'scale(1.15)' : 'scale(1)',
                     transition: 'all 0.2s ease',
-                    boxShadow: locale === lang.code ? '0 4px 10px var(--color-primary)' : 'none',
+                    boxShadow: locale === lang.code ? '0 4px 12px var(--color-primary)' : 'none',
                     padding: 0,
+                    background: 'transparent',
                   }}
-                />
+                >
+                  <img
+                    src={lang.flag}
+                    alt={lang.label}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      borderRadius: '50%',
+                      display: 'block',
+                      pointerEvents: 'none',
+                    }}
+                  />
+                </button>
               ))}
             </div>
           </div>
