@@ -90,7 +90,7 @@ const galleries: GalleryGroup[] = [
 
 const videos = [
   { webm: 'fundacion-underlife-video-impacto-1.webm', mp4: 'fundacion-underlife-video-impacto-1.mp4' },
-  { webm: 'fundacion-underlife-video-impacto-2.webm' },
+  { webm: 'fundacion-underlife-video-impacto-2.webm', mp4: 'fundacion-underlife-video-impacto-2.mp4' },
   { webm: 'fundacion-underlife-video-impacto-3.webm', mp4: 'fundacion-underlife-video-impacto-3.mp4' },
 ];
 

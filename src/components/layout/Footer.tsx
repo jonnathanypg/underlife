@@ -32,8 +32,8 @@ export default function Footer() {
           <div>
             <img
               src={theme === 'dark'
-                ? '/logos/logo-fundacionunderlife-dark.png'
-                : '/logos/logo-fundacionunderlife-ligth.png'
+                ? '/logos/logotipo-fundacionunderlife-dark.png'
+                : '/logos/logotipo-fundacionunderlife-ligth.png'
               }
               alt={t('brand')}
               width={159}

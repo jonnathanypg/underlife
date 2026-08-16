@@ -3,7 +3,6 @@ import { getMessages } from 'next-intl/server';
 import { ThemeProvider } from '@/components/ui/ThemeProvider';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import CustomCursor from '@/components/ui/CustomCursor';
 import ScrollRestorer from '@/components/ui/ScrollRestorer';
 import type { Metadata } from 'next';
 
@@ -46,6 +45,17 @@ export async function generateMetadata({
         'x-default': `${siteUrl}/en`,
       },
     },
+    icons: {
+      icon: [
+        { url: '/favicon.ico', sizes: 'any' },
+        { url: '/logos/isotipo-underlife.ico', sizes: 'any' },
+        { url: '/logos/icono-isotipo-underlife.png', type: 'image/png', sizes: '512x512' },
+      ],
+      apple: [
+        { url: '/logos/icono-isotipo-underlife.png', sizes: '180x180', type: 'image/png' },
+      ],
+      shortcut: '/favicon.ico',
+    },
     openGraph: {
       title: meta.title,
       description: meta.description,
@@ -85,7 +95,7 @@ export default async function LocaleLayout({
               name: 'Fundación Underlife',
               alternateName: 'Underlife Foundation',
               url: 'https://fundacionunderlife.org',
-              logo: 'https://fundacionunderlife.org/logos/logo-fundacionunderlife-dark.png',
+              logo: 'https://fundacionunderlife.org/logos/logotipo-fundacionunderlife-dark.png',
               description:
                 'Laboratorio integral de innovación social. Protección infantil, justicia digital, pensamiento divergente y desarrollo comunitario en Ecuador.',
               foundingDate: '2018',
@@ -132,7 +142,6 @@ export default async function LocaleLayout({
           <ThemeProvider>
             <div className="animated-bg" aria-hidden="true" />
             <ScrollRestorer />
-            <CustomCursor />
             <Header />
             <main style={{ minHeight: '100vh' }}>{children}</main>
             <Footer />

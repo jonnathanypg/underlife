@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     alternateLocale: ['en_US', 'pt_BR'],
     images: [
       {
-        url: '/logos/logo-fundacionunderlife-dark.png',
+        url: '/logos/logotipo-fundacionunderlife-dark.png',
         width: 786,
         height: 317,
         alt: 'Fundación Underlife',
@@ -62,7 +62,18 @@ export const metadata: Metadata = {
     title: 'Fundación Underlife — Pensamiento Divergente',
     description:
       'Innovando para erradicar la vulnerabilidad. Protección infantil, acceso tecnológico a la justicia y desarrollo comunitario en Ecuador.',
-    images: ['/logos/logo-fundacionunderlife-dark.png'],
+    images: ['/logos/logotipo-fundacionunderlife-dark.png'],
+  },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/logos/isotipo-underlife.ico', sizes: 'any' },
+      { url: '/logos/icono-isotipo-underlife.png', type: 'image/png', sizes: '512x512' },
+    ],
+    apple: [
+      { url: '/logos/icono-isotipo-underlife.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
   },
   alternates: {
     canonical: `${siteUrl}/es`,
