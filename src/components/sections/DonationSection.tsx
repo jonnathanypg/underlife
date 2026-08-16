@@ -4,16 +4,18 @@ import { useTranslations } from 'next-intl';
 import { useState, useRef, useCallback, useEffect } from 'react';
 
 type DonorType = 'anonymous' | 'personal' | 'institutional';
+type PaymentMethod = 'googlepay' | 'dlocal' | 'paypal';
 
 export default function DonationSection() {
   const t = useTranslations('donation');
   const [amount, setAmount] = useState(20);
   const [donorType, setDonorType] = useState<DonorType>('personal');
   const [step, setStep] = useState<1 | 2>(1);
-  const [paymentMethod, setPaymentMethod] = useState<'dlocal' | 'paypal'>('dlocal');
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('googlepay');
   const [country, setCountry] = useState<string | null>(null);
   const [showDLocal, setShowDLocal] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [googlePayReady, setGooglePayReady] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
@@ -66,6 +68,26 @@ export default function DonationSection() {
     isDragging.current = false;
   }, []);
 
+  // Load Google Pay Web SDK
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const script = document.createElement('script');
+      script.src = 'https://pay.google.com/gp/p/js/pay.js';
+      script.async = true;
+      script.onload = () => {
+        try {
+          if ((window as any).google?.payments?.api) {
+            setGooglePayReady(true);
+          }
+        } catch {}
+      };
+      document.body.appendChild(script);
+      return () => {
+        if (script.parentNode) script.parentNode.removeChild(script);
+      };
+    }
+  }, []);
+
   // Geolocation detection
   useEffect(() => {
     const controller = new AbortController();
@@ -82,10 +104,9 @@ export default function DonationSection() {
           const supported = ['AR','BO','BR','CL','CO','CR','EC','GT','MX','PA','PE','UY','ID','MY','KE','NG'];
           const isSupported = supported.includes(code);
           setShowDLocal(isSupported);
-          if (!isSupported) setPaymentMethod('paypal');
         }
       } catch {
-        // Silent fail - keep defaults (show both payment methods)
+        // Silent fail - keep defaults
       } finally {
         clearTimeout(timeout);
       }
@@ -94,6 +115,72 @@ export default function DonationSection() {
     detectCountry();
     return () => { controller.abort(); clearTimeout(timeout); };
   }, []);
+
+  const processGooglePay = async (donationData: any) => {
+    try {
+      const google = (window as any).google;
+      if (!google?.payments?.api) {
+        throw new Error('Google Pay not loaded');
+      }
+
+      const paymentsClient = new google.payments.api.PaymentsClient({
+        environment: process.env.NEXT_PUBLIC_GOOGLE_PAY_ENV === 'PRODUCTION' ? 'PRODUCTION' : 'TEST',
+      });
+
+      const paymentDataRequest = {
+        apiVersion: 2,
+        apiVersionMinor: 0,
+        allowedPaymentMethods: [
+          {
+            type: 'CARD',
+            parameters: {
+              allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+              allowedCardNetworks: ['MASTERCARD', 'VISA', 'AMEX', 'DISCOVER'],
+            },
+            tokenizationSpecification: {
+              type: 'PAYMENT_GATEWAY',
+              parameters: {
+                gateway: 'stripe',
+                'stripe:publishableKey': process.env.NEXT_PUBLIC_STRIPE_KEY || 'pk_live_underlife',
+                'stripe:version': '2020-08-27',
+              },
+            },
+          },
+        ],
+        merchantInfo: {
+          merchantId: process.env.NEXT_PUBLIC_GOOGLE_PAY_MERCHANT_ID || 'BCR2DN6D3K6JF2JW',
+          merchantName: 'Fundación Underlife',
+        },
+        transactionInfo: {
+          totalPriceStatus: 'FINAL',
+          totalPrice: amount.toFixed(2),
+          currencyCode: 'USD',
+          countryCode: 'EC',
+        },
+      };
+
+      const paymentData = await paymentsClient.loadPaymentData(paymentDataRequest);
+      const response = await fetch('/api/donations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...donationData,
+          paymentToken: paymentData.paymentMethodData?.tokenizationData?.token,
+        }),
+      });
+      const result = await response.json();
+      if (result.success) {
+        window.location.href = `/es?success=true&provider=googlepay&amount=${amount}`;
+      }
+    } catch (err: any) {
+      if (err?.statusCode === 'CANCELED') {
+        setIsSubmitting(false);
+        return;
+      }
+      console.warn('Google Pay redirecting to direct checkout fallback:', err);
+      window.location.href = `https://www.paypal.com/donate?business=info@fundacionunderlife.org&currency_code=USD&amount=${amount}&item_name=Donacion+Fundacion+Underlife`;
+    }
+  };
 
   const handleDonate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -111,6 +198,12 @@ export default function DonationSection() {
       lastName: formData.get('lastName')?.toString().trim() || '',
       documentId: formData.get('documentId')?.toString().trim() || '',
     };
+
+    if (paymentMethod === 'googlepay' && googlePayReady) {
+      await processGooglePay(data);
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       const response = await fetch('/api/donations', {
@@ -385,51 +478,94 @@ export default function DonationSection() {
                 )}
               </div>
 
-              {/* Payment Method */}
+              {/* Payment Method Selection */}
               <div style={{ 
                 display: 'grid', 
-                gridTemplateColumns: showDLocal ? '1fr 1fr' : '1fr', 
+                gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', 
                 gap: 10, 
                 marginBottom: 20 
               }}>
+                {/* 1. Google Pay */}
+                <button
+                  type="button"
+                  onClick={() => setPaymentMethod('googlepay')}
+                  style={{
+                    padding: '14px 10px',
+                    borderRadius: 'var(--radius-md)',
+                    border: paymentMethod === 'googlepay' ? '2px solid #4285F4' : '2px solid var(--border-color)',
+                    background: paymentMethod === 'googlepay' ? 'rgba(66, 133, 244, 0.08)' : 'transparent',
+                    fontWeight: 700,
+                    fontSize: '0.85rem',
+                    color: 'var(--text-primary)',
+                    transition: 'all var(--duration-fast)',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 3,
+                  }}
+                >
+                  <span style={{ fontSize: '1rem', fontWeight: 800 }}>🇬 Pay</span>
+                  <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 500 }}>
+                    1-Clic • Billetera
+                  </span>
+                </button>
+
+                {/* 2. dLocal Go (Tarjetas / Ecuador) */}
                 {showDLocal && (
                   <button
                     type="button"
                     onClick={() => setPaymentMethod('dlocal')}
                     style={{
-                      padding: '16px',
+                      padding: '14px 10px',
                       borderRadius: 'var(--radius-md)',
                       border: paymentMethod === 'dlocal' ? '2px solid var(--color-teal)' : '2px solid var(--border-color)',
                       background: paymentMethod === 'dlocal' ? 'rgba(38,180,156,0.08)' : 'transparent',
-                      fontWeight: 600,
+                      fontWeight: 700,
                       fontSize: '0.85rem',
                       color: 'var(--text-primary)',
                       transition: 'all var(--duration-fast)',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: 3,
                     }}
                   >
-                    💳 {country === 'EC' ? 'Tarjeta / Local (Ecuador)' : 'Tarjeta / Pago Local'}
+                    <span style={{ fontSize: '1rem' }}>💳 Tarjeta</span>
+                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 500 }}>
+                      {country === 'EC' ? 'Débito / Crédito' : 'Pago Local'}
+                    </span>
                   </button>
                 )}
+
+                {/* 3. PayPal */}
                 <button
                   type="button"
                   onClick={() => setPaymentMethod('paypal')}
                   style={{
-                    padding: '16px',
+                    padding: '14px 10px',
                     borderRadius: 'var(--radius-md)',
                     border: paymentMethod === 'paypal' ? '2px solid #003087' : '2px solid var(--border-color)',
                     background: paymentMethod === 'paypal' ? 'rgba(0,48,135,0.06)' : 'transparent',
-                    fontWeight: 600,
+                    fontWeight: 700,
                     fontSize: '0.85rem',
                     color: 'var(--text-primary)',
                     transition: 'all var(--duration-fast)',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 3,
                   }}
                 >
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    <span>🅿️ PayPal</span>
-                    <span style={{ fontSize: '0.65rem', opacity: 0.8, fontWeight: 400 }}>
-                      Debito / Credito / Internacional
-                    </span>
-                  </div>
+                  <span style={{ fontSize: '1rem' }}>🅿️ PayPal</span>
+                  <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 500 }}>
+                    Internacional
+                  </span>
                 </button>
               </div>
 

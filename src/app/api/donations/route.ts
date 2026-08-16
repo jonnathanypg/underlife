@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     const donorFirstName = (firstName && String(firstName).trim()) || (donorType === 'anonymous' ? 'Donante Anónimo' : 'Amigo de Underlife');
     const donorLastName = (lastName && String(lastName).trim()) || '';
     const donorEmail = (email && String(email).trim()) || (donorType === 'anonymous' ? 'anonimo@fundacionunderlife.org' : 'donaciones@fundacionunderlife.org');
-    const paymentMethod = method === 'paypal' ? 'paypal' : 'dlocal';
+    const paymentMethod = method === 'googlepay' ? 'googlepay' : (method === 'paypal' ? 'paypal' : 'dlocal');
     const origin = req.headers.get('origin') || 'https://fundacionunderlife.org';
 
     // 2. Register Donation in Database (with safe offline fallback)
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
             donorType: donorType || 'personal',
             method: paymentMethod,
             comment: comments || (phone ? `Tel: ${phone} | Doc: ${documentId || 'N/A'}` : null),
-            status: 'PENDING',
+            status: paymentMethod === 'googlepay' ? 'COMPLETED' : 'PENDING',
           },
         });
         donationId = newDonation.id;
@@ -40,7 +40,9 @@ export async function POST(req: Request) {
     // 3. Initiate Payment Gateway Session (or direct PayPal donation URL fallback)
     let paymentUrl = '';
 
-    if (paymentMethod === 'paypal') {
+    if (paymentMethod === 'googlepay') {
+      paymentUrl = `${origin}/es?success=true&provider=googlepay&donationId=${donationId}&amount=${parsedAmount}`;
+    } else if (paymentMethod === 'paypal') {
       const paypalId = process.env.PAYPAL_CLIENT_ID || process.env.PAYPAL_ID;
       const paypalSecret = process.env.PAYPAL_CLIENT_SECRET || process.env.PAYPAL_SECRET;
       const paypalMode = process.env.PAYPAL_MODE || 'live';
