@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build --webpack",
+    "build": "prisma generate && next build",
     "postinstall": "prisma generate",
     "start": "node server.js",
+    "deploy": "bash ./deploy.sh",
     "lint": "eslint"
   },
   "dependencies": {
