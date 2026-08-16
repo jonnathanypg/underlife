@@ -1,38 +1,7 @@
-import { getTranslations } from 'next-intl/server';
-import type { Metadata } from 'next';
+'use client';
+
+import { useLanguage } from '@/lib/LanguageContext';
 import Link from 'next/link';
-
-const siteUrl = 'https://fundacionunderlife.org';
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
-  const { locale } = await params;
-  const titles: Record<string, string> = {
-    es: 'Política de Privacidad — Fundación Underlife',
-    en: 'Privacy Policy — Underlife Foundation',
-    pt: 'Política de Privacidade — Fundação Underlife',
-  };
-  const descriptions: Record<string, string> = {
-    es: 'Política de privacidad y tratamiento de datos personales de Fundación Underlife. Conoce cómo protegemos tu información.',
-    en: 'Privacy policy and personal data processing of Underlife Foundation. Learn how we protect your information.',
-    pt: 'Política de privacidade e tratamento de dados pessoais da Fundação Underlife. Saiba como protegemos suas informações.',
-  };
-  return {
-    title: titles[locale] ?? titles.es,
-    description: descriptions[locale] ?? descriptions.es,
-    alternates: {
-      canonical: `${siteUrl}/${locale}/privacidad`,
-      languages: {
-        es: `${siteUrl}/es/privacidad`,
-        en: `${siteUrl}/en/privacidad`,
-        pt: `${siteUrl}/pt/privacidad`,
-      },
-    },
-  };
-}
 
 const content = {
   es: {
@@ -253,16 +222,12 @@ Endereço: Milagro, Guayas, Equador`,
   },
 };
 
-export default async function PrivacidadPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-  const c = content[locale as keyof typeof content] ?? content.es;
+export default function PrivacidadPage() {
+  const { lang } = useLanguage();
+  const c = content[lang] ?? content.es;
 
   return (
-    <main style={{ minHeight: '100vh', paddingTop: 'calc(var(--header-height) + 40px)', paddingBottom: 80 }}>
+    <div style={{ minHeight: '100vh', paddingTop: 'calc(var(--header-height) + 40px)', paddingBottom: 80 }}>
       <div className="container" style={{ maxWidth: 760 }}>
         <Link
           href="/"
@@ -317,6 +282,6 @@ export default async function PrivacidadPage({
           ))}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations } from '@/lib/LanguageContext';
 
 export default function HeroSection() {
   const t = useTranslations('hero');

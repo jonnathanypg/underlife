@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations } from '@/lib/LanguageContext';
 import { useState, useRef, useEffect } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';

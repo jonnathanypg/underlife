@@ -1,5 +1,25 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { ThemeProvider } from '@/components/ui/ThemeProvider';
+import { LanguageProvider } from '@/lib/LanguageContext';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import ScrollRestorer from '@/components/ui/ScrollRestorer';
+import { Outfit, Caveat } from 'next/font/google';
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-outfit',
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+});
+
+const caveat = Caveat({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-caveat',
+  weight: ['600', '700'],
+});
 
 const siteUrl = 'https://fundacionunderlife.org';
 
@@ -76,13 +96,7 @@ export const metadata: Metadata = {
     shortcut: '/favicon.ico',
   },
   alternates: {
-    canonical: `${siteUrl}/es`,
-    languages: {
-      'es': `${siteUrl}/es`,
-      'en': `${siteUrl}/en`,
-      'pt': `${siteUrl}/pt`,
-      'x-default': `${siteUrl}/en`,
-    },
+    canonical: siteUrl,
   },
   category: 'nonprofit',
 };
@@ -92,5 +106,72 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <html lang="es" className={`${outfit.variable} ${caveat.variable}`} data-theme="dark" suppressHydrationWarning>
+      <head>
+        {/* JSON-LD Schema for NGO / Google Ad Grants Credibility */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'NGO',
+              name: 'Fundación Underlife',
+              alternateName: 'Underlife Foundation',
+              url: 'https://fundacionunderlife.org',
+              logo: 'https://fundacionunderlife.org/logos/logotipo-fundacionunderlife-dark.png',
+              description:
+                'Laboratorio integral de innovación social. Protección infantil, justicia digital, pensamiento divergente y desarrollo comunitario en Ecuador.',
+              foundingDate: '2018',
+              address: {
+                '@type': 'PostalAddress',
+                addressLocality: 'Milagro',
+                addressRegion: 'Guayas',
+                addressCountry: 'EC',
+              },
+              contactPoint: {
+                '@type': 'ContactPoint',
+                telephone: '+593986020391',
+                contactType: 'customer support',
+                email: 'info@fundacionunderlife.org',
+                availableLanguage: ['es', 'en', 'pt'],
+              },
+              sameAs: [
+                'https://www.facebook.com/underlife.ong/',
+                'https://www.instagram.com/underlife_ong/',
+                'https://www.linkedin.com/company/underlife-ong/',
+              ],
+            }),
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('underlife-theme');
+                  if (theme) {
+                    document.documentElement.setAttribute('data-theme', theme);
+                  } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body>
+        <LanguageProvider>
+          <ThemeProvider>
+            <div className="animated-bg" aria-hidden="true" />
+            <ScrollRestorer />
+            <Header />
+            <main style={{ minHeight: '100vh' }}>{children}</main>
+            <Footer />
+          </ThemeProvider>
+        </LanguageProvider>
+      </body>
+    </html>
+  );
 }

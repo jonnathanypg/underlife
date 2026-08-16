@@ -1,5 +1,21 @@
-import { redirect } from 'next/navigation';
+import HeroSection from '@/components/sections/HeroSection';
+import DNASection from '@/components/sections/DNASection';
+import ImpactSection from '@/components/sections/ImpactSection';
+import GalleriesSection from '@/components/sections/GalleriesSection';
+import VolunteerSection from '@/components/sections/VolunteerSection';
+import DonationSection from '@/components/sections/DonationSection';
+import ContactSection from '@/components/sections/ContactSection';
 
-export default function RootPage() {
-  redirect('/es');
+export default function HomePage() {
+  return (
+    <>
+      <HeroSection />
+      <DNASection />
+      <ImpactSection />
+      <GalleriesSection />
+      <VolunteerSection />
+      <DonationSection />
+      <ContactSection />
+    </>
+  );
 }

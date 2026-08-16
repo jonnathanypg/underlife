@@ -1,17 +1,16 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { useTranslations, useLocale } from 'next-intl';
+import { useTranslations, useLocale, useLanguage } from '@/lib/LanguageContext';
 import { useTheme } from '@/components/ui/ThemeProvider';
-import { Link, usePathname, useRouter } from '@/i18n/navigation';
+import Link from 'next/link';
 
 export default function Header() {
   const t = useTranslations('nav');
   const tTheme = useTranslations('theme');
   const tLang = useTranslations('lang');
   const { theme, toggleTheme } = useTheme();
-  const pathname = usePathname();
-  const router = useRouter();
+  const { setLang } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
@@ -169,10 +168,7 @@ export default function Header() {
                   <button
                     key={lang.code}
                     onClick={() => {
-                      document.cookie = `NEXT_LOCALE=${lang.code}; path=/; max-age=31536000`;
-                      // Defensive: ensure pathname doesn't contain current locale prefix
-                      const cleanPath = pathname.replace(/^\/(es|en|pt)(\/|$)/, '/') || '/';
-                      router.replace(cleanPath, { locale: lang.code, scroll: false });
+                      setLang(lang.code as any);
                       setLangOpen(false);
                     }}
                     style={{
@@ -346,9 +342,7 @@ export default function Header() {
                   key={lang.code}
                   onClick={() => {
                     setMobileOpen(false);
-                    document.cookie = `NEXT_LOCALE=${lang.code}; path=/; max-age=31536000`;
-                    const cleanPath = pathname.replace(/^\/(es|en|pt)(\/|$)/, '/') || '/';
-                    router.replace(cleanPath, { locale: lang.code, scroll: false });
+                    setLang(lang.code as any);
                   }}
                   style={{
                     width: 36,

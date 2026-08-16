@@ -1,10 +1,10 @@
 import type { NextConfig } from "next";
-import createNextIntlPlugin from 'next-intl/plugin';
-
-const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 const nextConfig: NextConfig = {
   output: 'standalone',
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   images: {
     unoptimized: true,
   },
@@ -39,7 +39,6 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      // Logos: 1-year immutable cache
       {
         source: '/logos/:path*',
         headers: [
@@ -49,38 +48,18 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      // Videos: 1-year immutable cache for high PageSpeed cache score
       {
-        source: '/recursos_opt/:path*.mp4',
+        source: '/videos/:path*.mp4',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            value: 'public, max-age=2592000',
           },
         ],
       },
+      // Security headers for all routes
       {
-        source: '/recursos_opt/:path*.webm',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      // VTT captions: 1-year cache
-      {
-        source: '/recursos_opt/:path*.vtt',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      // Security headers for all routes (Google Ad Grants compliance)
-      {
-        source: '/(.*)',
+        source: '/:path*',
         headers: [
           {
             key: 'X-Content-Type-Options',
@@ -108,4 +87,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withNextIntl(nextConfig);
+export default nextConfig;

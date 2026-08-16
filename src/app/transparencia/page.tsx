@@ -1,37 +1,7 @@
-import type { Metadata } from 'next';
+'use client';
+
+import { useLanguage } from '@/lib/LanguageContext';
 import Link from 'next/link';
-
-const siteUrl = 'https://fundacionunderlife.org';
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
-  const { locale } = await params;
-  const titles: Record<string, string> = {
-    es: 'Transparencia e Información Legal — Fundación Underlife',
-    en: 'Transparency & Legal Information — Underlife Foundation',
-    pt: 'Transparência e Informações Legais — Fundação Underlife',
-  };
-  return {
-    title: titles[locale] ?? titles.es,
-    description:
-      locale === 'en'
-        ? 'Legal information, registration, mission, programs and annual impact of Underlife Foundation — Ecuador non-profit since 2018.'
-        : locale === 'pt'
-        ? 'Informações legais, registro, missão, programas e impacto anual da Fundação Underlife — ONG equatoriana desde 2018.'
-        : 'Información legal, registro, misión, programas e impacto anual de Fundación Underlife — ONG ecuatoriana desde 2018.',
-    alternates: {
-      canonical: `${siteUrl}/${locale}/transparencia`,
-      languages: {
-        es: `${siteUrl}/es/transparencia`,
-        en: `${siteUrl}/en/transparencia`,
-        pt: `${siteUrl}/pt/transparencia`,
-      },
-    },
-  };
-}
 
 const content = {
   es: {
@@ -204,16 +174,12 @@ const content = {
   },
 };
 
-export default async function TransparenciaPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-  const c = content[locale as keyof typeof content] ?? content.es;
+export default function TransparenciaPage() {
+  const { lang } = useLanguage();
+  const c = content[lang] ?? content.es;
 
   return (
-    <main style={{ minHeight: '100vh', paddingTop: 'calc(var(--header-height) + 40px)', paddingBottom: 80 }}>
+    <div style={{ minHeight: '100vh', paddingTop: 'calc(var(--header-height) + 40px)', paddingBottom: 80 }}>
       <div className="container" style={{ maxWidth: 800 }}>
         <Link
           href="/"
@@ -324,13 +290,13 @@ export default async function TransparenciaPage({
         {/* Privacy Policy Link */}
         <div style={{ borderTop: '1px solid var(--divider)', paddingTop: 24 }}>
           <Link
-            href={`/${locale}/privacidad`}
+            href="/privacidad"
             style={{ color: 'var(--color-primary)', fontWeight: 600, fontSize: '0.9rem', textDecoration: 'underline' }}
           >
             {c.privacyLink} →
           </Link>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations } from '@/lib/LanguageContext';
 import { useState } from 'react';
 
 export default function ContactSection() {

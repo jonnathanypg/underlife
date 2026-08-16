@@ -1,14 +1,13 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from '@/lib/LanguageContext';
 import { useTheme } from '@/components/ui/ThemeProvider';
-import { useLocale } from 'next-intl';
+import Link from 'next/link';
 
 export default function Footer() {
   const t = useTranslations('footer');
   const nav = useTranslations('nav');
   const { theme } = useTheme();
-  const locale = useLocale();
 
   return (
     <footer
@@ -99,24 +98,24 @@ export default function Footer() {
                 </li>
               ))}
               <li>
-                <a
-                  href={`/${locale}/transparencia`}
+                <Link
+                  href="/transparencia"
                   style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', transition: 'color var(--duration-fast)' }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
                   onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
                 >
                   {t('transparency')}
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href={`/${locale}/privacidad`}
+                <Link
+                  href="/privacidad"
                   style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', transition: 'color var(--duration-fast)' }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
                   onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
                 >
                   {t('privacy')}
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
