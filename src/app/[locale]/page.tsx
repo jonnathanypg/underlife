@@ -7,20 +7,11 @@ import VolunteerSection from '@/components/sections/VolunteerSection';
 import DonationSection from '@/components/sections/DonationSection';
 import ContactSection from '@/components/sections/ContactSection';
 
-import { setRequestLocale } from 'next-intl/server';
-
 export function generateStaticParams() {
   return [{ locale: 'es' }, { locale: 'en' }, { locale: 'pt' }];
 }
 
-export default async function HomePage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-  setRequestLocale(locale);
-
+export default function HomePage() {
   return (
     <>
       <HeroSection />
