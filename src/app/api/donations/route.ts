@@ -107,9 +107,9 @@ export async function POST(req: Request) {
         }
       }
 
-      // If dynamic order wasn't created, use the direct official PayPal checkout URL
+      // If dynamic order wasn't created, use the direct standard PayPal checkout URL (not /donate which requires Giving Fund 501c3 approval)
       if (!paymentUrl) {
-        paymentUrl = `https://www.paypal.com/donate?business=info@fundacionunderlife.org&currency_code=USD&amount=${parsedAmount}&item_name=Donacion+Fundacion+Underlife`;
+        paymentUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info@fundacionunderlife.org&currency_code=USD&amount=${parsedAmount}&item_name=Donacion+Fundacion+Underlife&no_shipping=1&return=${encodeURIComponent(origin + '/es?success=true&provider=paypal&donationId=' + donationId)}&cancel_return=${encodeURIComponent(origin + '/es#donar')}`;
       }
 
     } else {
@@ -148,7 +148,7 @@ export async function POST(req: Request) {
 
       // If dLocal credentials are not configured or failed, use secure PayPal direct checkout
       if (!paymentUrl) {
-        paymentUrl = `https://www.paypal.com/donate?business=info@fundacionunderlife.org&currency_code=USD&amount=${parsedAmount}&item_name=Donacion+Fundacion+Underlife`;
+        paymentUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info@fundacionunderlife.org&currency_code=USD&amount=${parsedAmount}&item_name=Donacion+Fundacion+Underlife&no_shipping=1&return=${encodeURIComponent(origin + '/es?success=true&provider=paypal&donationId=' + donationId)}&cancel_return=${encodeURIComponent(origin + '/es#donar')}`;
       }
     }
 
@@ -173,7 +173,7 @@ export async function POST(req: Request) {
     // Even in unexpected top-level errors, return safe direct PayPal checkout fallback
     return NextResponse.json({
       success: true,
-      paymentUrl: 'https://www.paypal.com/donate?business=info@fundacionunderlife.org&currency_code=USD&amount=20&item_name=Donacion+Fundacion+Underlife',
+      paymentUrl: 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info@fundacionunderlife.org&currency_code=USD&amount=20&item_name=Donacion+Fundacion+Underlife&no_shipping=1',
       donationId: `UL-DON-${Date.now()}`,
     });
   }

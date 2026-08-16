@@ -181,7 +181,7 @@ export default function DonationSection() {
         return;
       }
       console.warn('Google Pay redirecting to direct checkout fallback:', err);
-      window.location.href = `https://www.paypal.com/donate?business=info@fundacionunderlife.org&currency_code=USD&amount=${amount}&item_name=Donacion+Fundacion+Underlife`;
+      window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info@fundacionunderlife.org&currency_code=USD&amount=${amount}&item_name=Donacion+Fundacion+Underlife&no_shipping=1`;
     }
   };
 
@@ -220,11 +220,11 @@ export default function DonationSection() {
       if (result.paymentUrl) {
         window.location.href = result.paymentUrl;
       } else {
-        window.location.href = `https://www.paypal.com/donate?business=info@fundacionunderlife.org&currency_code=USD&amount=${amount}&item_name=Donacion+Fundacion+Underlife`;
+        window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info@fundacionunderlife.org&currency_code=USD&amount=${amount}&item_name=Donacion+Fundacion+Underlife&no_shipping=1`;
       }
     } catch (error) {
       console.warn('Redirecting to direct payment gateway:', error);
-      window.location.href = `https://www.paypal.com/donate?business=info@fundacionunderlife.org&currency_code=USD&amount=${amount}&item_name=Donacion+Fundacion+Underlife`;
+      window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info@fundacionunderlife.org&currency_code=USD&amount=${amount}&item_name=Donacion+Fundacion+Underlife&no_shipping=1`;
     } finally {
       setIsSubmitting(false);
     }
