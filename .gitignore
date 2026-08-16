@@ -37,8 +37,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# raw media resources (use public/recursos_opt only)
+/recursos
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-

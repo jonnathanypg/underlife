@@ -81,8 +81,8 @@ export default function Header() {
         <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
           <img
             src={theme === 'dark'
-              ? '/logos/logotipo-fundacionunderlife-dark.png'
-              : '/logos/logotipo-fundacionunderlife-ligth.png'
+              ? '/logos/logotipo-fundacionunderlife-dark.webp'
+              : '/logos/logotipo-fundacionunderlife-ligth.webp'
             }
             alt="Fundación Underlife"
             className="site-logo"
