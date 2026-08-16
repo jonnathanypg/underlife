@@ -7,6 +7,10 @@ import VolunteerSection from '@/components/sections/VolunteerSection';
 import DonationSection from '@/components/sections/DonationSection';
 import ContactSection from '@/components/sections/ContactSection';
 
+export function generateStaticParams() {
+  return [{ locale: 'es' }, { locale: 'en' }, { locale: 'pt' }];
+}
+
 export default function HomePage() {
   return (
     <>

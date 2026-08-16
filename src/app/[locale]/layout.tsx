@@ -80,6 +80,10 @@ export async function generateMetadata({
   };
 }
 
+export function generateStaticParams() {
+  return [{ locale: 'es' }, { locale: 'en' }, { locale: 'pt' }];
+}
+
 export default async function LocaleLayout({
   children,
   params
