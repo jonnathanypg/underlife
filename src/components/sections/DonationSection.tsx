@@ -68,9 +68,13 @@ export default function DonationSection() {
     isDragging.current = false;
   }, []);
 
-  // Load Google Pay Web SDK
+  // Load Google Pay Web SDK on demand when Google Pay is selected
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && paymentMethod === 'googlepay' && !googlePayReady) {
+      if ((window as any).google?.payments?.api) {
+        setGooglePayReady(true);
+        return;
+      }
       const script = document.createElement('script');
       script.src = 'https://pay.google.com/gp/p/js/pay.js';
       script.async = true;
@@ -82,38 +86,37 @@ export default function DonationSection() {
         } catch {}
       };
       document.body.appendChild(script);
-      return () => {
-        if (script.parentNode) script.parentNode.removeChild(script);
-      };
     }
-  }, []);
+  }, [paymentMethod, googlePayReady]);
 
-  // Geolocation detection
+  // Zero-latency local country detection (no external network requests, eliminates 429 errors)
   useEffect(() => {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 3000);
-    
-    const detectCountry = async () => {
-      try {
-        const res = await fetch('https://ipapi.co/json/', { signal: controller.signal });
-        if (!res.ok) return; // Fail silently on 429 or other errors
-        const data = await res.json();
-        if (data.country_code) {
-          const code = data.country_code;
-          setCountry(code);
-          const supported = ['AR','BO','BR','CL','CO','CR','EC','GT','MX','PA','PE','UY','ID','MY','KE','NG'];
-          const isSupported = supported.includes(code);
-          setShowDLocal(isSupported);
-        }
-      } catch {
-        // Silent fail - keep defaults
-      } finally {
-        clearTimeout(timeout);
-      }
-    };
-    
-    detectCountry();
-    return () => { controller.abort(); clearTimeout(timeout); };
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      const tzMap: Record<string, string> = {
+        'America/Guayaquil': 'EC',
+        'America/Galapagos': 'EC',
+        'America/Bogota': 'CO',
+        'America/Lima': 'PE',
+        'America/Santiago': 'CL',
+        'America/Buenos_Aires': 'AR',
+        'America/Cordoba': 'AR',
+        'America/Sao_Paulo': 'BR',
+        'America/Bahia': 'BR',
+        'America/Manaus': 'BR',
+        'America/Mexico_City': 'MX',
+        'America/Monterrey': 'MX',
+        'America/Panama': 'PA',
+        'America/Costa_Rica': 'CR',
+        'America/Guatemala': 'GT',
+        'America/Montevideo': 'UY',
+        'America/La_Paz': 'BO',
+      };
+      const detected = tzMap[tz] || 'EC';
+      setCountry(detected);
+      const supported = ['AR','BO','BR','CL','CO','CR','EC','GT','MX','PA','PE','UY','ID','MY','KE','NG'];
+      setShowDLocal(supported.includes(detected));
+    } catch {}
   }, []);
 
   const processGooglePay = async (donationData: any) => {

@@ -37,9 +37,8 @@ export default function HeroSection() {
           muted
           loop
           playsInline
-          preload="none"
-          poster="/recursos_opt/Videos/hero-bg-poster.jpg"
-          data-fetchpriority="low"
+          preload="metadata"
+          poster="/recursos_opt/Videos/hero-bg-poster.webp"
           style={{
             position: 'absolute',
             width: '100%',

@@ -11,27 +11,9 @@ const nextConfig: NextConfig = {
 
   async headers() {
     return [
-      // Static images: 1 year immutable cache
+      // All static resources, next-gen images, videos, audio, fonts: 1 year immutable cache
       {
-        source: '/recursos_opt/:path*.jpg',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      {
-        source: '/recursos_opt/:path*.png',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      {
-        source: '/recursos_opt/:path*.webp',
+        source: '/recursos_opt/:path*',
         headers: [
           {
             key: 'Cache-Control',
@@ -49,11 +31,20 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: '/videos/:path*.mp4',
+        source: '/icons/:path*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=2592000',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },
@@ -61,6 +52,14 @@ const nextConfig: NextConfig = {
       {
         source: '/:path*',
         headers: [
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on',
+          },
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload',
+          },
           {
             key: 'X-Content-Type-Options',
             value: 'nosniff',

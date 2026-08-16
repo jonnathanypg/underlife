@@ -172,7 +172,7 @@ export default function Footer() {
             borderTop: '1px solid var(--divider)',
             paddingTop: 20,
             textAlign: 'center',
-            color: 'var(--text-secondary)',
+            color: '#a0a8be',
             fontSize: '0.85rem',
           }}
         >
@@ -183,7 +183,7 @@ export default function Footer() {
               href="https://weblifetech.com"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: 'var(--color-accent-light)', fontWeight: 600, textDecoration: 'underline' }}
+              style={{ color: '#00d2ff', fontWeight: 700, textDecoration: 'underline' }}
             >
               WEBLIFETECH S.A.S.
             </a>

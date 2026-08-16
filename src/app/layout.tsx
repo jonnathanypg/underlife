@@ -160,6 +160,13 @@ export default function RootLayout({
             `,
           }}
         />
+        <link
+          rel="preload"
+          as="image"
+          href="/recursos_opt/Videos/hero-bg-poster.webp"
+          type="image/webp"
+          fetchPriority="high"
+        />
       </head>
       <body>
         <LanguageProvider>

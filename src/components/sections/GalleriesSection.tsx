@@ -89,9 +89,9 @@ const galleries: GalleryGroup[] = [
 ];
 
 const videos = [
-  { webm: 'fundacion-underlife-video-impacto-1.webm', mp4: 'fundacion-underlife-video-impacto-1.mp4', poster: '/recursos_opt/Videos/impacto-1-poster.jpg' },
-  { webm: 'fundacion-underlife-video-impacto-2.webm', mp4: 'fundacion-underlife-video-impacto-2.mp4', poster: '/recursos_opt/Videos/impacto-2-poster.jpg' },
-  { webm: 'fundacion-underlife-video-impacto-3.webm', mp4: 'fundacion-underlife-video-impacto-3.mp4', poster: '/recursos_opt/Videos/impacto-3-poster.jpg' },
+  { webm: 'fundacion-underlife-video-impacto-1.webm', mp4: 'fundacion-underlife-video-impacto-1.mp4', poster: '/recursos_opt/Videos/impacto-1-poster.webp' },
+  { webm: 'fundacion-underlife-video-impacto-2.webm', mp4: 'fundacion-underlife-video-impacto-2.mp4', poster: '/recursos_opt/Videos/impacto-2-poster.webp' },
+  { webm: 'fundacion-underlife-video-impacto-3.webm', mp4: 'fundacion-underlife-video-impacto-3.mp4', poster: '/recursos_opt/Videos/impacto-3-poster.webp' },
 ];
 
 export default function GalleriesSection() {
