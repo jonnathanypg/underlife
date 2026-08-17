@@ -25,7 +25,6 @@ const galleries: GalleryGroup[] = [
       'fundacion-underlife-ninos-proteccion-3.webp',
       'fundacion-underlife-ninos-proteccion-4.webp',
       'fundacion-underlife-ninos-proteccion-5.webp',
-      'fundacion-underlife-ninos-proteccion-6.webp',
       'fundacion-underlife-ninos-proteccion-7.webp',
       'fundacion-underlife-ninos-proteccion-8.webp',
       'fundacion-underlife-ninos-proteccion-9.webp',
@@ -67,10 +66,8 @@ const galleries: GalleryGroup[] = [
     key: 'innovation',
     folder: 'hackathon',
     images: [
-      'fundacion-underlife-hackathon-tecnologia-1.webp',
       'fundacion-underlife-hackathon-tecnologia-2.webp',
       'fundacion-underlife-hackathon-tecnologia-3.webp',
-      'fundacion-underlife-hackathon-tecnologia-4.webp',
       'fundacion-underlife-hackathon-tecnologia-5.webp',
       'fundacion-underlife-hackathon-tecnologia-6.webp',
       'fundacion-underlife-hackathon-tecnologia-7.webp',
@@ -80,10 +77,10 @@ const galleries: GalleryGroup[] = [
     key: 'workshops',
     folder: 'talleres',
     images: [
-      'fundacion-underlife-talleres-comunitarios-1.webp',
-      'fundacion-underlife-talleres-comunitarios-2.webp',
-      'fundacion-underlife-talleres-comunitarios-3.webp',
-      'fundacion-underlife-talleres-comunitarios-4.webp',
+      'fundacion-underlife-talleres-capacitacion-1.webp',
+      'fundacion-underlife-talleres-capacitacion-2.webp',
+      'fundacion-underlife-talleres-capacitacion-3.webp',
+      'fundacion-underlife-talleres-capacitacion-4.webp',
     ],
   },
 ];
