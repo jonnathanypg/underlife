@@ -1,11 +1,9 @@
-import dynamic from 'next/dynamic';
 import HeroSection from '@/components/sections/HeroSection';
 import DNASection from '@/components/sections/DNASection';
-
-const VolunteerSection = dynamic(() => import('@/components/sections/VolunteerSection'));
-const ImpactSection = dynamic(() => import('@/components/sections/ImpactSection'));
-const GalleriesSection = dynamic(() => import('@/components/sections/GalleriesSection'));
-const DonationSection = dynamic(() => import('@/components/sections/DonationSection'));
+import ImpactSection from '@/components/sections/ImpactSection';
+import GalleriesSection from '@/components/sections/GalleriesSection';
+import VolunteerSection from '@/components/sections/VolunteerSection';
+import DonationSection from '@/components/sections/DonationSection';
 
 export default function HomePage() {
   return (
