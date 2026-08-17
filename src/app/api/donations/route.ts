@@ -49,71 +49,76 @@ export async function POST(req: Request) {
     // 3. Initiate Payment Gateway Session (or direct PayPal donation URL fallback)
     let paymentUrl = '';
 
+    const paypalId = process.env.PAYPAL_CLIENT_ID || process.env.PAYPAL_ID;
+    const paypalSecret = process.env.PAYPAL_CLIENT_SECRET || process.env.PAYPAL_SECRET;
+    const paypalMode = process.env.PAYPAL_MODE || 'live';
+    const baseUrl = paypalMode === 'live' ? 'https://api-m.paypal.com' : 'https://api-m.sandbox.paypal.com';
+
+    // Helper function to create PayPal dynamic Order
+    const createPayPalOrder = async (isGuestCard: boolean) => {
+      if (!paypalId || !paypalSecret) return null;
+      try {
+        // 1. Get PayPal Access Token
+        const tokenRes = await fetch(`${baseUrl}/v1/oauth2/token`, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Accept-Language': 'en_US',
+            'Authorization': `Basic ${Buffer.from(paypalId + ':' + paypalSecret).toString('base64')}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: 'grant_type=client_credentials',
+        });
+        const tokenData = await tokenRes.json();
+
+        if (tokenData.access_token) {
+          // 2. Create PayPal Order (landing_page: BILLING forces Guest Card checkout)
+          const orderRes = await fetch(`${baseUrl}/v2/checkout/orders`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${tokenData.access_token}`,
+            },
+            body: JSON.stringify({
+              intent: 'CAPTURE',
+              purchase_units: [{
+                reference_id: donationId,
+                amount: { currency_code: 'USD', value: parsedAmount.toFixed(2) },
+                description: `Donación a Fundación Underlife (${donorFirstName})`,
+              }],
+              application_context: {
+                brand_name: 'Fundación Underlife',
+                landing_page: isGuestCard ? 'BILLING' : 'NO_PREFERENCE',
+                user_action: 'PAY_NOW',
+                return_url: `${origin}/?success=true&provider=${isGuestCard ? 'card' : 'paypal'}&donationId=${donationId}&amount=${parsedAmount}`,
+                cancel_url: `${origin}/?canceled=true#donar`,
+              },
+            }),
+          });
+          const orderData = await orderRes.json();
+          const approveLink = orderData.links?.find((link: any) => link.rel === 'approve');
+          if (approveLink?.href) {
+            return approveLink.href;
+          }
+        }
+      } catch (paypalApiErr) {
+        console.warn('[Donations API] PayPal dynamic session error:', paypalApiErr);
+      }
+      return null;
+    };
+
     if (paymentMethod === 'googlepay') {
       paymentUrl = `${origin}/?success=true&provider=googlepay&donationId=${donationId}&amount=${parsedAmount}`;
     } else if (paymentMethod === 'paypal') {
-      const paypalId = process.env.PAYPAL_CLIENT_ID || process.env.PAYPAL_ID;
-      const paypalSecret = process.env.PAYPAL_CLIENT_SECRET || process.env.PAYPAL_SECRET;
-      const paypalMode = process.env.PAYPAL_MODE || 'live';
-      const baseUrl = paypalMode === 'live' ? 'https://api-m.paypal.com' : 'https://api-m.sandbox.paypal.com';
+      // 1. Try PayPal dynamic order
+      paymentUrl = (await createPayPalOrder(false)) || '';
 
-      if (paypalId && paypalSecret) {
-        try {
-          // 1. Get PayPal Access Token
-          const tokenRes = await fetch(`${baseUrl}/v1/oauth2/token`, {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Accept-Language': 'en_US',
-              'Authorization': `Basic ${Buffer.from(paypalId + ':' + paypalSecret).toString('base64')}`,
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'grant_type=client_credentials',
-          });
-          const tokenData = await tokenRes.json();
-
-          if (tokenData.access_token) {
-            // 2. Create PayPal Order
-            const orderRes = await fetch(`${baseUrl}/v2/checkout/orders`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${tokenData.access_token}`,
-              },
-              body: JSON.stringify({
-                intent: 'CAPTURE',
-                purchase_units: [{
-                  reference_id: donationId,
-                  amount: { currency_code: 'USD', value: parsedAmount.toFixed(2) },
-                  description: `Donación a Fundación Underlife (${donorType || 'Aporte Social'})`,
-                }],
-                application_context: {
-                  brand_name: 'Fundación Underlife',
-                  landing_page: 'NO_PREFERENCE',
-                  user_action: 'PAY_NOW',
-                  return_url: `${origin}/?success=true&provider=paypal&donationId=${donationId}`,
-                  cancel_url: `${origin}/?canceled=true#donar`,
-                },
-              }),
-            });
-            const orderData = await orderRes.json();
-            const approveLink = orderData.links?.find((link: any) => link.rel === 'approve');
-            if (approveLink?.href) {
-              paymentUrl = approveLink.href;
-            }
-          }
-        } catch (paypalApiErr) {
-          console.warn('[Donations API] PayPal dynamic session error, falling back to direct URL:', paypalApiErr);
-        }
-      }
-
-      // If dynamic order wasn't created, use the direct standard PayPal checkout URL (not /donate which requires Giving Fund 501c3 approval)
+      // 2. Fallback to direct PayPal URL
       if (!paymentUrl) {
-        paymentUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info@fundacionunderlife.org&currency_code=USD&amount=${parsedAmount}&item_name=Donacion+Fundacion+Underlife&no_shipping=1&return=${encodeURIComponent(origin + '/?success=true&provider=paypal&donationId=' + donationId)}&cancel_return=${encodeURIComponent(origin + '/?canceled=true#donar')}`;
+        paymentUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info@fundacionunderlife.org&currency_code=USD&amount=${parsedAmount}&item_name=Donacion+Fundacion+Underlife&no_shipping=1&no_note=1&return=${encodeURIComponent(origin + '/?success=true&provider=paypal&donationId=' + donationId)}&cancel_return=${encodeURIComponent(origin + '/?canceled=true#donar')}`;
       }
-
     } else {
-      // dLocal Go Implementation (Cards / Local Payment in Ecuador)
+      // paymentMethod === 'dlocal' (Tarjeta de Crédito / Débito)
       const dlocalApiKey = process.env.DLOCAL_API_KEY;
       const dlocalApiSecret = process.env.DLOCAL_API_SECRET;
       const webhookUrl = process.env.DLOCAL_WEBHOOK_URL || origin;
@@ -132,7 +137,7 @@ export async function POST(req: Request) {
               currency: 'USD',
               country: 'EC',
               description: `Donación a Fundación Underlife (${donorFirstName})`,
-              success_url: `${origin}/?success=true&provider=dlocal&donationId=${donationId}`,
+              success_url: `${origin}/?success=true&provider=card&donationId=${donationId}&amount=${parsedAmount}`,
               back_url: `${origin}/?canceled=true#donar`,
               notification_url: `${webhookUrl}/api/donations/webhook`,
             }),
@@ -142,13 +147,18 @@ export async function POST(req: Request) {
             paymentUrl = dlocalData.redirect_url;
           }
         } catch (dlocalErr) {
-          console.warn('[Donations API] dLocal Go API error, falling back to direct payment:', dlocalErr);
+          console.warn('[Donations API] dLocal Go API error:', dlocalErr);
         }
       }
 
-      // If dLocal credentials are not configured or failed, use secure PayPal direct checkout
+      // If dLocal is not active, process with PayPal Guest Card Checkout (landing_page: BILLING)
       if (!paymentUrl) {
-        paymentUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info@fundacionunderlife.org&currency_code=USD&amount=${parsedAmount}&item_name=Donacion+Fundacion+Underlife&no_shipping=1&return=${encodeURIComponent(origin + '/?success=true&provider=paypal&donationId=' + donationId)}&cancel_return=${encodeURIComponent(origin + '/?canceled=true#donar')}`;
+        paymentUrl = (await createPayPalOrder(true)) || '';
+      }
+
+      // If dynamic order fails, use fallback with solution_type=sole & landing_page=billing
+      if (!paymentUrl) {
+        paymentUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info@fundacionunderlife.org&currency_code=USD&amount=${parsedAmount}&item_name=Donacion+Fundacion+Underlife&no_shipping=1&no_note=1&solution_type=sole&landing_page=billing&return=${encodeURIComponent(origin + '/?success=true&provider=card&donationId=' + donationId)}&cancel_return=${encodeURIComponent(origin + '/?canceled=true#donar')}`;
       }
     }
 
