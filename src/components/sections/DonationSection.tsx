@@ -11,7 +11,7 @@ export default function DonationSection() {
   const [amount, setAmount] = useState(50);
   const [donorType, setDonorType] = useState<DonorType>('personal');
   const [step, setStep] = useState<1 | 2 | 3>(1); // 1: Selección de artículos, 2: Precompra / Método de pago, 3: Éxito / Postcompra
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('googlepay');
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('dlocal');
   const [country, setCountry] = useState<string | null>(null);
   const [showDLocal, setShowDLocal] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -600,32 +600,34 @@ export default function DonationSection() {
                   gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', 
                   gap: 10, 
                 }}>
-                  {/* 1. Google Pay */}
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod('googlepay')}
-                    style={{
-                      padding: '12px 10px',
-                      borderRadius: 'var(--radius-md)',
-                      border: paymentMethod === 'googlepay' ? '2px solid #4285F4' : '2px solid var(--border-color)',
-                      background: paymentMethod === 'googlepay' ? 'rgba(66, 133, 244, 0.1)' : 'transparent',
-                      fontWeight: 700,
-                      color: 'var(--text-primary)',
-                      transition: 'all var(--duration-fast)',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: 6,
-                      minHeight: 68,
-                    }}
-                  >
-                    <GooglePayLogo height={20} />
-                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 500 }}>
-                      1-Clic • Billetera
-                    </span>
-                  </button>
+                  {/* 1. Google Pay (Only visible in simulator mode until production approval) */}
+                  {simulatorMode && (
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod('googlepay')}
+                      style={{
+                        padding: '12px 10px',
+                        borderRadius: 'var(--radius-md)',
+                        border: paymentMethod === 'googlepay' ? '2px solid #4285F4' : '2px solid var(--border-color)',
+                        background: paymentMethod === 'googlepay' ? 'rgba(66, 133, 244, 0.1)' : 'transparent',
+                        fontWeight: 700,
+                        color: 'var(--text-primary)',
+                        transition: 'all var(--duration-fast)',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 6,
+                        minHeight: 68,
+                      }}
+                    >
+                      <GooglePayLogo height={20} />
+                      <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 500 }}>
+                        1-Clic • Billetera
+                      </span>
+                    </button>
+                  )}
 
                   {/* 2. dLocal Go (Tarjetas) */}
                   {showDLocal && (
