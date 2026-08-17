@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import './globals.css';
 import { ThemeProvider } from '@/components/ui/ThemeProvider';
 import { LanguageProvider } from '@/lib/LanguageContext';
@@ -168,10 +169,10 @@ export default function RootLayout({
           fetchPriority="high"
         />
         {/* Aikrofy Conversational Webchat & Agentic AI Capabilities */}
-        <script
+        <Script
           src="https://app.aikrofy.com/widget.js"
-          data-widget-id="f97f9776-e3e5-4891-ad7f-5e54f91462c1"
-          async
+          data-widget-id="3e502c00-45ae-4d6e-9bf6-5d60dab2ba46"
+          strategy="afterInteractive"
         />
       </head>
       <body>
