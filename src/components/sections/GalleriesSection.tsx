@@ -176,15 +176,15 @@ export default function GalleriesSection() {
         >
           {(() => {
             const activeGallery = galleries[activeTab];
-            const activeImages =
-              activeGallery.images.length < 10
-                ? [...activeGallery.images, ...activeGallery.images, ...activeGallery.images]
-                : activeGallery.images;
+            let activeImages = [...activeGallery.images];
+            while (activeImages.length < 15) {
+              activeImages = [...activeImages, ...activeGallery.images];
+            }
 
             return (
               <>
                 <Swiper
-                  key={activeGallery.key}
+                  key={`${activeGallery.key}-${activeTab}`}
                   onSwiper={(swiper) => {
                     swiperRef.current = swiper;
                   }}
@@ -192,6 +192,8 @@ export default function GalleriesSection() {
                   grabCursor={true}
                   centeredSlides={true}
                   loop={true}
+                  observer={true}
+                  observeParents={true}
                   slideToClickedSlide={true}
                   slidesPerView="auto"
                   coverflowEffect={{
