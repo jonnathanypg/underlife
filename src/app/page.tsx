@@ -1,3 +1,5 @@
+'use client';
+
 import HeroSection from '@/components/sections/HeroSection';
 import DNASection from '@/components/sections/DNASection';
 import ImpactSection from '@/components/sections/ImpactSection';
