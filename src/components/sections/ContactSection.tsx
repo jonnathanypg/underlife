@@ -417,16 +417,23 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contacto" className="section section-dark" style={{ position: 'relative', overflow: 'hidden' }}>
-      <div className="container" style={{ maxWidth: 760 }}>
+    <section 
+      id="contacto" 
+      style={{ 
+        position: 'relative', 
+        overflow: 'hidden',
+        padding: 'calc(var(--header-height) + 20px) var(--space-md) var(--space-2xl)',
+      }}
+    >
+      <div className="container" style={{ maxWidth: 740, padding: 0 }}>
         
         {/* Section Header */}
-        <div className="section-header" style={{ textAlign: 'center', marginBottom: 28 }}>
+        <div className="section-header" style={{ textAlign: 'center', marginBottom: 20 }}>
           <span className="section-tag">{texts.tag}</span>
-          <h2 className="section-title">
+          <h2 className="section-title" style={{ marginBottom: 6 }}>
             {texts.title} <span className="gradient-text">{texts.titleAccent}</span>
           </h2>
-          <p className="section-subtitle" style={{ maxWidth: 580, margin: '8px auto 0' }}>
+          <p className="section-subtitle" style={{ maxWidth: 540, margin: '0 auto', fontSize: '0.95rem' }}>
             {texts.subtitle}
           </p>
         </div>
