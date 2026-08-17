@@ -98,6 +98,7 @@ export default function GalleriesSection() {
   const t = useTranslations('galleries');
   const [activeTab, setActiveTab] = useState(0);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const swiperRef = useRef<any>(null);
 
   // Defer gallery images background preloading during browser idle to avoid blocking main thread and FCP/LCP
   useEffect(() => {
@@ -167,7 +168,7 @@ export default function GalleriesSection() {
           ))}
         </div>
 
-        {/* 3D Carousel Panes — All panes remain in DOM for instant switching without re-rendering or blank flashes */}
+        {/* 3D Coverflow Carousel */}
         <div
           className="slider3d-wrapper"
           style={{
@@ -176,32 +177,26 @@ export default function GalleriesSection() {
             position: 'relative',
           }}
         >
-          {galleries.map((g, tabIdx) => {
-            const isSelected = activeTab === tabIdx;
-            const imagesList =
-              g.images.length < 10
-                ? [...g.images, ...g.images, ...g.images]
-                : g.images;
+          {(() => {
+            const activeGallery = galleries[activeTab];
+            const activeImages =
+              activeGallery.images.length < 10
+                ? [...activeGallery.images, ...activeGallery.images, ...activeGallery.images]
+                : activeGallery.images;
 
             return (
-              <div
-                key={g.key}
-                style={{
-                  display: isSelected ? 'block' : 'none',
-                  width: '100%',
-                  position: 'relative',
-                  animation: isSelected ? 'fadeIn 0.2s ease forwards' : 'none',
-                }}
-              >
+              <>
                 <Swiper
+                  key={activeGallery.key}
+                  onSwiper={(swiper) => {
+                    swiperRef.current = swiper;
+                  }}
                   effect="coverflow"
                   grabCursor={true}
                   centeredSlides={true}
                   loop={true}
                   slideToClickedSlide={true}
                   slidesPerView="auto"
-                  observer={true}
-                  observeParents={true}
                   coverflowEffect={{
                     rotate: 25,
                     stretch: 0,
@@ -216,17 +211,17 @@ export default function GalleriesSection() {
                   }}
                   pagination={{ clickable: true }}
                   modules={[EffectCoverflow, Pagination, Autoplay]}
-                  className={`mySwiper mySwiper-${g.key}`}
+                  className="mySwiper"
                   style={{ width: '100%', paddingTop: '30px', paddingBottom: '60px' }}
                 >
-                  {imagesList.map((img, i) => (
+                  {activeImages.map((img, i) => (
                     <SwiperSlide
-                      key={`${g.key}-${i}`}
+                      key={`${activeGallery.key}-${i}`}
                       style={{ width: '300px', height: '350px' }}
                     >
                       <img
-                        src={`/recursos_opt/${g.folder}/${img}`}
-                        alt={`Fundación Underlife — ${t(`${g.key}.title`)} (${i + 1})`}
+                        src={`/recursos_opt/${activeGallery.folder}/${img}`}
+                        alt={`Fundación Underlife — ${t(`${activeGallery.key}.title`)} (${i + 1})`}
                         loading="eager"
                         decoding="async"
                         width={300}
@@ -244,26 +239,22 @@ export default function GalleriesSection() {
                   ))}
                 </Swiper>
 
-                {/* Invisible Navigation Click Zones */}
+                {/* Navigation Click Zones */}
                 <div
                   className="swiper-nav-zone-left"
-                  onClick={() => {
-                    const swiper = (document.querySelector(`.mySwiper-${g.key}`) as any)?.swiper;
-                    if (swiper) swiper.slidePrev();
-                  }}
+                  onClick={() => swiperRef.current?.slidePrev()}
                   style={{ position: 'absolute', top: 0, left: 0, width: '15%', height: '100%', zIndex: 10, cursor: 'w-resize' }}
+                  aria-label="Diapositiva anterior"
                 />
                 <div
                   className="swiper-nav-zone-right"
-                  onClick={() => {
-                    const swiper = (document.querySelector(`.mySwiper-${g.key}`) as any)?.swiper;
-                    if (swiper) swiper.slideNext();
-                  }}
+                  onClick={() => swiperRef.current?.slideNext()}
                   style={{ position: 'absolute', top: 0, right: 0, width: '15%', height: '100%', zIndex: 10, cursor: 'e-resize' }}
+                  aria-label="Diapositiva siguiente"
                 />
-              </div>
+              </>
             );
-          })}
+          })()}
         </div>
 
         {/* Video Section */}
