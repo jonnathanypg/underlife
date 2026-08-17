@@ -42,14 +42,13 @@ export default function HeroSection() {
           zIndex: -1,
         }}
       >
-        {loadVideo ? (
+        {loadVideo && (
           <video
             autoPlay
             muted
             loop
             playsInline
             preload="none"
-            poster="/recursos_opt/Videos/hero-bg-poster.webp"
             style={{
               position: 'absolute',
               width: '100%',
@@ -62,21 +61,6 @@ export default function HeroSection() {
             <source src="/recursos_opt/Videos/underlife-hero-bg.webm" type="video/webm" />
             <source src="/recursos_opt/Videos/underlife-hero-bg.mp4" type="video/mp4" />
           </video>
-        ) : (
-          <img
-            src="/recursos_opt/Videos/hero-bg-poster.webp"
-            alt=""
-            aria-hidden="true"
-            fetchPriority="high"
-            style={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              opacity: 0.12,
-              filter: 'blur(10px)',
-            }}
-          />
         )}
       </div>
 

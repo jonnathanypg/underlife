@@ -172,18 +172,18 @@ export default function Footer() {
             borderTop: '1px solid var(--divider)',
             paddingTop: 20,
             textAlign: 'center',
-            color: '#a0a8be',
-            fontSize: '0.85rem',
+            color: 'var(--text-muted)',
+            fontSize: '0.88rem',
           }}
         >
-          <p>{t('copyright')}</p>
-          <p style={{ marginTop: 6 }}>
+          <p style={{ color: 'var(--text-secondary)' }}>{t('copyright')}</p>
+          <p style={{ marginTop: 6, color: 'var(--text-muted)' }}>
             {t('developer')}{' '}
             <a
               href="https://weblifetech.com"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: '#00d2ff', fontWeight: 700, textDecoration: 'underline' }}
+              style={{ color: 'var(--color-teal)', fontWeight: 700, textDecoration: 'underline' }}
             >
               WEBLIFETECH S.A.S.
             </a>

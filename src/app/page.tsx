@@ -4,8 +4,9 @@ import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import HeroSection from '@/components/sections/HeroSection';
 import DNASection from '@/components/sections/DNASection';
-import VolunteerSection from '@/components/sections/VolunteerSection';
-
+const VolunteerSection = dynamic(() => import('@/components/sections/VolunteerSection'), {
+  ssr: false,
+});
 const ImpactSection = dynamic(() => import('@/components/sections/ImpactSection'), {
   ssr: false,
 });

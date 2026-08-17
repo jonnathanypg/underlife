@@ -16,7 +16,16 @@ const nextConfig: NextConfig = {
 
   async headers() {
     return [
-      // All static resources, next-gen images, videos, audio, fonts: 1 year immutable cache
+      // Comprehensive static assets caching (1 year immutable)
+      {
+        source: '/:path*\\.(webp|avif|png|jpg|jpeg|svg|ico|woff2|woff|ttf|css|js|mp4|webm)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
       {
         source: '/recursos_opt/:path*',
         headers: [
