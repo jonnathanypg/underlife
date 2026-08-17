@@ -169,6 +169,9 @@ export default function RootLayout({
           type="image/webp"
           fetchPriority="high"
         />
+        {/* Preconnect to AI Agent Server (saves ~460ms LCP) */}
+        <link rel="preconnect" href="https://app.aikrofy.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://app.aikrofy.com" />
       </head>
       <body>
         <LanguageProvider>

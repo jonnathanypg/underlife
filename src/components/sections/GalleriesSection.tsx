@@ -99,15 +99,24 @@ export default function GalleriesSection() {
   const [activeTab, setActiveTab] = useState(0);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
-  // Preload all gallery images in browser cache to ensure 0ms tab switching and no blank flash
+  // Defer gallery images background preloading during browser idle to avoid blocking main thread and FCP/LCP
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      galleries.forEach((g) => {
-        g.images.forEach((img) => {
-          const image = new Image();
-          image.src = `/recursos_opt/${g.folder}/${img}`;
+      const schedulePreload = () => {
+        galleries.forEach((g) => {
+          g.images.forEach((img) => {
+            const image = new Image();
+            image.src = `/recursos_opt/${g.folder}/${img}`;
+          });
         });
-      });
+      };
+
+      if ('requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(schedulePreload, { timeout: 3000 });
+      } else {
+        const timer = setTimeout(schedulePreload, 2000);
+        return () => clearTimeout(timer);
+      }
     }
   }, []);
 

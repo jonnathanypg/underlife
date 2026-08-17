@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
     return [
       // Comprehensive static assets caching (1 year immutable)
       {
-        source: '/:path*\\.(webp|avif|png|jpg|jpeg|svg|ico|woff2|woff|ttf|css|js|mp4|webm)',
+        source: '/:all*(.*)\\.(webp|avif|png|jpg|jpeg|svg|ico|woff2|woff|ttf|css|js|mp4|webm)',
         headers: [
           {
             key: 'Cache-Control',
