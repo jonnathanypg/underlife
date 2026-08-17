@@ -54,6 +54,8 @@ export async function POST(req: Request) {
     const paypalMode = process.env.PAYPAL_MODE || 'live';
     const baseUrl = paypalMode === 'live' ? 'https://api-m.paypal.com' : 'https://api-m.sandbox.paypal.com';
 
+    let orderId = '';
+
     // Helper function to create PayPal dynamic Order
     const createPayPalOrder = async (isGuestCard: boolean) => {
       if (!paypalId || !paypalSecret) return null;
@@ -97,9 +99,10 @@ export async function POST(req: Request) {
           });
           const orderData = await orderRes.json();
           const approveLink = orderData.links?.find((link: any) => link.rel === 'approve');
-          if (approveLink?.href) {
-            return approveLink.href;
-          }
+          return {
+            orderId: orderData.id || '',
+            paymentUrl: approveLink?.href || '',
+          };
         }
       } catch (paypalApiErr) {
         console.warn('[Donations API] PayPal dynamic session error:', paypalApiErr);
@@ -111,7 +114,11 @@ export async function POST(req: Request) {
       paymentUrl = `${origin}/?success=true&provider=googlepay&donationId=${donationId}&amount=${parsedAmount}`;
     } else if (paymentMethod === 'paypal') {
       // 1. Try PayPal dynamic order
-      paymentUrl = (await createPayPalOrder(false)) || '';
+      const paypalOrder = await createPayPalOrder(false);
+      if (paypalOrder) {
+        orderId = paypalOrder.orderId;
+        paymentUrl = paypalOrder.paymentUrl;
+      }
 
       // 2. Fallback to direct PayPal URL
       if (!paymentUrl) {
@@ -153,7 +160,11 @@ export async function POST(req: Request) {
 
       // If dLocal is not active, process with PayPal Guest Card Checkout (landing_page: BILLING)
       if (!paymentUrl) {
-        paymentUrl = (await createPayPalOrder(true)) || '';
+        const cardOrder = await createPayPalOrder(true);
+        if (cardOrder) {
+          orderId = cardOrder.orderId;
+          paymentUrl = cardOrder.paymentUrl;
+        }
       }
 
       // If dynamic order fails, use fallback with solution_type=sole & landing_page=billing
@@ -174,6 +185,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       success: true,
+      orderId,
       paymentUrl,
       donationId,
       amount: parsedAmount,
