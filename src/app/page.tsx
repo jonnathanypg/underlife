@@ -19,11 +19,17 @@ const DonationSection = dynamic(() => import('@/components/sections/DonationSect
 export default function HomePage() {
   useEffect(() => {
     if (typeof window !== 'undefined' && window.location.hash) {
-      const hash = window.location.hash;
       const scrollToHash = () => {
-        const el = document.querySelector(hash);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        try {
+          const rawHash = window.location.hash.split('?')[0].split('&')[0];
+          if (rawHash && /^#[a-zA-Z0-9_-]+$/.test(rawHash)) {
+            const el = document.getElementById(rawHash.slice(1)) || document.querySelector(rawHash);
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }
+        } catch (err) {
+          console.warn('Scroll to hash safely skipped:', err);
         }
       };
 
