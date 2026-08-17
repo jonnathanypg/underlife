@@ -50,7 +50,7 @@ export async function POST(req: Request) {
     let paymentUrl = '';
 
     if (paymentMethod === 'googlepay') {
-      paymentUrl = `${origin}/es?success=true&provider=googlepay&donationId=${donationId}&amount=${parsedAmount}`;
+      paymentUrl = `${origin}/?success=true&provider=googlepay&donationId=${donationId}&amount=${parsedAmount}`;
     } else if (paymentMethod === 'paypal') {
       const paypalId = process.env.PAYPAL_CLIENT_ID || process.env.PAYPAL_ID;
       const paypalSecret = process.env.PAYPAL_CLIENT_SECRET || process.env.PAYPAL_SECRET;
@@ -91,8 +91,8 @@ export async function POST(req: Request) {
                   brand_name: 'Fundación Underlife',
                   landing_page: 'NO_PREFERENCE',
                   user_action: 'PAY_NOW',
-                  return_url: `${origin}/es?success=true&provider=paypal&donationId=${donationId}`,
-                  cancel_url: `${origin}/es#donar`,
+                  return_url: `${origin}/?success=true&provider=paypal&donationId=${donationId}`,
+                  cancel_url: `${origin}/?canceled=true#donar`,
                 },
               }),
             });
@@ -109,7 +109,7 @@ export async function POST(req: Request) {
 
       // If dynamic order wasn't created, use the direct standard PayPal checkout URL (not /donate which requires Giving Fund 501c3 approval)
       if (!paymentUrl) {
-        paymentUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info@fundacionunderlife.org&currency_code=USD&amount=${parsedAmount}&item_name=Donacion+Fundacion+Underlife&no_shipping=1&return=${encodeURIComponent(origin + '/es?success=true&provider=paypal&donationId=' + donationId)}&cancel_return=${encodeURIComponent(origin + '/es#donar')}`;
+        paymentUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info@fundacionunderlife.org&currency_code=USD&amount=${parsedAmount}&item_name=Donacion+Fundacion+Underlife&no_shipping=1&return=${encodeURIComponent(origin + '/?success=true&provider=paypal&donationId=' + donationId)}&cancel_return=${encodeURIComponent(origin + '/?canceled=true#donar')}`;
       }
 
     } else {
@@ -132,8 +132,8 @@ export async function POST(req: Request) {
               currency: 'USD',
               country: 'EC',
               description: `Donación a Fundación Underlife (${donorFirstName})`,
-              success_url: `${origin}/es?success=true&provider=dlocal&donationId=${donationId}`,
-              back_url: `${origin}/es#donar`,
+              success_url: `${origin}/?success=true&provider=dlocal&donationId=${donationId}`,
+              back_url: `${origin}/?canceled=true#donar`,
               notification_url: `${webhookUrl}/api/donations/webhook`,
             }),
           });
@@ -148,7 +148,7 @@ export async function POST(req: Request) {
 
       // If dLocal credentials are not configured or failed, use secure PayPal direct checkout
       if (!paymentUrl) {
-        paymentUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info@fundacionunderlife.org&currency_code=USD&amount=${parsedAmount}&item_name=Donacion+Fundacion+Underlife&no_shipping=1&return=${encodeURIComponent(origin + '/es?success=true&provider=paypal&donationId=' + donationId)}&cancel_return=${encodeURIComponent(origin + '/es#donar')}`;
+        paymentUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info@fundacionunderlife.org&currency_code=USD&amount=${parsedAmount}&item_name=Donacion+Fundacion+Underlife&no_shipping=1&return=${encodeURIComponent(origin + '/?success=true&provider=paypal&donationId=' + donationId)}&cancel_return=${encodeURIComponent(origin + '/?canceled=true#donar')}`;
       }
     }
 

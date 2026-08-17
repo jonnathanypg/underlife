@@ -1,6 +1,7 @@
 'use client';
 
 import { useTranslations } from '@/lib/LanguageContext';
+import Link from 'next/link';
 
 export default function VolunteerSection() {
   const t = useTranslations('volunteer');
@@ -34,9 +35,9 @@ export default function VolunteerSection() {
           >
             {t('body')}
           </p>
-          <a href="#contacto" className="btn btn-primary" style={{ fontSize: '1.05rem' }}>
+          <Link href="/contacto" className="btn btn-primary" style={{ fontSize: '1.05rem' }}>
             {t('cta')}
-          </a>
+          </Link>
         </div>
       </div>
     </section>
