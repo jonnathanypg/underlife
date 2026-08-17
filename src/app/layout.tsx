@@ -167,6 +167,12 @@ export default function RootLayout({
           type="image/webp"
           fetchPriority="high"
         />
+        {/* Aikrofy Conversational Webchat & Agentic AI Capabilities */}
+        <script
+          src="https://app.aikrofy.com/widget.js"
+          data-widget-id="f97f9776-e3e5-4891-ad7f-5e54f91462c1"
+          async
+        />
       </head>
       <body>
         <LanguageProvider>

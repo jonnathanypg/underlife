@@ -39,7 +39,7 @@ export default function ContactSection() {
     message: '',
   });
 
-  const texts = {
+const TEXT_DATA = {
     es: {
       tag: 'CONVERSACIÓN DIRECTA',
       title: 'Conecta con',
@@ -316,7 +316,9 @@ export default function ContactSection() {
         btnHome: 'Voltar ao Início',
       },
     },
-  }[lang] || {};
+  };
+
+  const texts = TEXT_DATA[(lang as keyof typeof TEXT_DATA)] || TEXT_DATA.es;
 
   // Auto redirect countdown on success step
   useEffect(() => {
