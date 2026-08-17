@@ -723,8 +723,8 @@ export default function DonationSection() {
                     width: '100%',
                     height: 50,
                     borderRadius: 8,
-                    background: '#0070BA',
-                    color: '#ffffff',
+                    background: '#FFC439',
+                    color: '#111111',
                     border: 'none',
                     display: 'flex',
                     alignItems: 'center',
@@ -734,22 +734,45 @@ export default function DonationSection() {
                     fontWeight: 700,
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
-                    boxShadow: '0 4px 14px rgba(0, 112, 186, 0.35)',
+                    boxShadow: '0 4px 14px rgba(255, 196, 57, 0.35)',
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = '#005ea6')}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = '#0070BA')}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = '#f2ba36')}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = '#FFC439')}
                 >
-                  <span style={{ fontSize: '0.95rem' }}>Donar con</span>
-                  <PayPalLogo height={22} isLight={true} />
+                  <span style={{ fontSize: '0.95rem', color: '#111111', fontWeight: 700 }}>Donar con</span>
+                  <PayPalLogo height={22} isLight={false} />
                 </button>
               ) : (
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn btn-primary"
-                  style={{ width: '100%', height: 50, justifyContent: 'center', opacity: isSubmitting ? 0.7 : 1 }}
+                  style={{
+                    width: '100%',
+                    height: 50,
+                    borderRadius: 8,
+                    background: '#2A2D37',
+                    color: '#ffffff',
+                    border: '1px solid rgba(255, 255, 255, 0.15)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 10,
+                    fontSize: '0.98rem',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+                    opacity: isSubmitting ? 0.7 : 1,
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = '#343844')}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = '#2A2D37')}
                 >
-                  🔒 {isSubmitting ? 'Procesando...' : t('ctaPay')}
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                    <line x1="5" y1="15" x2="9" y2="15"></line>
+                  </svg>
+                  <span>{isSubmitting ? 'Procesando...' : 'Pagar con Tarjeta de Crédito / Débito'}</span>
                 </button>
               )}
 
