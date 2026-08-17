@@ -123,7 +123,7 @@
     "next": "Next →",
     "ctaPay": "Proceed to Secure Payment",
     "back": "← Back",
-    "securityBadge": "Secure payments processed by dLocal Go and PayPal"
+    "securityBadge": "Secure payments processed by Google Pay and PayPal"
   },
   "contact": {
     "headline": "Connect with",

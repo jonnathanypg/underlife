@@ -10,7 +10,7 @@ export default function DonationSection() {
   const t = useTranslations('donation');
   const [amount, setAmount] = useState(50);
   const [donorType, setDonorType] = useState<DonorType>('personal');
-  const [step, setStep] = useState<1 | 2 | 3>(1); // 1: Select item/amount, 2: Pre-purchase form & method, 3: Success / Post-purchase
+  const [step, setStep] = useState<1 | 2 | 3>(1); // 1: Selección de artículos, 2: Precompra / Método de pago, 3: Éxito / Postcompra
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('googlepay');
   const [country, setCountry] = useState<string | null>(null);
   const [showDLocal, setShowDLocal] = useState(true);
@@ -506,7 +506,7 @@ export default function DonationSection() {
             </>
           )}
 
-          {/* === STEP 2: Pre-Purchase Form & Payment Gateway Selector === */}
+          {/* === STEP 2: Precompra / Formulario y Métodos de Pago === */}
           {step === 2 && (
             <form onSubmit={handleDonate}>
               <button
@@ -590,7 +590,7 @@ export default function DonationSection() {
                 )}
               </div>
 
-              {/* Payment Methods */}
+              {/* Payment Methods Selection */}
               <div style={{ marginBottom: 20 }}>
                 <label style={{ display: 'block', fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: 8, fontWeight: 600 }}>
                   Selecciona Método de Pago
@@ -605,12 +605,11 @@ export default function DonationSection() {
                     type="button"
                     onClick={() => setPaymentMethod('googlepay')}
                     style={{
-                      padding: '14px 10px',
+                      padding: '12px 10px',
                       borderRadius: 'var(--radius-md)',
                       border: paymentMethod === 'googlepay' ? '2px solid #4285F4' : '2px solid var(--border-color)',
-                      background: paymentMethod === 'googlepay' ? 'rgba(66, 133, 244, 0.08)' : 'transparent',
+                      background: paymentMethod === 'googlepay' ? 'rgba(66, 133, 244, 0.1)' : 'transparent',
                       fontWeight: 700,
-                      fontSize: '0.85rem',
                       color: 'var(--text-primary)',
                       transition: 'all var(--duration-fast)',
                       cursor: 'pointer',
@@ -618,11 +617,11 @@ export default function DonationSection() {
                       flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: 5,
-                      minHeight: 64,
+                      gap: 6,
+                      minHeight: 68,
                     }}
                   >
-                    <GooglePayLogo height={18} />
+                    <GooglePayLogo height={20} />
                     <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 500 }}>
                       1-Clic • Billetera
                     </span>
@@ -634,12 +633,11 @@ export default function DonationSection() {
                       type="button"
                       onClick={() => setPaymentMethod('dlocal')}
                       style={{
-                        padding: '14px 10px',
+                        padding: '12px 10px',
                         borderRadius: 'var(--radius-md)',
                         border: paymentMethod === 'dlocal' ? '2px solid var(--color-teal)' : '2px solid var(--border-color)',
-                        background: paymentMethod === 'dlocal' ? 'rgba(38,180,156,0.08)' : 'transparent',
+                        background: paymentMethod === 'dlocal' ? 'rgba(38,180,156,0.1)' : 'transparent',
                         fontWeight: 700,
-                        fontSize: '0.85rem',
                         color: 'var(--text-primary)',
                         transition: 'all var(--duration-fast)',
                         cursor: 'pointer',
@@ -647,8 +645,8 @@ export default function DonationSection() {
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        gap: 5,
-                        minHeight: 64,
+                        gap: 6,
+                        minHeight: 68,
                       }}
                     >
                       <span style={{ fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -665,12 +663,11 @@ export default function DonationSection() {
                     type="button"
                     onClick={() => setPaymentMethod('paypal')}
                     style={{
-                      padding: '14px 10px',
+                      padding: '12px 10px',
                       borderRadius: 'var(--radius-md)',
                       border: paymentMethod === 'paypal' ? '2px solid #003087' : '2px solid var(--border-color)',
-                      background: paymentMethod === 'paypal' ? 'rgba(0,48,135,0.06)' : 'transparent',
+                      background: paymentMethod === 'paypal' ? 'rgba(0,48,135,0.08)' : 'transparent',
                       fontWeight: 700,
-                      fontSize: '0.85rem',
                       color: 'var(--text-primary)',
                       transition: 'all var(--duration-fast)',
                       cursor: 'pointer',
@@ -678,11 +675,11 @@ export default function DonationSection() {
                       flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: 5,
-                      minHeight: 64,
+                      gap: 6,
+                      minHeight: 68,
                     }}
                   >
-                    <PayPalLogo height={18} />
+                    <PayPalLogo height={20} />
                     <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 500 }}>
                       Internacional
                     </span>
@@ -690,14 +687,14 @@ export default function DonationSection() {
                 </div>
               </div>
 
-              {/* Dynamic CTA Button matching Official Brand Guidelines */}
+              {/* Dynamic Submit CTA Button matching Official Brand Guidelines */}
               {paymentMethod === 'googlepay' ? (
                 <button
                   type="submit"
                   disabled={isSubmitting}
                   style={{
                     width: '100%',
-                    height: 48,
+                    height: 50,
                     borderRadius: 8,
                     background: '#000000',
                     color: '#ffffff',
@@ -705,16 +702,17 @@ export default function DonationSection() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: 10,
+                    gap: 12,
                     fontSize: '1rem',
                     fontWeight: 600,
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
                   }}
                   onMouseEnter={(e) => (e.currentTarget.style.background = '#1a1a1a')}
                   onMouseLeave={(e) => (e.currentTarget.style.background = '#000000')}
                 >
+                  <span style={{ fontSize: '0.9rem', color: '#fff', fontWeight: 600 }}>Pagar con</span>
                   <GooglePayLogo height={22} isLight={true} />
                 </button>
               ) : paymentMethod === 'paypal' ? (
@@ -723,7 +721,7 @@ export default function DonationSection() {
                   disabled={isSubmitting}
                   style={{
                     width: '100%',
-                    height: 48,
+                    height: 50,
                     borderRadius: 8,
                     background: '#0070BA',
                     color: '#ffffff',
@@ -736,19 +734,20 @@ export default function DonationSection() {
                     fontWeight: 700,
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
-                    boxShadow: '0 2px 8px rgba(0, 112, 186, 0.3)',
+                    boxShadow: '0 4px 14px rgba(0, 112, 186, 0.35)',
                   }}
                   onMouseEnter={(e) => (e.currentTarget.style.background = '#005ea6')}
                   onMouseLeave={(e) => (e.currentTarget.style.background = '#0070BA')}
                 >
-                  <PayPalLogo height={20} isLight={true} />
+                  <span style={{ fontSize: '0.95rem' }}>Donar con</span>
+                  <PayPalLogo height={22} isLight={true} />
                 </button>
               ) : (
                 <button
                   type="submit"
                   disabled={isSubmitting}
                   className="btn btn-primary"
-                  style={{ width: '100%', justifyContent: 'center', opacity: isSubmitting ? 0.7 : 1 }}
+                  style={{ width: '100%', height: 50, justifyContent: 'center', opacity: isSubmitting ? 0.7 : 1 }}
                 >
                   🔒 {isSubmitting ? 'Procesando...' : t('ctaPay')}
                 </button>
@@ -760,7 +759,7 @@ export default function DonationSection() {
             </form>
           )}
 
-          {/* === STEP 3: Post-Purchase / Donation Confirmation (Pantalla posterior a la compra) === */}
+          {/* === STEP 3: Postcompra / Confirmación de Donación === */}
           {step === 3 && (
             <div style={{ textAlign: 'center', padding: '10px 0' }}>
               <div
@@ -813,7 +812,7 @@ export default function DonationSection() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10, fontSize: '0.85rem' }}>
                   <span style={{ color: 'var(--text-muted)' }}>Método de Pago:</span>
                   <span style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 }}>
-                    {successInfo?.provider === 'paypal' ? <PayPalLogo height={14} /> : <GooglePayLogo height={14} />}
+                    {successInfo?.provider === 'paypal' ? <PayPalLogo height={16} /> : <GooglePayLogo height={16} />}
                   </span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
@@ -838,7 +837,7 @@ export default function DonationSection() {
             </div>
           )}
 
-          {/* === SIMULATED GOOGLE PAY API PAYMENT SHEET MODAL (Pantalla de pago de la API de Google Pay) === */}
+          {/* === MODAL SHEET DE PAGO DE LA API DE GOOGLE PAY (Simulador oficial para Capturas) === */}
           {showGPayModal && (
             <div
               style={{
@@ -951,7 +950,7 @@ export default function DonationSection() {
         </div>
       </div>
 
-      {/* === FLOATING TOOLBAR FOR GOOGLE PAY CONSOLE SCREENSHOTS (Visible only when ?gpay_flow=true) === */}
+      {/* === BARRA FLOTANTE PARA CAPTURAS GOOGLE PAY CONSOLE (Visible cuando ?gpay_flow=true) === */}
       {simulatorMode && (
         <aside
           aria-label="Panel de capturas Google Pay"
@@ -1159,52 +1158,48 @@ function GooglePayLogo({ height = 18, isLight = false }: { height?: number; isLi
   );
 }
 
-function PayPalLogo({ height = 18, isLight = false }: { height?: number; isLight?: boolean }) {
+function PayPalLogo({ height = 20, isLight = false }: { height?: number; isLight?: boolean }) {
   return (
     <svg
       height={height}
-      viewBox="0 0 80 22"
+      viewBox="0 0 102 26"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       style={{ display: 'inline-block', verticalAlign: 'middle', maxWidth: '100%' }}
       aria-label="PayPal"
     >
+      {/* Official PayPal Monogram Double P */}
       <path
-        d="M12.2 2.7C10.7 2.7 6.9 2.7 5.7 2.7C5.2 2.7 4.8 3.1 4.7 3.6L1.8 19.3C1.7 19.7 2 20 2.4 20H5.8C6.2 20 6.5 19.7 6.6 19.3L7.4 14.1C7.5 13.7 7.8 13.4 8.2 13.4H10.5C14.7 13.4 17.5 11.3 18.2 7.1C18.5 4.9 17.4 3.7 15.8 3.2C14.8 2.8 13.5 2.7 12.2 2.7Z"
-        fill={isLight ? '#ffffff' : '#003087'}
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M17.433 2.146C14.733 2.146 8.033 2.146 6.033 2.146C5.033 2.146 4.233 2.846 4.033 3.846L0.533 25.846C0.433 26.446 0.933 26.946 1.533 26.946H6.933C7.633 26.946 8.233 26.446 8.333 25.746L9.633 17.646C9.733 16.946 10.333 16.446 11.033 16.446H14.133C20.333 16.446 24.333 13.346 25.333 7.246C25.733 4.846 24.833 3.346 23.333 2.646C21.833 2.146 19.833 2.146 17.433 2.146Z"
+        fill={isLight ? '#FFFFFF' : '#003087'}
       />
       <path
-        d="M14.6 7.6C14.1 10.6 12 12.3 8.8 12.3H7C6.6 12.3 6.3 12.6 6.2 13L5.2 19.4C5.1 19.7 5.4 20 5.8 20H8.7C9.1 20 9.4 19.7 9.5 19.3L10.3 14.4C10.4 14 10.7 13.7 11.1 13.7H12.2C15.8 13.7 18.2 11.9 18.8 8.2C19.1 6.5 18.7 5.3 17.7 4.5C17.3 5.8 16.3 6.9 14.6 7.6Z"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M20.733 9.046C20.033 13.346 17.033 15.746 12.433 15.746H9.933C9.433 15.746 8.933 16.146 8.833 16.646L7.433 25.746C7.333 26.346 7.833 26.846 8.433 26.846H12.633C13.233 26.846 13.733 26.446 13.833 25.846L14.933 18.946C15.033 18.446 15.433 18.046 16.033 18.046H17.333C22.433 18.046 25.733 15.446 26.533 10.446C26.933 8.146 26.433 6.446 25.033 5.446C24.433 7.146 22.933 8.546 20.733 9.046Z"
         fill={isLight ? '#00b2ff' : '#0079C1'}
       />
       <path
-        d="M14.6 7.6C14.3 7.7 13.9 7.8 13.5 7.8C13.2 7.8 13 7.8 12.8 7.8L13.4 4.3C13.7 4.4 14.1 4.5 14.5 4.6C15.5 5.1 15.9 5.9 15.7 7.1C15.4 7.3 15 7.5 14.6 7.6Z"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M20.733 9.046C20.333 9.146 19.833 9.246 19.333 9.246H14.133C13.633 9.246 13.233 9.646 13.133 10.146L11.833 18.246C11.733 18.746 12.133 19.146 12.633 19.146H15.733C19.933 19.146 22.833 17.046 23.533 12.846C23.933 10.846 23.333 9.646 22.133 9.146C21.733 9.046 21.233 9.046 20.733 9.046Z"
         fill={isLight ? '#0070ba' : '#00457C'}
       />
-      <path
-        d="M28.4 6.9H23.8C23.5 6.9 23.2 7.1 23.1 7.4L20.8 20.3C20.7 20.6 20.9 20.9 21.2 20.9H23.6C23.9 20.9 24.2 20.7 24.3 20.4L24.9 16.3C25 16 25.3 15.8 25.6 15.8H27.5C30.9 15.8 33.1 14.1 33.7 10.8C34 9.1 33.3 7.9 32.2 7.4C31.3 7 30 6.9 28.4 6.9ZM29 11.4C28.6 13.6 27.1 13.6 25.6 13.6H24.7L25.4 9.3H26.5C27.5 9.3 28.4 9.3 28.8 9.9C29.1 10.2 29.2 10.7 29 11.4Z"
-        fill={isLight ? '#ffffff' : '#003087'}
-      />
-      <path
-        d="M37.8 12.4H35.5C35.3 12.4 35.1 12.5 35.1 12.7L34.9 13.8C34.4 12.8 33.3 12.3 32.1 12.3C29.4 12.3 27 14.3 26.6 17C26.2 19.5 28 21.1 30.5 21.1C32.4 21.1 33.5 20.1 33.5 20.1L33.3 21C33.2 21.3 33.4 21.6 33.7 21.6H35.8C36.1 21.6 36.4 21.4 36.4 21.1L37.8 12.8C38 12.6 37.9 12.4 37.8 12.4ZM34.2 16.8C33.9 18.5 32.6 19.4 31.1 19.4C29.8 19.4 28.9 18.4 29.1 17C29.4 15.3 30.7 14.3 32.2 14.3C33.4 14.3 34.4 15.2 34.2 16.8Z"
-        fill={isLight ? '#ffffff' : '#003087'}
-      />
-      <path
-        d="M47.7 12.5H45.4C45.2 12.5 45 12.7 44.8 12.9L41.3 18.2L39.8 12.9C39.7 12.6 39.5 12.5 39.2 12.5H37C36.7 12.5 36.4 12.8 36.5 13.1L39.2 21.3L36.8 24.6C36.6 24.9 36.8 25.3 37.2 25.3H39.5C39.7 25.3 39.9 25.2 40.1 24.9L47.9 13.2C48.2 12.8 48 12.5 47.7 12.5Z"
-        fill={isLight ? '#ffffff' : '#003087'}
-      />
-      <path
-        d="M57.6 6.9H53C52.7 6.9 52.4 7.1 52.3 7.4L50 20.3C49.9 20.6 50.1 20.9 50.4 20.9H52.8C53.1 20.9 53.4 20.7 53.5 20.4L54.1 16.3C54.2 16 54.5 15.8 54.8 15.8H56.7C60.1 15.8 62.3 14.1 62.9 10.8C63.2 9.1 62.5 7.9 61.4 7.4C60.5 7 59.2 6.9 57.6 6.9ZM58.2 11.4C57.8 13.6 56.3 13.6 54.8 13.6H53.9L54.6 9.3H55.7C56.7 9.3 57.6 9.3 58 9.9C58.3 10.2 58.4 10.7 58.2 11.4Z"
-        fill={isLight ? '#ffffff' : '#0079C1'}
-      />
-      <path
-        d="M67 12.4H64.7C64.5 12.4 64.3 12.5 64.3 12.7L64.1 13.8C63.6 12.8 62.5 12.3 61.3 12.3C58.6 12.3 56.2 14.3 55.8 17C55.4 19.5 57.2 21.1 59.7 21.1C61.6 21.1 62.7 20.1 62.7 20.1L62.5 21C62.4 21.3 62.6 21.6 62.9 21.6H65C65.3 21.6 65.6 21.4 65.6 21.1L67 12.8C67.2 12.6 67.1 12.4 67 12.4ZM63.4 16.8C63.1 18.5 61.8 19.4 60.3 19.4C59 19.4 58.1 18.4 58.3 17C58.6 15.3 59.9 14.3 61.4 14.3C62.6 14.3 63.6 15.2 63.4 16.8Z"
-        fill={isLight ? '#ffffff' : '#0079C1'}
-      />
-      <path
-        d="M72.2 6.9H69.9C69.6 6.9 69.4 7.1 69.3 7.4L67.1 20.4C67 20.7 67.2 21 67.5 21H69.6C69.9 21 70.2 20.8 70.3 20.5L72.4 7.4C72.5 7.1 72.4 6.9 72.2 6.9Z"
-        fill={isLight ? '#ffffff' : '#0079C1'}
-      />
+      {/* Official PayPal Wordmark Typography */}
+      <text
+        x="32"
+        y="19"
+        fontFamily="'Helvetica Neue', Helvetica, Arial, sans-serif"
+        fontSize="18"
+        fontWeight="900"
+        fontStyle="italic"
+        letterSpacing="-0.5px"
+        fill={isLight ? '#FFFFFF' : '#003087'}
+      >
+        Pay<tspan fill={isLight ? '#00b2ff' : '#0079C1'}>Pal</tspan>
+      </text>
     </svg>
   );
 }
