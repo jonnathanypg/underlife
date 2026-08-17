@@ -6,6 +6,7 @@ import { LanguageProvider } from '@/lib/LanguageContext';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ScrollRestorer from '@/components/ui/ScrollRestorer';
+import AikrofyWidget from '@/components/ui/AikrofyWidget';
 import { Outfit, Caveat } from 'next/font/google';
 
 const outfit = Outfit({
@@ -168,12 +169,6 @@ export default function RootLayout({
           type="image/webp"
           fetchPriority="high"
         />
-        {/* Aikrofy Conversational Webchat & Agentic AI Capabilities */}
-        <Script
-          src="https://app.aikrofy.com/widget.js"
-          data-widget-id="3e502c00-45ae-4d6e-9bf6-5d60dab2ba46"
-          strategy="afterInteractive"
-        />
       </head>
       <body>
         <LanguageProvider>
@@ -183,6 +178,7 @@ export default function RootLayout({
             <Header />
             <main style={{ minHeight: '100vh' }}>{children}</main>
             <Footer />
+            <AikrofyWidget />
           </ThemeProvider>
         </LanguageProvider>
       </body>
