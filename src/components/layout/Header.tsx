@@ -11,6 +11,7 @@ export default function Header() {
   const tLang = useTranslations('lang');
   const { theme, toggleTheme } = useTheme();
   const { setLang } = useLanguage();
+  const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
@@ -18,6 +19,7 @@ export default function Header() {
   const mobileLangRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setMounted(true);
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll, { passive: true });
     
@@ -235,10 +237,11 @@ export default function Header() {
               </div>
             )}
           </div>
-
+          {/* Theme Toggle Button */}
           <button
             onClick={toggleTheme}
-            aria-label={theme === 'dark' ? tTheme('light') : tTheme('dark')}
+            aria-label={mounted && theme === 'dark' ? tTheme('light') : tTheme('dark')}
+            suppressHydrationWarning
             style={{
               width: 38,
               height: 38,
@@ -256,10 +259,10 @@ export default function Header() {
             onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.background = 'var(--divider)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.background = 'var(--border-color)'; }}
           >
-            {theme === 'dark' ? (
+            {(!mounted || theme === 'dark') ? (
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: 18, height: 18 }}>
                 <circle cx="12" cy="12" r="5"></circle>
-                <line x1="12" y1="12" x2="12" y2="3"></line>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
                 <line x1="12" y1="21" x2="12" y2="23"></line>
                 <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
                 <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
@@ -421,16 +424,17 @@ export default function Header() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)',
+                background: (!mounted || theme === 'dark') ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)',
                 border: 'none',
                 color: 'var(--text-primary)',
                 cursor: 'pointer' 
               }}
+              suppressHydrationWarning
             >
-              {theme === 'dark' ? (
+              {(!mounted || theme === 'dark') ? (
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}>
                   <circle cx="12" cy="12" r="5"></circle>
-                  <line x1="12" y1="12" x2="12" y2="3"></line>
+                  <line x1="12" y1="1" x2="12" y2="3"></line>
                   <line x1="12" y1="21" x2="12" y2="23"></line>
                   <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
                   <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
