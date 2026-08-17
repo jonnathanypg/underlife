@@ -1,8 +1,0 @@
-# Modern Baseline Browsers — Avoid legacy JS polyfills & transforms
-Chrome >= 95
-Edge >= 95
-Firefox >= 90
-Safari >= 15.4
-iOS >= 15.4
-not IE 11
-not dead
