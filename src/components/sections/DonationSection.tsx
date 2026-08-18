@@ -37,18 +37,22 @@ function PayPalButtonWrapper({
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null;
     let isCancelled = false;
+    let buttonInstance: any = null;
 
     const renderButton = () => {
       if (isCancelled) return;
       const win = window as any;
+      const container = containerRef.current;
       
-      if (!win.paypal || !containerRef.current) {
+      if (!win.paypal || !container) {
         timer = setTimeout(renderButton, 150);
         return;
       }
 
       setSdkReady(true);
-      containerRef.current.innerHTML = '';
+      container.innerHTML = '';
+      const buttonSlot = document.createElement('div');
+      container.appendChild(buttonSlot);
 
       try {
         const btnConfig: any = {
@@ -130,22 +134,24 @@ function PayPalButtonWrapper({
             setProcessing(false);
           },
           onError: (err: any) => {
-            console.error('PayPal Error:', err);
+            if (isCancelled) return;
+            console.warn('PayPal notice:', err);
             setProcessing(false);
           },
         };
 
-        const buttonInstance = win.paypal.Buttons(btnConfig);
+        buttonInstance = win.paypal.Buttons(btnConfig);
 
         if (buttonInstance.isEligible()) {
-          buttonInstance.render(containerRef.current).catch((e: any) => console.error(e));
+          buttonInstance.render(buttonSlot).catch(() => {});
         } else {
           // Fallback if standalone funding source is constrained in user locale
           delete btnConfig.fundingSource;
-          win.paypal.Buttons(btnConfig).render(containerRef.current).catch((e: any) => console.error(e));
+          buttonInstance = win.paypal.Buttons(btnConfig);
+          buttonInstance.render(buttonSlot).catch(() => {});
         }
       } catch (e) {
-        console.error('Failed to render PayPal Button:', e);
+        if (!isCancelled) console.warn('Failed to render PayPal Button:', e);
       }
     };
 
@@ -154,6 +160,11 @@ function PayPalButtonWrapper({
     return () => {
       isCancelled = true;
       if (timer) clearTimeout(timer);
+      if (buttonInstance && typeof buttonInstance.close === 'function') {
+        try {
+          buttonInstance.close();
+        } catch {}
+      }
     };
   }, [amount, donorType, donorEmail, donorName, donorPhone, donorDoc, fundingType]);
 
