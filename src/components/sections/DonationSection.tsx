@@ -6,6 +6,143 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 type DonorType = 'anonymous' | 'personal' | 'institutional';
 type PaymentMethod = 'googlepay' | 'dlocal' | 'paypal';
 
+interface PayPalButtonWrapperProps {
+  amount: number;
+  donorType: DonorType;
+  donorEmail: string;
+  donorName: string;
+  donorPhone: string;
+  donorDoc: string;
+  fundingType: 'paypal' | 'card';
+  onSuccess: (info: { donationId: string; amount: number; provider: string; donorName: string }) => void;
+  setProcessing: (b: boolean) => void;
+  processing: boolean;
+}
+
+function PayPalButtonWrapper({
+  amount,
+  donorType,
+  donorEmail,
+  donorName,
+  donorPhone,
+  donorDoc,
+  fundingType,
+  onSuccess,
+  setProcessing,
+  processing,
+}: PayPalButtonWrapperProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const win = window as any;
+    if (!win.paypal || !containerRef.current) return;
+
+    containerRef.current.innerHTML = '';
+
+    try {
+      win.paypal
+        .Buttons({
+          fundingSource: fundingType === 'paypal' ? win.paypal.FUNDING.PAYPAL : win.paypal.FUNDING.CARD,
+          style: {
+            layout: 'horizontal',
+            color: fundingType === 'paypal' ? 'gold' : 'black',
+            shape: 'rect',
+            tagline: false,
+            height: 48,
+          },
+          onClick: (_data: any, actions: any) => {
+            if (donorType !== 'anonymous' && (!donorEmail || !donorEmail.includes('@'))) {
+              alert('Por favor introduce un correo electrónico válido antes de continuar al pago.');
+              return actions.reject();
+            }
+            return actions.resolve();
+          },
+          createOrder: async () => {
+            setProcessing(true);
+            try {
+              const res = await fetch('/api/donations', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  amount,
+                  donorType,
+                  method: fundingType === 'paypal' ? 'paypal' : 'dlocal',
+                  email: donorEmail || (donorType === 'anonymous' ? 'anonimo@fundacionunderlife.org' : 'donaciones@fundacionunderlife.org'),
+                  firstName: donorName || 'Donante Solidario',
+                  phone: donorPhone,
+                  documentId: donorDoc,
+                }),
+              });
+              const data = await res.json();
+              if (data.orderId) {
+                return data.orderId;
+              } else if (data.paymentUrl) {
+                window.location.href = data.paymentUrl;
+                return '';
+              } else {
+                throw new Error('No se pudo generar la orden de pago');
+              }
+            } catch (err) {
+              setProcessing(false);
+              throw err;
+            }
+          },
+          onApprove: async (data: any) => {
+            try {
+              const res = await fetch('/api/donations/capture', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  orderId: data.orderID,
+                  donationId: data.orderID,
+                  donorName: donorName || 'Donante Solidario',
+                  donorEmail: donorEmail || 'anonimo@fundacionunderlife.org',
+                }),
+              });
+              const result = await res.json();
+              if (result.success) {
+                onSuccess({
+                  donationId: data.orderID,
+                  amount,
+                  provider: fundingType === 'paypal' ? 'PayPal' : 'Tarjeta Débito/Crédito (PayPal)',
+                  donorName: donorName || 'Donante Solidario',
+                });
+              } else {
+                alert(`Error al confirmar la donación: ${result.error || 'Intente nuevamente'}`);
+              }
+            } catch {
+              alert('Error de conexión al confirmar la donación.');
+            } finally {
+              setProcessing(false);
+            }
+          },
+          onCancel: () => {
+            setProcessing(false);
+          },
+          onError: (err: any) => {
+            console.error('PayPal Card Error:', err);
+            setProcessing(false);
+          },
+        })
+        .render(containerRef.current)
+        .catch((e: any) => console.error(e));
+    } catch (e) {
+      console.error('Failed to render PayPal Button:', e);
+    }
+  }, [amount, donorType, donorEmail, donorName, donorPhone, donorDoc, fundingType]);
+
+  return (
+    <div style={{ width: '100%', position: 'relative' }}>
+      {processing && (
+        <div style={{ textAlign: 'center', padding: '8px 0', fontSize: '0.82rem', color: 'var(--color-teal)', fontWeight: 600 }}>
+          Procesando con la pasarela oficial de PayPal... ⏳
+        </div>
+      )}
+      <div ref={containerRef} style={{ width: '100%', minHeight: 48 }} />
+    </div>
+  );
+}
+
 export default function DonationSection() {
   const t = useTranslations('donation');
   const [amount, setAmount] = useState(50);
@@ -17,24 +154,17 @@ export default function DonationSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [googlePayReady, setGooglePayReady] = useState(false);
   const [showGPayModal, setShowGPayModal] = useState(false);
+  const [paypalLoaded, setPaypalLoaded] = useState(false);
   
+  // Real-time donor details for instant pass-through to PayPal button
+  const [donorEmail, setDonorEmail] = useState('');
+  const [donorPhone, setDonorPhone] = useState('');
+  const [donorFirstName, setDonorFirstName] = useState('Carlos Mendoza');
+  const [donorDoc, setDonorDoc] = useState('1718293847');
+
   // Simulator mode for Google Pay Console approval screenshots
   const [simulatorMode, setSimulatorMode] = useState(false);
   const [simStep, setSimStep] = useState<1 | 2 | 3 | 4 | 5>(1);
-  const [isCardSubstep, setIsCardSubstep] = useState(false);
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardExpiry, setCardExpiry] = useState('');
-  const [cardCvc, setCardCvc] = useState('');
-  const [cardHolder, setCardHolder] = useState('');
-  const [cardZip, setCardZip] = useState('');
-  const [donorDetails, setDonorDetails] = useState({
-    email: '',
-    phone: '',
-    firstName: '',
-    lastName: '',
-    documentId: '',
-  });
-
   const [successInfo, setSuccessInfo] = useState<{
     donationId: string;
     amount: number;
@@ -271,133 +401,6 @@ export default function DonationSection() {
     }
   };
 
-  const getCardBrand = (num: string) => {
-    const clean = num.replace(/\s+/g, '');
-    if (/^4/.test(clean)) return 'Visa';
-    if (/^5[1-5]/.test(clean) || /^2[2-7]/.test(clean)) return 'Mastercard';
-    if (/^3[47]/.test(clean)) return 'American Express';
-    if (/^6(?:011|5)/.test(clean)) return 'Discover';
-    if (/^3(?:0[0-5]|[68])/.test(clean)) return 'Diners Club';
-    return 'Tarjeta';
-  };
-
-  const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let val = e.target.value.replace(/\D/g, '').slice(0, 16);
-    val = val.replace(/(\d{4})(?=\d)/g, '$1 ');
-    setCardNumber(val);
-  };
-
-  const handleCardExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let val = e.target.value.replace(/\D/g, '').slice(0, 4);
-    if (val.length >= 3) {
-      val = `${val.slice(0, 2)}/${val.slice(2)}`;
-    }
-    setCardExpiry(val);
-  };
-
-  const handleCardCvcChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value.replace(/\D/g, '').slice(0, 4);
-    setCardCvc(val);
-  };
-
-  const handleDonate = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const emailVal = formData.get('email')?.toString().trim();
-    const capturedDetails = {
-      amount,
-      donorType,
-      method: paymentMethod,
-      email: emailVal || (donorType === 'anonymous' ? 'anonimo@fundacionunderlife.org' : ''),
-      phone: formData.get('phone')?.toString().trim() || '',
-      firstName: formData.get('firstName')?.toString().trim() || (donorType === 'anonymous' ? 'Donante Anónimo' : 'Amigo de Underlife'),
-      lastName: formData.get('lastName')?.toString().trim() || '',
-      documentId: formData.get('documentId')?.toString().trim() || '',
-    };
-    setDonorDetails(capturedDetails);
-
-    if (paymentMethod === 'dlocal') {
-      // Open in-modal Card Checkout Section
-      setIsCardSubstep(true);
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    if (paymentMethod === 'googlepay' && googlePayReady) {
-      await processGooglePay(capturedDetails);
-      setIsSubmitting(false);
-      return;
-    }
-
-    try {
-      const response = await fetch('/api/donations', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(capturedDetails),
-      });
-
-      const result = await response.json();
-      
-      if (result.paymentUrl) {
-        window.location.href = result.paymentUrl;
-      } else {
-        window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info@fundacionunderlife.org&currency_code=USD&amount=${amount}&item_name=Donacion+Fundacion+Underlife&no_shipping=1`;
-      }
-    } catch (error) {
-      console.warn('Redirecting to direct payment gateway:', error);
-      window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info@fundacionunderlife.org&currency_code=USD&amount=${amount}&item_name=Donacion+Fundacion+Underlife&no_shipping=1`;
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleInModalCardSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (cardNumber.replace(/\s/g, '').length < 13 || cardExpiry.length < 4 || cardCvc.length < 3) {
-      alert('Por favor verifica los datos de tu tarjeta.');
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      const data = {
-        amount,
-        donorType,
-        method: 'card',
-        email: donorDetails.email || (donorType === 'anonymous' ? 'anonimo@fundacionunderlife.org' : 'donante@fundacionunderlife.org'),
-        phone: donorDetails.phone || '',
-        firstName: donorDetails.firstName || cardHolder || 'Donante Solidario',
-        lastName: donorDetails.lastName || '',
-        documentId: donorDetails.documentId || '',
-        comments: `Pago con Tarjeta In-Modal: ${getCardBrand(cardNumber)} **** ${cardNumber.slice(-4)}`,
-      };
-
-      const response = await fetch('/api/donations', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-
-      setSuccessInfo({
-        donationId: result.donationId || `UL-CARD-${Date.now().toString().slice(-6)}`,
-        amount,
-        provider: `${getCardBrand(cardNumber)} **** ${cardNumber.slice(-4)}`,
-        donorName: donorDetails.firstName || cardHolder || 'Donante Solidario',
-      });
-      setStep(3);
-      setIsCardSubstep(false);
-    } catch (error) {
-      console.error('Error processing in-modal card donation:', error);
-      alert('Ocurrió un error al procesar tu tarjeta. Por favor intenta de nuevo.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   const ratio = amountToPosition(amount);
 
   const getSliderFeedback = () => {
@@ -602,9 +605,9 @@ export default function DonationSection() {
             </>
           )}
 
-          {/* === STEP 2: Precompra / Formulario y Métodos de Pago === */}
-          {step === 2 && !isCardSubstep && (
-            <form onSubmit={handleDonate}>
+          {/* === STEP 2: Formulario y Pasarela Oficial de Pago === */}
+          {step === 2 && (
+            <div>
               <button
                 type="button"
                 onClick={() => setStep(1)}
@@ -655,33 +658,98 @@ export default function DonationSection() {
 
               {/* Donor Details Fields */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 24 }}>
-                <input
-                  name="email"
-                  type="email"
-                  required={donorType !== 'anonymous'}
-                  defaultValue={donorType === 'personal' ? 'donante@ejemplo.com' : ''}
-                  placeholder={donorType === 'anonymous' ? 'Correo electrónico (opcional para recibo)' : 'correo@ejemplo.com'}
-                  style={inputStyle}
-                />
-                <input
-                  name="phone"
-                  type="tel"
-                  defaultValue={donorType === 'personal' ? '+593 99 123 4567' : ''}
-                  placeholder={donorType === 'anonymous' ? 'Teléfono (opcional)' : '+593 000 000 000'}
-                  style={inputStyle}
-                />
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 4, fontWeight: 600 }}>
+                    Correo Electrónico (para comprobante y certificado)
+                  </label>
+                  <input
+                    name="email"
+                    type="email"
+                    required={donorType !== 'anonymous'}
+                    value={donorEmail}
+                    onChange={(e) => setDonorEmail(e.target.value)}
+                    placeholder={donorType === 'anonymous' ? 'correo@ejemplo.com (opcional)' : 'correo@ejemplo.com'}
+                    style={inputStyle}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 4, fontWeight: 600 }}>
+                    Teléfono Celular
+                  </label>
+                  <input
+                    name="phone"
+                    type="tel"
+                    value={donorPhone}
+                    onChange={(e) => setDonorPhone(e.target.value)}
+                    placeholder="+593 99 123 4567"
+                    style={inputStyle}
+                  />
+                </div>
 
                 {donorType === 'personal' && (
                   <>
-                    <input name="firstName" required type="text" defaultValue="Carlos Mendoza" placeholder="Nombre Completo" style={inputStyle} />
-                    <input name="documentId" required type="text" defaultValue="1718293847" placeholder="Cédula de Identidad (C.I.)" style={inputStyle} />
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 4, fontWeight: 600 }}>
+                        Nombre Completo
+                      </label>
+                      <input
+                        name="firstName"
+                        required
+                        type="text"
+                        value={donorFirstName}
+                        onChange={(e) => setDonorFirstName(e.target.value)}
+                        placeholder="Nombre y Apellido"
+                        style={inputStyle}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 4, fontWeight: 600 }}>
+                        Cédula de Identidad (C.I.) / Pasaporte
+                      </label>
+                      <input
+                        name="documentId"
+                        required
+                        type="text"
+                        value={donorDoc}
+                        onChange={(e) => setDonorDoc(e.target.value)}
+                        placeholder="1718293847"
+                        style={inputStyle}
+                      />
+                    </div>
                   </>
                 )}
 
                 {donorType === 'institutional' && (
                   <>
-                    <input name="firstName" required type="text" defaultValue="Innovación & Tecnología S.A." placeholder="Nombre de la Empresa" style={inputStyle} />
-                    <input name="documentId" required type="text" defaultValue="1792837465001" placeholder="RUC / Tax ID" style={inputStyle} />
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 4, fontWeight: 600 }}>
+                        Nombre de la Empresa o Institución
+                      </label>
+                      <input
+                        name="firstName"
+                        required
+                        type="text"
+                        value={donorFirstName}
+                        onChange={(e) => setDonorFirstName(e.target.value)}
+                        placeholder="Razón Social"
+                        style={inputStyle}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 4, fontWeight: 600 }}>
+                        RUC / Tax ID
+                      </label>
+                      <input
+                        name="documentId"
+                        required
+                        type="text"
+                        value={donorDoc}
+                        onChange={(e) => setDonorDoc(e.target.value)}
+                        placeholder="1792837465001"
+                        style={inputStyle}
+                      />
+                    </div>
                   </>
                 )}
               </div>
@@ -696,67 +764,36 @@ export default function DonationSection() {
                   gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', 
                   gap: 10, 
                 }}>
-                  {/* 1. Google Pay (Only visible in simulator mode until production approval) */}
-                  {simulatorMode && (
-                    <button
-                      type="button"
-                      onClick={() => setPaymentMethod('googlepay')}
-                      style={{
-                        padding: '12px 10px',
-                        borderRadius: 'var(--radius-md)',
-                        border: paymentMethod === 'googlepay' ? '2px solid #4285F4' : '2px solid var(--border-color)',
-                        background: paymentMethod === 'googlepay' ? 'rgba(66, 133, 244, 0.1)' : 'transparent',
-                        fontWeight: 700,
-                        color: 'var(--text-primary)',
-                        transition: 'all var(--duration-fast)',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: 6,
-                        minHeight: 68,
-                      }}
-                    >
-                      <GooglePayLogo height={20} />
-                      <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 500 }}>
-                        1-Clic • Billetera
-                      </span>
-                    </button>
-                  )}
+                  {/* 1. Tarjeta (PayPal Guest Smart Card) */}
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('dlocal')}
+                    style={{
+                      padding: '12px 10px',
+                      borderRadius: 'var(--radius-md)',
+                      border: paymentMethod === 'dlocal' ? '2px solid var(--color-teal)' : '2px solid var(--border-color)',
+                      background: paymentMethod === 'dlocal' ? 'rgba(38,180,156,0.1)' : 'transparent',
+                      fontWeight: 700,
+                      color: 'var(--text-primary)',
+                      transition: 'all var(--duration-fast)',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: 6,
+                      minHeight: 68,
+                    }}
+                  >
+                    <span style={{ fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: 4 }}>
+                      💳 <strong style={{ fontWeight: 800 }}>Tarjeta</strong>
+                    </span>
+                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 500 }}>
+                      Débito / Crédito (Invitado)
+                    </span>
+                  </button>
 
-                  {/* 2. Tarjeta (In-Modal Checkout) */}
-                  {showDLocal && (
-                    <button
-                      type="button"
-                      onClick={() => setPaymentMethod('dlocal')}
-                      style={{
-                        padding: '12px 10px',
-                        borderRadius: 'var(--radius-md)',
-                        border: paymentMethod === 'dlocal' ? '2px solid var(--color-teal)' : '2px solid var(--border-color)',
-                        background: paymentMethod === 'dlocal' ? 'rgba(38,180,156,0.1)' : 'transparent',
-                        fontWeight: 700,
-                        color: 'var(--text-primary)',
-                        transition: 'all var(--duration-fast)',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: 6,
-                        minHeight: 68,
-                      }}
-                    >
-                      <span style={{ fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: 4 }}>
-                        💳 <strong style={{ fontWeight: 800 }}>Tarjeta</strong>
-                      </span>
-                      <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 500 }}>
-                        Débito / Crédito
-                      </span>
-                    </button>
-                  )}
-
-                  {/* 3. PayPal */}
+                  {/* 2. PayPal */}
                   <button
                     type="button"
                     onClick={() => setPaymentMethod('paypal')}
@@ -779,311 +816,40 @@ export default function DonationSection() {
                   >
                     <PayPalLogo height={20} />
                     <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 500 }}>
-                      Internacional
+                      Cuenta PayPal
                     </span>
                   </button>
                 </div>
               </div>
 
-              {/* Dynamic Submit CTA Button */}
-              {paymentMethod === 'googlepay' ? (
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  style={{
-                    width: '100%',
-                    height: 50,
-                    borderRadius: 8,
-                    background: '#000000',
-                    color: '#ffffff',
-                    border: '1px solid #3c4043',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 12,
-                    fontSize: '1rem',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
+              {/* Official Real PayPal / Card Button */}
+              <div style={{ marginTop: 24 }}>
+                <PayPalButtonWrapper
+                  amount={amount}
+                  donorType={donorType}
+                  donorEmail={donorEmail}
+                  donorName={donorFirstName}
+                  donorPhone={donorPhone}
+                  donorDoc={donorDoc}
+                  fundingType={paymentMethod === 'dlocal' ? 'card' : 'paypal'}
+                  onSuccess={(info) => {
+                    setSuccessInfo(info);
+                    setStep(3);
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = '#1a1a1a')}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = '#000000')}
-                >
-                  <span style={{ fontSize: '0.9rem', color: '#fff', fontWeight: 600 }}>Pagar con</span>
-                  <GooglePayLogo height={22} isLight={true} />
-                </button>
-              ) : paymentMethod === 'paypal' ? (
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  style={{
-                    width: '100%',
-                    height: 50,
-                    borderRadius: 8,
-                    background: '#FFC439',
-                    color: '#111111',
-                    border: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 10,
-                    fontSize: '1rem',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    boxShadow: '0 4px 14px rgba(255, 196, 57, 0.35)',
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = '#f2ba36')}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = '#FFC439')}
-                >
-                  <span style={{ fontSize: '0.95rem', color: '#111111', fontWeight: 700 }}>Donar con</span>
-                  <PayPalLogo height={22} isLight={false} />
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  style={{
-                    width: '100%',
-                    height: 50,
-                    borderRadius: 8,
-                    background: 'var(--gradient-primary)',
-                    color: '#ffffff',
-                    border: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 10,
-                    fontSize: '0.98rem',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    boxShadow: '0 4px 14px rgba(0, 85, 255, 0.35)',
-                  }}
-                >
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                    <line x1="1" y1="10" x2="23" y2="10"></line>
-                    <line x1="5" y1="15" x2="9" y2="15"></line>
-                  </svg>
-                  <span>Continuar con Tarjeta →</span>
-                </button>
-              )}
-
-              <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.75rem', marginTop: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                🛡️ {t('securityBadge')}
-              </p>
-            </form>
-          )}
-
-          {/* === STEP 2B: In-Modal Guest Card Payment Form === */}
-          {step === 2 && isCardSubstep && (
-            <form onSubmit={handleInModalCardSubmit}>
-              <button
-                type="button"
-                onClick={() => setIsCardSubstep(false)}
-                style={{
-                  color: 'var(--color-primary)',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  fontWeight: 600,
-                  fontSize: '0.85rem',
-                  marginBottom: 16,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 6,
-                  padding: 0,
-                }}
-              >
-                ← Cambiar datos o método
-              </button>
-
-              {/* Live Digital Card Preview */}
-              <div
-                style={{
-                  background: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0369a1 100%)',
-                  borderRadius: 16,
-                  padding: '20px 22px',
-                  color: '#ffffff',
-                  boxShadow: '0 12px 28px rgba(0, 0, 0, 0.45)',
-                  marginBottom: 22,
-                  position: 'relative',
-                  overflow: 'hidden',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                }}
-              >
-                {/* Chip & Contactless */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-                  <div
-                    style={{
-                      width: 38,
-                      height: 28,
-                      borderRadius: 6,
-                      background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-                      border: '1px solid rgba(255, 255, 255, 0.4)',
-                    }}
-                  />
-                  <div style={{ fontWeight: 800, fontSize: '0.9rem', letterSpacing: '0.05em', color: '#38bdf8' }}>
-                    {getCardBrand(cardNumber)}
-                  </div>
-                </div>
-
-                {/* Card Number display */}
-                <div
-                  style={{
-                    fontSize: '1.25rem',
-                    fontFamily: 'monospace',
-                    letterSpacing: '0.12em',
-                    fontWeight: 700,
-                    marginBottom: 18,
-                    textShadow: '0 2px 4px rgba(0,0,0,0.5)',
-                  }}
-                >
-                  {cardNumber || '•••• •••• •••• ••••'}
-                </div>
-
-                {/* Cardholder & Expiry */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', fontSize: '0.75rem', textTransform: 'uppercase' }}>
-                  <div>
-                    <div style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.65rem' }}>Titular</div>
-                    <div style={{ fontWeight: 600, maxWidth: 170, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                      {cardHolder || donorDetails.firstName || 'DONANTE SOLIDARIO'}
-                    </div>
-                  </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <div style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.65rem' }}>Expira</div>
-                    <div style={{ fontWeight: 600, fontFamily: 'monospace' }}>
-                      {cardExpiry || 'MM/YY'}
-                    </div>
-                  </div>
-                </div>
+                  setProcessing={setIsSubmitting}
+                  processing={isSubmitting}
+                />
               </div>
 
-              {/* Card Inputs */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 20 }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 4, fontWeight: 600 }}>
-                    Número de Tarjeta
-                  </label>
-                  <div style={{ position: 'relative' }}>
-                    <input
-                      type="text"
-                      required
-                      value={cardNumber}
-                      onChange={handleCardNumberChange}
-                      placeholder="4532 0123 4567 8901"
-                      maxLength={19}
-                      inputMode="numeric"
-                      style={{ ...inputStyle, fontFamily: 'monospace', fontSize: '1rem', letterSpacing: '0.04em' }}
-                    />
-                    <span style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', fontSize: '0.8rem', color: 'var(--color-teal)', fontWeight: 700 }}>
-                      {getCardBrand(cardNumber)}
-                    </span>
-                  </div>
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 4, fontWeight: 600 }}>
-                      Expiración (MM/AA)
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={cardExpiry}
-                      onChange={handleCardExpiryChange}
-                      placeholder="MM/AA"
-                      maxLength={5}
-                      inputMode="numeric"
-                      style={{ ...inputStyle, textAlign: 'center', fontFamily: 'monospace' }}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 4, fontWeight: 600 }}>
-                      Código de Seguridad (CVV)
-                    </label>
-                    <input
-                      type="password"
-                      required
-                      value={cardCvc}
-                      onChange={handleCardCvcChange}
-                      placeholder="123"
-                      maxLength={4}
-                      inputMode="numeric"
-                      style={{ ...inputStyle, textAlign: 'center', fontFamily: 'monospace' }}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 4, fontWeight: 600 }}>
-                    Nombre del Titular de la Tarjeta
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={cardHolder}
-                    onChange={(e) => setCardHolder(e.target.value.toUpperCase())}
-                    placeholder="Como aparece en la tarjeta"
-                    style={inputStyle}
-                  />
-                </div>
-
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 4, fontWeight: 600 }}>
-                    Código Postal / Ciudad (Facturación)
-                  </label>
-                  <input
-                    type="text"
-                    value={cardZip}
-                    onChange={(e) => setCardZip(e.target.value)}
-                    placeholder="170150 o Quito"
-                    style={inputStyle}
-                  />
-                </div>
-              </div>
-
-              {/* Submit Card Payment Button */}
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                style={{
-                  width: '100%',
-                  height: 52,
-                  borderRadius: 10,
-                  background: 'var(--gradient-accent)',
-                  color: '#ffffff',
-                  border: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 10,
-                  fontSize: '1.05rem',
-                  fontWeight: 800,
-                  cursor: isSubmitting ? 'not-allowed' : 'pointer',
-                  transition: 'all 0.2s ease',
-                  boxShadow: '0 4px 16px var(--color-accent-glow)',
-                  opacity: isSubmitting ? 0.7 : 1,
-                }}
-              >
-                {isSubmitting ? (
-                  <span>Procesando pago seguro... ⏳</span>
-                ) : (
-                  <span>Donar ${amount.toFixed(2)} USD con Tarjeta 🔒</span>
-                )}
-              </button>
-
-              <div style={{ textAlign: 'center', marginTop: 14 }}>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.72rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                  🔒 Cifrado de nivel bancario SSL de 256 bits • Procesamiento directo sin redirección
+              <div style={{ textAlign: 'center', marginTop: 16 }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                  🛡️ {t('securityBadge')}
                 </p>
                 <div style={{ display: 'flex', justifyContent: 'center', gap: 10, marginTop: 8, opacity: 0.6, fontSize: '0.72rem', fontWeight: 600 }}>
                   <span>VISA</span> • <span>MASTERCARD</span> • <span>AMEX</span> • <span>DINERS</span> • <span>DISCOVER</span>
                 </div>
               </div>
-            </form>
+            </div>
           )}
 
           {/* === STEP 3: Postcompra / Confirmación de Donación === */}
