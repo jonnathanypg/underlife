@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     const donorFirstName = (firstName && String(firstName).trim()) || (donorType === 'anonymous' ? 'Donante Anónimo' : 'Amigo de Underlife');
     const donorLastName = (lastName && String(lastName).trim()) || '';
     const donorEmail = (email && String(email).trim()) || (donorType === 'anonymous' ? 'anonimo@fundacionunderlife.org' : 'donaciones@fundacionunderlife.org');
-    const paymentMethod = method === 'googlepay' ? 'googlepay' : (method === 'paypal' ? 'paypal' : 'dlocal');
+    const paymentMethod = method === 'googlepay' ? 'googlepay' : (method === 'paypal' ? 'paypal' : (method === 'cash' || method === 'efectivo' ? 'cash' : 'dlocal'));
     const origin = req.headers.get('origin') || 'https://fundacionunderlife.org';
 
     // 2. Register Donation in Database (with safe offline fallback)
@@ -37,13 +37,33 @@ export async function POST(req: Request) {
             donorType: donorType || 'personal',
             method: paymentMethod,
             comment: comments || (phone ? `Tel: ${phone} | Doc: ${documentId || 'N/A'}` : null),
-            status: paymentMethod === 'googlepay' ? 'COMPLETED' : 'PENDING',
+            status: paymentMethod === 'googlepay' ? 'COMPLETED' : (paymentMethod === 'cash' ? 'PENDING_CASH' : 'PENDING'),
           },
         });
         donationId = newDonation.id;
       } catch (dbError) {
         console.warn('[Donations API] DB storage bypassed (offline or unavailable):', dbError);
       }
+    }
+
+    if (paymentMethod === 'cash') {
+      try {
+        await notifyAdmin(
+          `Nueva Donación en Efectivo por Coordinar: $${parsedAmount} USD (${donorFirstName})`,
+          `Se ha registrado una solicitud de donación en efectivo para coordinación directa.\n\nDonante: ${donorFirstName} ${donorLastName}\nEmail: ${donorEmail}\nTeléfono: ${phone || 'N/A'}\nMonto: $${parsedAmount} USD\nID: ${donationId}`
+        );
+      } catch (mailErr) {
+        console.warn('[Donations API] Mail notify error:', mailErr);
+      }
+
+      return NextResponse.json({
+        success: true,
+        orderId: donationId,
+        paymentUrl: '',
+        donationId,
+        amount: parsedAmount,
+        isCash: true,
+      });
     }
 
     // 3. Initiate Payment Gateway Session (or direct PayPal donation URL fallback)

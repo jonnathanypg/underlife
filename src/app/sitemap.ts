@@ -3,7 +3,7 @@ import type { MetadataRoute } from 'next';
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://fundacionunderlife.org';
   const locales = ['es', 'en', 'pt'];
-  const routes = ['', '/privacidad', '/transparencia'];
+  const routes = ['', '/primeros-1000-dias', '/contacto', '/privacidad', '/transparencia'];
   const lastModified = new Date();
 
   const entries: MetadataRoute.Sitemap = [];

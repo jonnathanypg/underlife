@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
 import { notifyAdmin, sendNotification } from '@/lib/mail';
 
 export async function POST(request: Request) {
@@ -60,6 +61,28 @@ Nuevo contacto conversacional recibido desde fundacionunderlife.org:
 - Mensaje / Notas:
 ${message || 'Sin mensaje adicional'}
     `.trim();
+
+    // 0. Persist Lead in Database (Prisma)
+    try {
+      await prisma.lead.upsert({
+        where: { email: email.toLowerCase().trim() },
+        update: {
+          name: name.trim(),
+          subject: formattedSubject,
+          message: textSummary,
+          source: intention === 'alliance' ? 'SPONSOR_MODAL' : (subject?.includes('Artista') ? 'ARTIST_MODAL' : 'CONTACT_FORM'),
+        },
+        create: {
+          email: email.toLowerCase().trim(),
+          name: name.trim(),
+          subject: formattedSubject,
+          message: textSummary,
+          source: intention === 'alliance' ? 'SPONSOR_MODAL' : (subject?.includes('Artista') ? 'ARTIST_MODAL' : 'CONTACT_FORM'),
+        },
+      });
+    } catch (dbErr) {
+      console.warn('[contact/route] Lead database storage bypassed (offline or unavailable):', dbErr);
+    }
 
     // 1. Notify Admin via SMTP (Nodemailer)
     try {

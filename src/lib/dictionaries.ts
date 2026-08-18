@@ -1,4 +1,6 @@
-{
+export type Language = 'es' | 'en' | 'pt';
+
+export const DICTIONARY: Record<Language, Record<string, string>> = {
   "es": {
     "nav.home": "Inicio",
     "nav.primeros1000": "Primeros 1.000 Días",
@@ -916,4 +918,4 @@
     "sponsorModal.payCash": "💵 Doação em Dinheiro (Coordenação Direta)",
     "sponsorModal.payCashNotice": "ℹ️ Um coordenador da Fundação Underlife entrará em contato por telefone/WhatsApp ou e-mail para coordenar a entrega segura e o recibo oficial."
   }
-}
+} as const;

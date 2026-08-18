@@ -1,17 +1,16 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
-import dictionariesData from './dictionaries.json';
+import { DICTIONARY, Language } from './dictionaries';
 
-export type Language = 'es' | 'en' | 'pt';
+export type { Language };
+export { DICTIONARY };
 
 interface LanguageContextType {
   lang: Language;
   setLang: (lang: Language) => void;
   t: (key: string) => string;
 }
-
-export const DICTIONARY: Record<Language, Record<string, string>> = dictionariesData as Record<Language, Record<string, string>>;
 
 const LanguageContext = createContext<LanguageContextType>({
   lang: 'es',
