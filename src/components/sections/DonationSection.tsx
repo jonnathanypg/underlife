@@ -642,7 +642,7 @@ export default function DonationSection() {
                 style={{ width: '100%', justifyContent: 'center' }}
                 onClick={() => setStep(2)}
               >
-                {t('next')} →
+                {t('next')}
               </button>
             </>
           )}
@@ -667,7 +667,7 @@ export default function DonationSection() {
                   padding: 0,
                 }}
               >
-                ← {t('back')}
+                {t('back')}
               </button>
 
               {/* Summary of Selection */}
