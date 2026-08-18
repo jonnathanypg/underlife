@@ -177,7 +177,7 @@ export default function Primeros1000DiasBannerSection() {
                   Autogestión Solidaria
                 </div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>
-                  Toda la utilidad neta se convierte en nutrición y estimulación.
+                  El 100% de fondos y aportes se convierte en nutrición y estimulación.
                 </div>
               </div>
 
@@ -193,10 +193,10 @@ export default function Primeros1000DiasBannerSection() {
                   150%
                 </div>
                 <div style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '4px' }}>
-                  Deducción Estimada
+                  Deducción Proyectada
                 </div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>
-                  Incentivo fiscal en postulación oficial ante el MDH / SRI.
+                  Incentivo proyectado conforme a la LRTI (sujeto a código de resolución MDH).
                 </div>
               </div>
 

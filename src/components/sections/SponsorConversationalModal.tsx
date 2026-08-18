@@ -629,6 +629,22 @@ ${formData.notes || 'Ninguno'}
                     </div>
                   </div>
 
+                  {formData.taxDeductionInterest === 'si' && (
+                    <div
+                      style={{
+                        padding: '10px 14px',
+                        borderRadius: '10px',
+                        background: 'rgba(0, 85, 255, 0.08)',
+                        border: '1px solid rgba(0, 85, 255, 0.2)',
+                        fontSize: '0.8rem',
+                        color: 'var(--color-primary)',
+                        lineHeight: 1.4,
+                      }}
+                    >
+                      {t('taxOptionDisclaimer')}
+                    </div>
+                  )}
+
                   <div>
                     <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, marginBottom: '6px' }}>
                       {t('brandActLabel')}
