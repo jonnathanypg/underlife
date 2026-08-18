@@ -32,17 +32,27 @@ function PayPalButtonWrapper({
   processing,
 }: PayPalButtonWrapperProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [sdkReady, setSdkReady] = useState(false);
 
   useEffect(() => {
-    const win = window as any;
-    if (!win.paypal || !containerRef.current) return;
+    let timer: NodeJS.Timeout | null = null;
+    let isCancelled = false;
 
-    containerRef.current.innerHTML = '';
+    const renderButton = () => {
+      if (isCancelled) return;
+      const win = window as any;
+      
+      if (!win.paypal || !containerRef.current) {
+        timer = setTimeout(renderButton, 150);
+        return;
+      }
 
-    try {
-      win.paypal
-        .Buttons({
-          fundingSource: fundingType === 'paypal' ? win.paypal.FUNDING.PAYPAL : win.paypal.FUNDING.CARD,
+      setSdkReady(true);
+      containerRef.current.innerHTML = '';
+
+      try {
+        const btnConfig: any = {
+          fundingSource: fundingType === 'paypal' ? win.paypal.FUNDING?.PAYPAL : win.paypal.FUNDING?.CARD,
           style: {
             layout: 'horizontal',
             color: fundingType === 'paypal' ? 'gold' : 'black',
@@ -52,7 +62,7 @@ function PayPalButtonWrapper({
           },
           onClick: (_data: any, actions: any) => {
             if (donorType !== 'anonymous' && (!donorEmail || !donorEmail.includes('@'))) {
-              alert('Por favor introduce un correo electrónico válido antes de continuar al pago.');
+              alert('Por favor introduce un correo electrónico válido para enviar tu comprobante.');
               return actions.reject();
             }
             return actions.resolve();
@@ -80,7 +90,7 @@ function PayPalButtonWrapper({
                 window.location.href = data.paymentUrl;
                 return '';
               } else {
-                throw new Error('No se pudo generar la orden de pago');
+                throw new Error(data.error || 'No se pudo generar la orden de pago');
               }
             } catch (err) {
               setProcessing(false);
@@ -120,19 +130,40 @@ function PayPalButtonWrapper({
             setProcessing(false);
           },
           onError: (err: any) => {
-            console.error('PayPal Card Error:', err);
+            console.error('PayPal Error:', err);
             setProcessing(false);
           },
-        })
-        .render(containerRef.current)
-        .catch((e: any) => console.error(e));
-    } catch (e) {
-      console.error('Failed to render PayPal Button:', e);
-    }
+        };
+
+        const buttonInstance = win.paypal.Buttons(btnConfig);
+
+        if (buttonInstance.isEligible()) {
+          buttonInstance.render(containerRef.current).catch((e: any) => console.error(e));
+        } else {
+          // Fallback if standalone funding source is constrained in user locale
+          delete btnConfig.fundingSource;
+          win.paypal.Buttons(btnConfig).render(containerRef.current).catch((e: any) => console.error(e));
+        }
+      } catch (e) {
+        console.error('Failed to render PayPal Button:', e);
+      }
+    };
+
+    renderButton();
+
+    return () => {
+      isCancelled = true;
+      if (timer) clearTimeout(timer);
+    };
   }, [amount, donorType, donorEmail, donorName, donorPhone, donorDoc, fundingType]);
 
   return (
-    <div style={{ width: '100%', position: 'relative' }}>
+    <div style={{ width: '100%', position: 'relative', minHeight: 48 }}>
+      {!sdkReady && (
+        <div style={{ textAlign: 'center', padding: '12px 0', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+          Cargando pasarela segura de PayPal... ⏳
+        </div>
+      )}
       {processing && (
         <div style={{ textAlign: 'center', padding: '8px 0', fontSize: '0.82rem', color: 'var(--color-teal)', fontWeight: 600 }}>
           Procesando con la pasarela oficial de PayPal... ⏳
@@ -825,6 +856,7 @@ export default function DonationSection() {
               {/* Official Real PayPal / Card Button */}
               <div style={{ marginTop: 24 }}>
                 <PayPalButtonWrapper
+                  key={paymentMethod}
                   amount={amount}
                   donorType={donorType}
                   donorEmail={donorEmail}

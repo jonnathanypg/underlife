@@ -182,6 +182,11 @@ export default function RootLayout({
             <main style={{ minHeight: '100vh' }}>{children}</main>
             <Footer />
             <AikrofyWidget />
+            <Script
+              src="https://www.paypal.com/sdk/js?client-id=BAAHaUaKhWsWq0TTXodULxlOOiK6IkAH93rDl1FvxaCB4EiNVgnRyswgsmPFKUclEPgSRNzblvfHwHJNFA&currency=USD&disable-funding=credit"
+              strategy="afterInteractive"
+              id="paypal-sdk-script"
+            />
           </ThemeProvider>
         </LanguageProvider>
       </body>
