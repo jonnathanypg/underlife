@@ -25,9 +25,9 @@ export const metadata: Metadata = {
     siteName: 'Fundación Underlife',
     images: [
       {
-        url: '/opengraph-image',
-        width: 1200,
-        height: 630,
+        url: 'https://fundacionunderlife.org/logos/logo-fundacionunderlife-dark.png',
+        width: 800,
+        height: 800,
         alt: 'Política de Privacidad — Fundación Underlife',
       },
     ],
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     title: 'Política de Privacidad | Fundación Underlife',
     description:
       'Conoce cómo protegemos tus datos personales conforme a la LOPDP y normativas internacionales de seguridad y confidencialidad.',
-    images: ['/twitter-image'],
+    images: ['https://fundacionunderlife.org/logos/logo-fundacionunderlife-dark.png'],
   },
 };
 

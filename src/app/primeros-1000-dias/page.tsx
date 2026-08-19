@@ -30,9 +30,9 @@ export const metadata: Metadata = {
     siteName: 'Fundación Underlife',
     images: [
       {
-        url: '/opengraph-image',
+        url: 'https://fundacionunderlife.org/artivismo-img/hero_festival_muralismo.webp',
         width: 1200,
-        height: 630,
+        height: 675,
         alt: 'Tour Artivismo Primeros 1000 Días — Fundación Underlife',
       },
     ],
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     title: 'Tour Artivismo 1000 Días | Fundación Underlife',
     description:
       'Música, arte y tecnología para erradicar la desnutrición infantil en Ecuador. Conoce el tour, únete como artista o patrocina el futuro.',
-    images: ['/twitter-image'],
+    images: ['https://fundacionunderlife.org/artivismo-img/hero_festival_muralismo.webp'],
   },
 };
 
@@ -70,7 +70,7 @@ export default function Primeros1000DiasPage() {
             addressCountry: 'EC',
           },
         },
-        image: `${siteUrl}/opengraph-image`,
+        image: 'https://fundacionunderlife.org/artivismo-img/hero_festival_muralismo.webp',
         eventStatus: 'https://schema.org/EventScheduled',
         eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
       },

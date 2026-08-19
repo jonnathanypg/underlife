@@ -27,9 +27,9 @@ export const metadata: Metadata = {
     siteName: 'Fundación Underlife',
     images: [
       {
-        url: '/opengraph-image',
+        url: 'https://fundacionunderlife.org/recursos_opt/talleres/fundacion-underlife-talleres-capacitacion-1.webp',
         width: 1200,
-        height: 630,
+        height: 800,
         alt: 'Contacto y Voluntariado — Fundación Underlife',
       },
     ],
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     title: 'Contacto y Voluntariado | Fundación Underlife',
     description:
       '¿Quieres colaborar, donar o sumarte como voluntario? Escríbenos y transformemos juntos el futuro de la niñez en Ecuador.',
-    images: ['/twitter-image'],
+    images: ['https://fundacionunderlife.org/recursos_opt/talleres/fundacion-underlife-talleres-capacitacion-1.webp'],
   },
 };
 

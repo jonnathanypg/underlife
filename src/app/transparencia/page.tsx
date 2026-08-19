@@ -27,10 +27,10 @@ export const metadata: Metadata = {
     siteName: 'Fundación Underlife',
     images: [
       {
-        url: '/opengraph-image',
-        width: 1200,
-        height: 630,
-        alt: 'Transparencia y Legalidad — Fundación Underlife',
+        url: 'https://fundacionunderlife.org/logos/logo-fundacionunderlife-dark.png',
+        width: 800,
+        height: 800,
+        alt: 'Transparencia y Rendición de Cuentas — Fundación Underlife',
       },
     ],
   },
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     title: 'Transparencia y Rendición de Cuentas | Fundación Underlife',
     description:
       'Accede a nuestros estatutos legales, programas CDI, destino de fondos y gobierno institucional con máxima claridad y rigor.',
-    images: ['/twitter-image'],
+    images: ['https://fundacionunderlife.org/logos/logo-fundacionunderlife-dark.png'],
   },
 };
 

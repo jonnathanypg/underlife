@@ -74,9 +74,9 @@ export const metadata: Metadata = {
     alternateLocale: ['en_US', 'pt_BR'],
     images: [
       {
-        url: '/opengraph-image',
-        width: 1200,
-        height: 630,
+        url: 'https://fundacionunderlife.org/logos/logo-fundacionunderlife-dark.png',
+        width: 800,
+        height: 800,
         alt: 'Fundación Underlife — Innovación Social y Protección Infantil',
         type: 'image/png',
       },
@@ -87,7 +87,7 @@ export const metadata: Metadata = {
     title: 'Fundación Underlife | Innovación Social y Protección Infantil',
     description:
       'Transformamos el futuro de la niñez en Ecuador mediante tecnología, pensamiento divergente y nutrición integral. ¡Conoce nuestro impacto y súmate!',
-    images: ['/twitter-image'],
+    images: ['https://fundacionunderlife.org/logos/logo-fundacionunderlife-dark.png'],
   },
   icons: {
     icon: [
@@ -133,7 +133,7 @@ export default function RootLayout({
                     width: 512,
                     height: 512,
                   },
-                  image: 'https://fundacionunderlife.org/opengraph-image',
+                  image: 'https://fundacionunderlife.org/logos/logo-fundacionunderlife-dark.png',
                   description:
                     'Laboratorio integral de innovación social. Protección infantil, erradicación de la desnutrición crónica, justicia digital y pensamiento divergente en Ecuador.',
                   foundingDate: '2018',
