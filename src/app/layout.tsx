@@ -28,11 +28,11 @@ const siteUrl = 'https://fundacionunderlife.org';
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Fundación Underlife — Pensamiento Divergente',
+    default: 'Fundación Underlife | Innovación Social y Protección Infantil en Ecuador',
     template: '%s | Fundación Underlife',
   },
   description:
-    'No solo asistimos a la vulnerabilidad; innovamos para erradicarla. Protección infantil, acceso tecnológico a la justicia y desarrollo comunitario en Ecuador. Fundada en 2018, Milagro, Ecuador.',
+    'Transformamos el futuro de la niñez en Ecuador mediante tecnología, pensamiento divergente y nutrición integral. ¡Conoce nuestro impacto y súmate!',
   keywords: [
     'Fundación Underlife',
     'ONG Ecuador',
@@ -46,6 +46,8 @@ export const metadata: Metadata = {
     'CDI Milagro',
     'organización sin fines de lucro',
     'nonprofit Ecuador',
+    'Tour Artivismo',
+    'primeros 1000 dias',
   ],
   authors: [{ name: 'Fundación Underlife', url: siteUrl }],
   creator: 'Fundación Underlife',
@@ -64,27 +66,28 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: 'Fundación Underlife',
-    title: 'Fundación Underlife — Pensamiento Divergente',
+    title: 'Fundación Underlife | Innovación Social y Protección Infantil',
     description:
-      'No solo asistimos a la vulnerabilidad; innovamos para erradicarla. ONG ecuatoriana dedicada a la protección infantil, acceso tecnológico a la justicia y desarrollo comunitario.',
+      'Transformamos el futuro de la niñez en Ecuador mediante tecnología, pensamiento divergente y nutrición integral. ¡Conoce nuestro impacto y súmate!',
     url: siteUrl,
     locale: 'es_EC',
     alternateLocale: ['en_US', 'pt_BR'],
     images: [
       {
-        url: '/logos/logotipo-fundacionunderlife-dark.webp',
-        width: 400,
-        height: 139,
-        alt: 'Fundación Underlife',
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: 'Fundación Underlife — Innovación Social y Protección Infantil',
+        type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Fundación Underlife — Pensamiento Divergente',
+    title: 'Fundación Underlife | Innovación Social y Protección Infantil',
     description:
-      'Innovando para erradicar la vulnerabilidad. Protección infantil, acceso tecnológico a la justicia y desarrollo comunitario en Ecuador.',
-    images: ['/logos/logotipo-fundacionunderlife-dark.webp'],
+      'Transformamos el futuro de la niñez en Ecuador mediante tecnología, pensamiento divergente y nutrición integral. ¡Conoce nuestro impacto y súmate!',
+    images: ['/twitter-image'],
   },
   icons: {
     icon: [
@@ -111,37 +114,59 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${outfit.variable} ${caveat.variable}`} data-theme="dark" suppressHydrationWarning>
       <head>
-        {/* JSON-LD Schema for NGO / Google Ad Grants Credibility */}
+        {/* JSON-LD Schema for NGO, Organization and WebSite Rich Snippets */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
-              '@type': 'NGO',
-              name: 'Fundación Underlife',
-              alternateName: 'Underlife Foundation',
-              url: 'https://fundacionunderlife.org',
-              logo: 'https://fundacionunderlife.org/logos/logotipo-fundacionunderlife-dark.webp',
-              description:
-                'Laboratorio integral de innovación social. Protección infantil, justicia digital, pensamiento divergente y desarrollo comunitario en Ecuador.',
-              foundingDate: '2018',
-              address: {
-                '@type': 'PostalAddress',
-                addressLocality: 'Milagro',
-                addressRegion: 'Guayas',
-                addressCountry: 'EC',
-              },
-              contactPoint: {
-                '@type': 'ContactPoint',
-                telephone: '+593986020391',
-                contactType: 'customer support',
-                email: 'info@fundacionunderlife.org',
-                availableLanguage: ['es', 'en', 'pt'],
-              },
-              sameAs: [
-                'https://www.facebook.com/underlife.ong/',
-                'https://www.instagram.com/underlife_ong/',
-                'https://www.linkedin.com/company/underlife-ong/',
+              '@graph': [
+                {
+                  '@type': 'NGO',
+                  '@id': 'https://fundacionunderlife.org/#organization',
+                  name: 'Fundación Underlife',
+                  alternateName: 'Underlife Foundation',
+                  url: 'https://fundacionunderlife.org',
+                  logo: {
+                    '@type': 'ImageObject',
+                    url: 'https://fundacionunderlife.org/logos/logo-fundacionunderlife-dark.png',
+                    width: 512,
+                    height: 512,
+                  },
+                  image: 'https://fundacionunderlife.org/opengraph-image',
+                  description:
+                    'Laboratorio integral de innovación social. Protección infantil, erradicación de la desnutrición crónica, justicia digital y pensamiento divergente en Ecuador.',
+                  foundingDate: '2018',
+                  slogan: 'No solo asistimos a la vulnerabilidad; innovamos para erradicarla',
+                  address: {
+                    '@type': 'PostalAddress',
+                    addressLocality: 'Milagro',
+                    addressRegion: 'Guayas',
+                    addressCountry: 'EC',
+                  },
+                  contactPoint: {
+                    '@type': 'ContactPoint',
+                    telephone: '+593986020391',
+                    contactType: 'customer support',
+                    email: 'info@fundacionunderlife.org',
+                    availableLanguage: ['es', 'en', 'pt'],
+                  },
+                  sameAs: [
+                    'https://www.facebook.com/underlife.ong/',
+                    'https://www.instagram.com/underlife_ong/',
+                    'https://www.linkedin.com/company/underlife-ong/',
+                  ],
+                },
+                {
+                  '@type': 'WebSite',
+                  '@id': 'https://fundacionunderlife.org/#website',
+                  url: 'https://fundacionunderlife.org',
+                  name: 'Fundación Underlife',
+                  publisher: {
+                    '@id': 'https://fundacionunderlife.org/#organization',
+                  },
+                  inLanguage: ['es-EC', 'en-US', 'pt-BR'],
+                },
               ],
             }),
           }}
@@ -182,6 +207,13 @@ export default function RootLayout({
             <main style={{ minHeight: '100vh' }}>{children}</main>
             <Footer />
             <AikrofyWidget />
+            {/* Aikrofy Conversational AI Webchat & Agentic Copilot */}
+            <Script
+              id="aikrofy-widget-script"
+              src="https://app.aikrofy.com/widget.js"
+              data-widget-id="3e502c00-45ae-4d6e-9bf6-5d60dab2ba46"
+              strategy="afterInteractive"
+            />
             <Script
               src="https://www.paypal.com/sdk/js?client-id=BAAHaUaKhWsWq0TTXodULxlOOiK6IkAH93rDl1FvxaCB4EiNVgnRyswgsmPFKUclEPgSRNzblvfHwHJNFA&currency=USD&disable-funding=credit"
               strategy="afterInteractive"
