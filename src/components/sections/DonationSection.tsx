@@ -4,7 +4,7 @@ import { useTranslations } from '@/lib/LanguageContext';
 import { useState, useRef, useCallback, useEffect } from 'react';
 
 type DonorType = 'anonymous' | 'personal' | 'institutional';
-type PaymentMethod = 'googlepay' | 'dlocal' | 'paypal' | 'cash';
+type PaymentMethod = 'googlepay' | 'dlocal' | 'paypal';
 
 interface PayPalButtonWrapperProps {
   amount: number;
@@ -803,8 +803,8 @@ export default function DonationSection() {
                 </label>
                 <div style={{ 
                   display: 'grid', 
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', 
-                  gap: 10, 
+                  gridTemplateColumns: 'repeat(2, 1fr)', 
+                  gap: 12, 
                 }}>
                   {/* 1. Tarjeta (PayPal Guest Smart Card) */}
                   <button
@@ -861,125 +861,27 @@ export default function DonationSection() {
                       Cuenta PayPal
                     </span>
                   </button>
-
-                  {/* 3. Efectivo / Coordinación Directa */}
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod('cash')}
-                    style={{
-                      padding: '12px 10px',
-                      borderRadius: 'var(--radius-md)',
-                      border: paymentMethod === 'cash' ? '2px solid var(--color-accent)' : '2px solid var(--border-color)',
-                      background: paymentMethod === 'cash' ? 'rgba(255,85,0,0.1)' : 'transparent',
-                      fontWeight: 700,
-                      color: 'var(--text-primary)',
-                      transition: 'all var(--duration-fast)',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: 6,
-                      minHeight: 68,
-                    }}
-                  >
-                    <span style={{ fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: 4 }}>
-                      💵 <strong style={{ fontWeight: 800 }}>Efectivo</strong>
-                    </span>
-                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 500 }}>
-                      Coordinación Directa
-                    </span>
-                  </button>
                 </div>
               </div>
 
-              {/* Payment Action Area: PayPal / Card vs. Direct Cash */}
+              {/* Payment Action Area: PayPal / Card */}
               <div style={{ marginTop: 24 }}>
-                {paymentMethod === 'cash' ? (
-                  <div
-                    style={{
-                      padding: '20px',
-                      borderRadius: '16px',
-                      background: 'var(--bg-section-alt)',
-                      border: '1px solid var(--border-color)',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <div style={{ fontSize: '1.8rem', marginBottom: '8px' }}>🤝</div>
-                    <h4 style={{ margin: '0 0 6px', fontSize: '1.05rem', fontWeight: 700 }}>
-                      Donación en Efectivo por Coordinar
-                    </h4>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: '0 0 16px', lineHeight: 1.5 }}>
-                      Un coordinador de la Fundación Underlife se contactará al teléfono/WhatsApp o correo proporcionado para coordinar la recepción segura de tu aporte de <strong>${amount} USD</strong> y emitir tu comprobante oficial.
-                    </p>
-                    <button
-                      type="button"
-                      disabled={isSubmitting}
-                      onClick={async () => {
-                        setIsSubmitting(true);
-                        try {
-                          const res = await fetch('/api/donations', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                              amount,
-                              donorType,
-                              firstName: donorFirstName,
-                              email: donorEmail || 'donante@fundacionunderlife.org',
-                              phone: donorPhone,
-                              documentId: donorDoc,
-                              method: 'cash',
-                            }),
-                          });
-                          const data = await res.json();
-                          if (data.success) {
-                            setSuccessInfo({
-                              donationId: data.donationId || `UL-CASH-${Date.now()}`,
-                              amount,
-                              provider: 'Efectivo / Coordinación Directa',
-                              donorName: donorFirstName || 'Donante Solidario',
-                            });
-                            setStep(3);
-                          } else {
-                            alert('Hubo un error al registrar la donación. Intenta de nuevo.');
-                          }
-                        } catch {
-                          alert('Error de conexión. Intenta de nuevo.');
-                        } finally {
-                          setIsSubmitting(false);
-                        }
-                      }}
-                      className="btn btn-primary"
-                      style={{
-                        width: '100%',
-                        padding: '14px',
-                        fontWeight: 700,
-                        fontSize: '1rem',
-                        borderRadius: 'var(--radius-full)',
-                        boxShadow: '0 4px 16px rgba(0, 85, 255, 0.3)',
-                      }}
-                    >
-                      {isSubmitting ? 'Registrando...' : `Confirmar Donación de $${amount} USD en Efectivo`}
-                    </button>
-                  </div>
-                ) : (
-                  <PayPalButtonWrapper
-                    key={paymentMethod}
-                    amount={amount}
-                    donorType={donorType}
-                    donorEmail={donorEmail}
-                    donorName={donorFirstName}
-                    donorPhone={donorPhone}
-                    donorDoc={donorDoc}
-                    fundingType={paymentMethod === 'dlocal' ? 'card' : 'paypal'}
-                    onSuccess={(info) => {
-                      setSuccessInfo(info);
-                      setStep(3);
-                    }}
-                    setProcessing={setIsSubmitting}
-                    processing={isSubmitting}
-                  />
-                )}
+                <PayPalButtonWrapper
+                  key={paymentMethod}
+                  amount={amount}
+                  donorType={donorType}
+                  donorEmail={donorEmail}
+                  donorName={donorFirstName}
+                  donorPhone={donorPhone}
+                  donorDoc={donorDoc}
+                  fundingType={paymentMethod === 'dlocal' ? 'card' : 'paypal'}
+                  onSuccess={(info) => {
+                    setSuccessInfo(info);
+                    setStep(3);
+                  }}
+                  setProcessing={setIsSubmitting}
+                  processing={isSubmitting}
+                />
               </div>
 
               <div style={{ textAlign: 'center', marginTop: 16 }}>
