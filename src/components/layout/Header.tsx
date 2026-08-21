@@ -64,7 +64,7 @@ export default function Header() {
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 'var(--z-sticky)' as unknown as number,
+        zIndex: 1000,
         height: 'var(--header-height)',
         display: 'flex',
         alignItems: 'center',
@@ -291,15 +291,16 @@ export default function Header() {
           aria-label="Menu"
           style={{
             display: 'none',
-            width: 40,
-            height: 40,
+            width: 44,
+            height: 44,
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '1.4rem',
+            fontSize: '1.5rem',
             color: 'var(--text-primary)',
             background: 'transparent',
             border: 'none',
             cursor: 'pointer',
+            zIndex: 1001,
           }}
         >
           {mobileOpen ? '✕' : '☰'}
@@ -323,7 +324,7 @@ export default function Header() {
             justifyContent: 'center',
             gap: 20,
             padding: '40px 20px',
-            zIndex: ('var(--z-sticky)' as unknown as number) - 1,
+            zIndex: 999,
             height: '100vh',
             width: '100vw',
           }}

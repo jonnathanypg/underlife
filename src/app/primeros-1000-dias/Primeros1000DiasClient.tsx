@@ -62,7 +62,7 @@ export default function Primeros1000DiasClient() {
             </span>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '40px', alignItems: 'center' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '32px', alignItems: 'center' }}>
             <div>
               <h1
                 style={{
@@ -258,7 +258,7 @@ export default function Primeros1000DiasClient() {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '50px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '24px', marginBottom: '50px' }}>
             {/* Card 1 */}
             <div className="glass-card" style={{ padding: '28px', borderRadius: '20px' }}>
               <div style={{ fontSize: '2.2rem', marginBottom: '14px' }}>🧠</div>
@@ -294,7 +294,7 @@ export default function Primeros1000DiasClient() {
           </div>
 
           {/* Dual Optimized Images Gallery (Infancia & Arte Comunitario) */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '24px' }}>
             <div
               className="glass-card"
               style={{
@@ -552,7 +552,7 @@ export default function Primeros1000DiasClient() {
       {/* 4. BENEFICIO FISCAL & DEDUCCIÓN TRIBUTARIA ESTIMADA (RSE & EMPRESAS) */}
       <section className="section" style={{ padding: '80px 0' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '40px', alignItems: 'center' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '40px', alignItems: 'center' }}>
             <div>
               <span
                 style={{
@@ -696,7 +696,7 @@ export default function Primeros1000DiasClient() {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '28px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '28px' }}>
             {/* TIER 1: PATROCINADOR */}
             <div
               className="glass-card"
@@ -855,7 +855,7 @@ export default function Primeros1000DiasClient() {
               border: '1px solid var(--border-color-strong)',
               background: 'linear-gradient(135deg, rgba(255,85,0,0.06) 0%, rgba(0,85,255,0.06) 100%)',
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
               gap: '36px',
               alignItems: 'center',
             }}
@@ -954,7 +954,7 @@ export default function Primeros1000DiasClient() {
       {/* 7. TRANSPARENCIA & GOBERNANZA */}
       <section className="section section-dark" style={{ padding: '60px 0', borderTop: '1px solid var(--border-color)' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '36px', alignItems: 'center' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '36px', alignItems: 'center' }}>
             <div>
               <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '10px' }}>
                 {t('govTitle')}

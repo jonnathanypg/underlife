@@ -486,7 +486,7 @@ ${formData.notes || 'Ninguno'}
               </div>
 
               {/* General Contact Info */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              <div className="modal-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, marginBottom: '4px' }}>
                     {t('nameLabel')}
@@ -532,7 +532,7 @@ ${formData.notes || 'Ninguno'}
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              <div className="modal-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, marginBottom: '4px' }}>
                     {t('emailLabel')}
@@ -581,7 +581,7 @@ ${formData.notes || 'Ninguno'}
               {/* SPECIFIC FIELDS FOR PATROCINADOR */}
               {role === 'patrocinador' && (
                 <>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                  <div className="modal-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                     <div>
                       <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, marginBottom: '4px' }}>
                         {t('budgetLabel')}
@@ -649,7 +649,7 @@ ${formData.notes || 'Ninguno'}
                     <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, marginBottom: '6px' }}>
                       {t('brandActLabel')}
                     </label>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontSize: '0.85rem' }}>
+                    <div className="modal-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontSize: '0.85rem' }}>
                       {[
                         { key: 'logo_mural', label: t('actMural') },
                         { key: 'streaming', label: t('actStreaming') },
@@ -677,7 +677,7 @@ ${formData.notes || 'Ninguno'}
                     <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, marginBottom: '6px' }}>
                       {t('supplyLabel')}
                     </label>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontSize: '0.85rem' }}>
+                    <div className="modal-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontSize: '0.85rem' }}>
                       {[
                         { key: 'pintura', label: t('supplyPaint') },
                         { key: 'andamios', label: t('supplyScaffold') },
@@ -754,7 +754,7 @@ ${formData.notes || 'Ninguno'}
                     </select>
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                  <div className="modal-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                     <div>
                       <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, marginBottom: '4px' }}>
                         {t('paymentPrefLabel')}
