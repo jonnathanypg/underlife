@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations, useLocale } from '@/lib/LanguageContext';
+import { useTranslations } from '@/lib/LanguageContext';
 import { useTheme } from '@/components/ui/ThemeProvider';
 import Link from 'next/link';
 
@@ -11,6 +11,7 @@ export default function Footer() {
 
   return (
     <footer
+      aria-label="Pie de página de Fundación Underlife"
       style={{
         background: 'var(--bg-section-alt)',
         borderTop: '1px solid var(--divider)',
@@ -183,7 +184,8 @@ export default function Footer() {
               href="https://weblifetech.com"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: 'var(--color-teal)', fontWeight: 700, textDecoration: 'underline' }}
+              aria-label="WEBLIFETECH S.A.S. — Desarrolladora del sitio web"
+              style={{ color: 'var(--color-primary)', fontWeight: 700, textDecoration: 'underline' }}
             >
               WEBLIFETECH S.A.S.
             </a>

@@ -10,12 +10,25 @@ const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 
 // Prefixes and extensions that get 1-year immutable cache
+// IMPORTANT: Add any new public static-asset folders here so they get
+// Cache-Control: public, max-age=31536000, immutable from day 1.
 const IMMUTABLE_PREFIXES = [
   '/recursos_opt/',
   '/logos/',
   '/icons/',
   '/_next/static/',
   '/_next/image/',
+  // Gallery image folders (public static images — never change filename)
+  '/hiphop/',
+  '/ninos/',
+  '/talleres/',
+  '/hackathon/',
+  '/artivismo-img/',
+  // CDI center image folders
+  '/cdi-amiguitos-a-jugar/',
+  '/cdi-caritas-alegres/',
+  '/cdi-gotitas-del-saber/',
+  '/cdi-pedacitos-de-amor/',
 ];
 const IMMUTABLE_EXTS = /\.(webp|jpg|jpeg|png|gif|svg|ico|mp4|webm|woff|woff2|otf|ttf|eot)$/i;
 

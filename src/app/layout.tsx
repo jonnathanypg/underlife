@@ -194,9 +194,18 @@ export default function RootLayout({
           type="image/webp"
           fetchPriority="high"
         />
+        <link
+          rel="preload"
+          as="image"
+          href="/logos/logotipo-fundacionunderlife-ligth.webp"
+          type="image/webp"
+        />
         {/* Preconnect to AI Agent Server (saves ~460ms LCP) */}
         <link rel="preconnect" href="https://app.aikrofy.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://app.aikrofy.com" />
+        {/* Preconnect to PayPal (loaded on-demand when donation section is visible) */}
+        <link rel="preconnect" href="https://www.paypal.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.paypal.com" />
       </head>
       <body>
         <LanguageProvider>
@@ -216,7 +225,7 @@ export default function RootLayout({
             />
             <Script
               src="https://www.paypal.com/sdk/js?client-id=BAAHaUaKhWsWq0TTXodULxlOOiK6IkAH93rDl1FvxaCB4EiNVgnRyswgsmPFKUclEPgSRNzblvfHwHJNFA&currency=USD&disable-funding=credit"
-              strategy="afterInteractive"
+              strategy="lazyOnload"
               id="paypal-sdk-script"
             />
           </ThemeProvider>

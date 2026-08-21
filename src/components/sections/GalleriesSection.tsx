@@ -221,7 +221,7 @@ export default function GalleriesSection() {
                       <img
                         src={`/recursos_opt/${activeGallery.folder}/${img}`}
                         alt={`Fundación Underlife — ${t(`${activeGallery.key}.title`)} (${i + 1})`}
-                        loading="eager"
+                        loading="lazy"
                         decoding="async"
                         width={300}
                         height={350}
@@ -238,16 +238,22 @@ export default function GalleriesSection() {
                   ))}
                 </Swiper>
 
-                {/* Navigation Click Zones */}
+                {/* Navigation Click Zones — role="button" required for aria-label on div */}
                 <div
+                  role="button"
+                  tabIndex={0}
                   className="swiper-nav-zone-left"
                   onClick={() => swiperRef.current?.slidePrev()}
+                  onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && swiperRef.current?.slidePrev()}
                   style={{ position: 'absolute', top: 0, left: 0, width: '15%', height: '100%', zIndex: 10, cursor: 'w-resize' }}
                   aria-label="Diapositiva anterior"
                 />
                 <div
+                  role="button"
+                  tabIndex={0}
                   className="swiper-nav-zone-right"
                   onClick={() => swiperRef.current?.slideNext()}
+                  onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && swiperRef.current?.slideNext()}
                   style={{ position: 'absolute', top: 0, right: 0, width: '15%', height: '100%', zIndex: 10, cursor: 'e-resize' }}
                   aria-label="Diapositiva siguiente"
                 />

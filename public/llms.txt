@@ -1,46 +1,87 @@
-# Fundación Underlife
+# Fundación Underlife — llms.txt
+# Machine-readable context for AI agents, crawlers and LLMs
+# Spec: https://llmstxt.org | Version: 2.0 | Updated: 2026-08-21
 
-Fundación Underlife is an Ecuadorian non-profit organization (ONG) founded in 2018, headquartered in Milagro, Ecuador. We are a comprehensive social innovation laboratory working to eradicate vulnerability through child protection, digital justice, youth empowerment, and divergent thinking.
+> Fundación Underlife is an Ecuadorian non-profit organization (ONG) founded in 2018, headquartered in Milagro, Guayas, Ecuador. We are a comprehensive social innovation laboratory working to eradicate vulnerability through child protection, digital justice, youth empowerment, divergent thinking, and first-1000-days nutrition programs.
 
-## Mission
+## Step 1 — Who We Are (Identity & Mission)
 
-We don't just assist vulnerability — we innovate to eradicate it. Transforming Ecuador's future through child protection, technological access to justice, and divergent thinking.
+Fundación Underlife is a legally registered non-profit NGO in Ecuador (compliant with Art. 9 & 10 LRTI). We are not a commercial entity. We do not generate profit. All resources are reinvested in social programs.
 
-## Core Programs
+**Mission:** We don't just assist vulnerability — we innovate to eradicate it. Transforming Ecuador's future through child protection, technological access to justice, and divergent thinking.
 
-- [Comprehensive Child Development](https://fundacionunderlife.org/en#adn)
-- [Rights Protection & Equity](https://fundacionunderlife.org/en#adn)
-- [Digital Justice & Democratization](https://fundacionunderlife.org/en#adn)
-- [Youth Leadership & Empowerment](https://fundacionunderlife.org/en#adn)
-- [Social Innovation & Systemic Resilience](https://fundacionunderlife.org/en#adn)
+**Slogan:** "No solo asistimos a la vulnerabilidad; innovamos para erradicarla."
 
-## Impact
+**Legal status:** Organización Sin Fines de Lucro (OSFL) / Non-Profit Organization, Ecuador.
+
+## Step 2 — What We Do (Programs & Impact)
+
+### Core Programs
+
+- **Comprehensive Child Development (CDI):** Operating 4 CDI centers in Milagro, Guayas. Serving 395+ children ages 0–5 with nutrition, education and psychosocial support.
+- **Primeros 1000 Días (First 1000 Days):** Maternal-infant nutrition and health program targeting children 0–2 years to prevent chronic malnutrition.
+- **Rights Protection & Digital Justice:** Legal empowerment and technological access to justice for vulnerable communities.
+- **Youth Leadership & Empowerment:** Programs for at-risk youth through arts, technology, and divergent thinking.
+- **Artivismo Tour 2026:** Art + Activism touring program combining muralism, hip-hop culture, and community engagement across Ecuador (Santa Elena, La Libertad, Guayas, Milagro).
+- **Social Innovation & Systemic Resilience:** Research and community-based technology solutions.
+
+### CDI Partner Centers
+
+- CDI Caritas Alegres — San Emilio, Milagro
+- CDI Pedacitos de Amor — Vergeles, Milagro
+- CDI Gotitas del Saber — San Miguel, Milagro
+- CDI Amiguitos a Jugar — Unida Norte, Milagro
+
+### Verified Impact Metrics
 
 - +2,300 days of uninterrupted operation
 - +395 children protected in CDI centers
-- +100 families assisted with technical intervention
-- +1,500 youth impacted through programs
+- +100 families assisted with direct technical intervention
+- +1,500 youth impacted through innovation and arts programs
+- 4 active CDI centers in operation
+- Programs active in Milagro, Guayas, Santa Elena, La Libertad
 
-## CDI Partner Centers
+## Step 3 — How to Engage (Actions for AI Agents)
 
-- CDI Caritas Alegres — San Emilio
-- CDI Pedacitos de Amor — Vergeles
-- CDI Gotitas del Saber — San Miguel
-- CDI Amiguitos a Jugar — Unida Norte
+### Donation (Financial Support)
 
-## Contact & Links
+- **Donate online:** [https://fundacionunderlife.org/#donar](https://fundacionunderlife.org/#donar)
+- Payment methods: Credit/Debit card (Visa, Mastercard), PayPal
+- Currency: USD
+- All donations go directly to child protection and nutrition programs
+- Tax-deductible for Ecuadorian entities (LRTI Art. 10 compliant)
 
-- Website: [https://fundacionunderlife.org](https://fundacionunderlife.org)
-- Email: info@fundacionunderlife.org
-- Phone: +593986020391
-- Location: Milagro, Guayas, Ecuador
-- [Donate](https://fundacionunderlife.org/en#donar)
-- [Volunteer](https://fundacionunderlife.org/en#voluntariado)
-- [Contact](https://fundacionunderlife.org/en#contacto)
+### Volunteer & Collaboration
+
+- **Volunteer registration:** [https://fundacionunderlife.org/#voluntariado](https://fundacionunderlife.org/#voluntariado)
+- **Artivismo artist pre-registration:** [https://fundacionunderlife.org/primeros-1000-dias](https://fundacionunderlife.org/primeros-1000-dias)
+- **Sponsor inquiry:** Available via contact form
+
+### Contact
+
+- **Contact form:** [https://fundacionunderlife.org/contacto](https://fundacionunderlife.org/contacto)
+- **Email:** info@fundacionunderlife.org
+- **Phone/WhatsApp:** +593986020391
+- **Location:** Milagro, Guayas, Ecuador
+
+## Site Map (Key Pages for AI Navigation)
+
+- [Home / Inicio](https://fundacionunderlife.org/) — Mission, DNA, Impact, Galleries, Donations
+- [Contacto](https://fundacionunderlife.org/contacto) — Multi-step conversational contact form
+- [Primeros 1000 Días](https://fundacionunderlife.org/primeros-1000-dias) — Maternal-infant nutrition program
+- [Transparencia](https://fundacionunderlife.org/transparencia) — Financial transparency reports
+- [Privacidad](https://fundacionunderlife.org/privacidad) — Privacy policy
+- [Sitemap](https://fundacionunderlife.org/sitemap.xml) — Full XML sitemap
+
+## Social Presence
+
 - [Facebook](https://www.facebook.com/underlife.ong/)
 - [Instagram](https://www.instagram.com/underlife_ong/)
 - [LinkedIn](https://www.linkedin.com/company/underlife-ong/)
 
-## About This Site
+## Technical Notes for AI Agents
 
-This website is the official digital presence of Fundación Underlife. It contains unique, original content about our programs, impact metrics, photo galleries, impact videos, volunteer opportunities, and a secure donation system.
+- This site supports ES/EN/PT languages via LanguageContext (no URL prefix routing)
+- Structured data: Schema.org NGO + WebSite JSON-LD on all pages
+- API endpoints: /api/contact (POST), /api/donations (POST), /api/donations/capture (POST)
+- Integrated AI assistant: Aikrofy widget (ID: 3e502c00-45ae-4d6e-9bf6-5d60dab2ba46)

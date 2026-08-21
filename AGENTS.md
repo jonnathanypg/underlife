@@ -220,3 +220,58 @@ npx prisma studio        # DB GUI
 
 *Última actualización: 2026-08-21 — Auditoría de producción (ChunkLoadError post-deploy)*  
 *Mantenido por: jonnathanypg / WLT Team*
+
+---
+
+## 14. Reglas de Performance (PageSpeed) — Actualizado 2026-08-21
+
+### Caché de Imágenes de Galería
+Todas las carpetas de imágenes públicas DEBEN estar listadas en:
+- `server.js` → `IMMUTABLE_PREFIXES` array
+- `next.config.ts` → `headers()` function
+
+Al agregar una nueva carpeta de imágenes en `/public/`, siempre añadir su entrada en ambos archivos.
+
+### Script PayPal SDK
+- **Estrategia:** `lazyOnload` (no `afterInteractive`)
+- El SDK está en `src/app/layout.tsx`
+- `DonationSection.tsx` ya tiene un ciclo de retry/polling para `window.paypal` — es seguro usar `lazyOnload`
+- Nunca cambiar a `beforeInteractive` — bloquearía el render crítico
+
+### Imágenes de Galería
+- Las imágenes del carrusel (`GalleriesSection.tsx`) usan `loading="lazy"` — NO cambiar a `eager`
+- Las imágenes LCP (logo, hero poster) usan `fetchPriority="high"` y `loading="eager"`
+- El preloading de galería se hace con `requestIdleCallback` — no modificar
+
+### Animaciones
+- Usar siempre `transform` y `opacity` para animaciones (composited)
+- Evitar animar `width`, `height`, `top`, `left`, `margin`, `padding` — causan forced reflow
+- Las animaciones que usa GSAP en el proyecto ya son composited — no cambiar
+
+### ARIA Roles en Divs Interactivos
+- Cualquier `<div>` con `onClick` y `aria-label` DEBE tener también `role="button"` y `tabIndex={0}` y `onKeyDown`
+- El patrón correcto:
+```tsx
+<div
+  role="button"
+  tabIndex={0}
+  onClick={handler}
+  onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handler()}
+  aria-label="Descripción"
+/>
+```
+
+### Contraste de Color (WCAG AA)
+- Links sobre fondos claros: usar `var(--color-primary)` (#0055FF) — ratio 5.9:1 ✅
+- PROHIBIDO usar `var(--color-teal)` (#26b49c) en texto sobre fondos claros — ratio ~2.4:1 ❌
+- Verificar contraste en: https://webaim.org/resources/contrastchecker/
+
+### llms.txt (3 Pasos para Optimización LLM)
+El archivo `/public/llms.txt` sigue la estructura de 3 pasos del estándar llmstxt.org:
+1. **Identidad y Misión** — Quiénes somos, estatus legal
+2. **Programas e Impacto** — Qué hacemos, métricas verificadas
+3. **Cómo Participar** — Donaciones, voluntariado, contacto
+
+Al agregar nuevos programas o actualizar métricas de impacto, actualizar también `llms.txt`.
+
+*Sección agregada: 2026-08-21 — Auditoría PageSpeed 68→objetivo 90+*
