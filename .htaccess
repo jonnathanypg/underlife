@@ -16,26 +16,44 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     AddOutputFilterByType DEFLATE font/woff2 font/woff
 </IfModule>
 
-# Cache-Control & Expires Headers — 1 Year Immutable for all static assets
+# ============================================================
+# CACHE POLICY — CRITICAL: HTML documents must NEVER be cached
+# by the CDN/Edge. Only static assets with content-hashed filenames
+# (/_next/static/*) should receive long-lived immutable cache.
+# Caching HTML breaks Next.js deployments by serving stale chunk hashes.
+# ============================================================
 <IfModule mod_expires.c>
     ExpiresActive On
-    ExpiresDefault "access plus 1 year"
+    # Default: no caching for HTML and unknown types
+    ExpiresDefault "access plus 0 seconds"
+    # Images — 1 year immutable (filenames are content-hashed)
     ExpiresByType image/webp "access plus 1 year"
     ExpiresByType image/png "access plus 1 year"
     ExpiresByType image/jpg "access plus 1 year"
     ExpiresByType image/jpeg "access plus 1 year"
     ExpiresByType image/svg+xml "access plus 1 year"
     ExpiresByType image/x-icon "access plus 1 year"
+    # Video
     ExpiresByType video/mp4 "access plus 1 year"
     ExpiresByType video/webm "access plus 1 year"
+    # Fonts
     ExpiresByType font/woff2 "access plus 1 year"
     ExpiresByType font/woff "access plus 1 year"
+    # CSS and JS — ONLY safe because Next.js content-hashes these filenames
+    # HTML (text/html) is intentionally EXCLUDED — no long-term caching
     ExpiresByType text/css "access plus 1 year"
     ExpiresByType application/javascript "access plus 1 year"
     ExpiresByType text/javascript "access plus 1 year"
 </IfModule>
 
 <IfModule mod_headers.c>
+    # HTML pages and API routes: always revalidate (never cache in CDN)
+    <FilesMatch "\.(html|htm)$">
+        Header always set Cache-Control "public, max-age=0, must-revalidate"
+        Header always unset ETag
+    </FilesMatch>
+
+    # Static assets with content-hashed filenames: 1 year immutable
     <FilesMatch "\.(webp|png|jpg|jpeg|gif|ico|svg|mp4|webm|woff2|woff|css|js)$">
         Header always set Cache-Control "public, max-age=31536000, immutable"
         Header always set Access-Control-Allow-Origin "*"

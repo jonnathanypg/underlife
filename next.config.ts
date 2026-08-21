@@ -80,7 +80,8 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      // Security headers for all routes
+      // Security + Cache headers for all HTML page routes
+      // CRITICAL: HTML must never be cached by CDN/Edge — only /_next/static/* assets are safe to cache
       {
         source: '/:path*',
         headers: [
@@ -91,6 +92,10 @@ const nextConfig: NextConfig = {
           {
             key: 'Strict-Transport-Security',
             value: 'max-age=63072000; includeSubDomains; preload',
+          },
+          {
+            key: 'X-Content-Options',
+            value: 'nosniff',
           },
           {
             key: 'X-Content-Type-Options',
@@ -111,6 +116,16 @@ const nextConfig: NextConfig = {
           {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(self "https://app.aikrofy.com"), geolocation=()',
+          },
+        ],
+      },
+      // HTML documents: explicitly no CDN cache — prevents chunk hash mismatch after deploy
+      {
+        source: '/((?!_next/static|_next/image|favicon\\.ico|logos|icons|recursos_opt).*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
           },
         ],
       },
