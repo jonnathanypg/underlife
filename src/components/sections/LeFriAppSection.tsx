@@ -280,48 +280,6 @@ export default function LeFriAppSection() {
                 </div>
               </div>
 
-              {/* Action Link to subdominio */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <a
-                  href="https://lefri.fundacionunderlife.org"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-primary"
-                  style={{
-                    padding: '16px 36px',
-                    borderRadius: 'var(--radius-full)',
-                    background: 'var(--gradient-primary)',
-                    color: '#fff',
-                    fontWeight: 800,
-                    fontSize: '1.02rem',
-                    textDecoration: 'none',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '10px',
-                    boxShadow: '0 10px 30px rgba(0, 85, 255, 0.35)',
-                    width: 'fit-content',
-                  }}
-                >
-                  <span>{t.ctaPrimary}</span>
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    style={{ width: 18, height: 18 }}
-                  >
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                  </svg>
-                </a>
-                <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-                  🌐 {t.domainLabel} — {t.ctaSub}
-                </span>
-              </div>
             </div>
 
             {/* Right Column: Visual Interactive Mockup Card */}
@@ -451,8 +409,49 @@ export default function LeFriAppSection() {
                     <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>
                       {t.statFreeLabel}
                     </div>
-                  </div>
-                </div>
+              </div>
+
+              {/* Action Link to subdominio moved below mac card */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginTop: '24px' }}>
+                <a
+                  href="https://lefri.fundacionunderlife.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                  style={{
+                    padding: '16px 36px',
+                    borderRadius: 'var(--radius-full)',
+                    background: 'var(--gradient-primary)',
+                    color: '#fff',
+                    fontWeight: 800,
+                    fontSize: '1.02rem',
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '10px',
+                    boxShadow: '0 10px 30px rgba(0, 85, 255, 0.35)',
+                    width: 'fit-content',
+                  }}
+                >
+                  <span>{t.ctaPrimary}</span>
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ width: 18, height: 18 }}
+                  >
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                </a>
+                <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', textAlign: 'center' }}>
+                  🌐 {t.domainLabel} — {t.ctaSub}
+                </span>
               </div>
             </div>
           </div>

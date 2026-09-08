@@ -203,7 +203,7 @@ export default function ArtivismoTourBannerSection() {
                 }}
               >
                 <div style={{ fontSize: '1.9rem', fontWeight: 900, color: 'var(--color-primary)', marginBottom: '4px' }}>
-                  Ecuador
+                  {t('statTourNum') || '+70'}
                 </div>
                 <div style={{ fontSize: '0.9rem', fontWeight: 700, marginBottom: '4px' }}>
                   {t('statTourTitle')}
