@@ -82,7 +82,7 @@ export default function Primeros1000DiasBannerSection() {
                     color: 'var(--color-success)',
                   }}
                 >
-                  11 Locaciones Piloto
+                  14 Locaciones en 3 Ciudades
                 </span>
               </div>
 
@@ -99,7 +99,7 @@ export default function Primeros1000DiasBannerSection() {
               </h2>
 
               <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: '24px' }}>
-                Transformamos 11 comunidades vulnerables en <strong>Milagro</strong> y <strong>La Libertad</strong> a través de arte urbano pedagógico y movilización de recursos 100% destinados a nutrición infantil y prevención de la DCI.
+                Transformamos 14 comunidades prioritarias en <strong>Milagro</strong>, <strong>Guayaquil</strong> y <strong>La Libertad</strong> a través de arte urbano pedagógico y movilización de recursos 100% destinados a nutrición infantil y prevención de la DCI.
               </p>
 
               <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', alignItems: 'center' }}>
@@ -152,13 +152,13 @@ export default function Primeros1000DiasBannerSection() {
                 }}
               >
                 <div style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--color-primary)', marginBottom: '4px' }}>
-                  11
+                  14
                 </div>
                 <div style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '4px' }}>
                   Muros Pedagógicos
                 </div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>
-                  En 2 ciudades costeras con jornadas de 2 a 3 días por sitio.
+                  En 3 ciudades costeras con intervenciones intensivas por sitio.
                 </div>
               </div>
 
@@ -190,13 +190,13 @@ export default function Primeros1000DiasBannerSection() {
                 }}
               >
                 <div style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--color-accent)', marginBottom: '4px' }}>
-                  150%
+                  3
                 </div>
                 <div style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '4px' }}>
-                  Deducción Proyectada
+                  Ciudades Eje Costero
                 </div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>
-                  Incentivo proyectado conforme a la LRTI (sujeto a código de resolución MDH).
+                  Milagro (4), Guayaquil (3) y La Libertad (7).
                 </div>
               </div>
 
@@ -215,7 +215,7 @@ export default function Primeros1000DiasBannerSection() {
                   Modelo Escalable
                 </div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>
-                  Proyección sostenida a múltiples ciudades del Ecuador.
+                  Proyección sostenida a múltiples provincias del Ecuador.
                 </div>
               </div>
             </div>

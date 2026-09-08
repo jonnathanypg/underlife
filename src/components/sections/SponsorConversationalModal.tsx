@@ -33,14 +33,13 @@ export function SponsorConversationalModal({ isOpen, onClose, initialRole = 'pat
 
     // Patrocinador specific
     companySector: '',
-    taxDeductionInterest: 'si',
     sponsorTier: 'muro_completo',
     estimatedBudget: '1000_2500',
     brandActivation: [] as string[],
 
     // Auspiciante specific
     supplyTypes: [] as string[],
-    coverageLocation: 'ambas',
+    coverageLocation: 'todas',
     supplyDetails: '',
 
     // Mecenas specific (defaults to voluntary & disinterested support)
@@ -121,14 +120,14 @@ export function SponsorConversationalModal({ isOpen, onClose, initialRole = 'pat
           intention: 'alliance',
           subject: `[Primeros 1.000 Días] Postulación como ${role.toUpperCase()} — ${formData.organization || formData.name}`,
           subOption: `Rol: ${role} | Presupuesto/Tipo: ${role === 'patrocinador' ? formData.estimatedBudget : role === 'auspiciante' ? formData.supplyTypes.join(', ') : formData.patronType + ' (' + formData.patronAmount + ' USD)'}`,
-          mode: `Ubicación: ${formData.coverageLocation || 'Milagro/La Libertad'}`,
-          availability: `Deducción Fiscal: ${formData.taxDeductionInterest}`,
+          mode: `Ubicación: ${formData.coverageLocation || 'Milagro / Guayaquil / La Libertad'}`,
+          availability: 'Tour Festival 2026 (14 Locaciones)',
           message: `
 --- DETALLES DE LA POSTULACIÓN ---
 Rol Seleccionado: ${role.toUpperCase()}
 Organización/Empresa: ${formData.organization || 'Particular'}
 Cargo del contacto: ${formData.roleTitle || 'N/A'}
-Interés en Deducción 150% (MDH/SRI): ${formData.taxDeductionInterest}
+Locación de Interés: ${formData.coverageLocation}
 
 ${role === 'patrocinador' ? `
 Sector: ${formData.companySector}
@@ -139,7 +138,6 @@ Activaciones deseadas: ${formData.brandActivation.join(', ') || 'General'}
 ${role === 'auspiciante' ? `
 Insumos / Especies / Servicios: ${formData.supplyTypes.join(', ')}
 Detalles de aporte: ${formData.supplyDetails}
-Locación: ${formData.coverageLocation}
 ` : ''}
 
 ${role === 'mecenas' ? `
@@ -608,11 +606,11 @@ ${formData.notes || 'Ninguno'}
 
                     <div>
                       <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, marginBottom: '4px' }}>
-                        {t('taxInterestLabel')}
+                        {t('locLabel')}
                       </label>
                       <select
-                        value={formData.taxDeductionInterest}
-                        onChange={(e) => setFormData({ ...formData, taxDeductionInterest: e.target.value })}
+                        value={formData.coverageLocation}
+                        onChange={(e) => setFormData({ ...formData, coverageLocation: e.target.value })}
                         style={{
                           width: '100%',
                           padding: '10px 12px',
@@ -623,27 +621,13 @@ ${formData.notes || 'Ninguno'}
                           fontSize: '0.9rem',
                         }}
                       >
-                        <option value="si">{t('taxYes')}</option>
-                        <option value="no">{t('taxNo')}</option>
+                        <option value="milagro">{t('locMilagro')}</option>
+                        <option value="guayaquil">{t('locGuayaquil')}</option>
+                        <option value="lalibertad">{t('locLaLibertad')}</option>
+                        <option value="todas">{t('locBoth')}</option>
                       </select>
                     </div>
                   </div>
-
-                  {formData.taxDeductionInterest === 'si' && (
-                    <div
-                      style={{
-                        padding: '10px 14px',
-                        borderRadius: '10px',
-                        background: 'rgba(0, 85, 255, 0.08)',
-                        border: '1px solid rgba(0, 85, 255, 0.2)',
-                        fontSize: '0.8rem',
-                        color: 'var(--color-primary)',
-                        lineHeight: 1.4,
-                      }}
-                    >
-                      {t('taxOptionDisclaimer')}
-                    </div>
-                  )}
 
                   <div>
                     <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, marginBottom: '6px' }}>
@@ -715,8 +699,33 @@ ${formData.notes || 'Ninguno'}
                         background: 'var(--bg-section-alt)',
                         color: 'var(--text-primary)',
                         fontSize: '0.88rem',
+                        marginBottom: '10px',
                       }}
                     />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, marginBottom: '4px' }}>
+                      {t('locLabel')}
+                    </label>
+                    <select
+                      value={formData.coverageLocation}
+                      onChange={(e) => setFormData({ ...formData, coverageLocation: e.target.value })}
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        borderRadius: '10px',
+                        border: '1px solid var(--border-color)',
+                        background: 'var(--bg-section-alt)',
+                        color: 'var(--text-primary)',
+                        fontSize: '0.9rem',
+                      }}
+                    >
+                      <option value="milagro">{t('locMilagro')}</option>
+                      <option value="guayaquil">{t('locGuayaquil')}</option>
+                      <option value="lalibertad">{t('locLaLibertad')}</option>
+                      <option value="todas">{t('locBoth')}</option>
+                    </select>
                   </div>
                 </>
               )}

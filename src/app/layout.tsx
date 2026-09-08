@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import './globals.css';
 import { ThemeProvider } from '@/components/ui/ThemeProvider';
 import { LanguageProvider } from '@/lib/LanguageContext';
@@ -171,6 +170,10 @@ export default function RootLayout({
             }),
           }}
         />
+        {/*
+         * PERFORMANCE: Theme initialization — runs before first paint to avoid FOUC.
+         * Uses try/catch to silently handle localStorage errors in private browsing mode.
+         */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -187,6 +190,16 @@ export default function RootLayout({
             `,
           }}
         />
+        {/*
+         * PERFORMANCE: LCP Critical Image — preload ONLY the dark logo (SSR default theme).
+         *
+         * The light logo is intentionally NOT preloaded here. The Header component
+         * swaps to the light logo on the client after hydration. Preloading both logos
+         * wastes 9 KiB on the critical path for zero user-visible benefit.
+         *
+         * This single preload hint (fetchPriority="high") tells the browser to begin
+         * fetching the LCP element as early as possible, which directly reduces LCP time.
+         */}
         <link
           rel="preload"
           as="image"
@@ -194,16 +207,10 @@ export default function RootLayout({
           type="image/webp"
           fetchPriority="high"
         />
-        <link
-          rel="preload"
-          as="image"
-          href="/logos/logotipo-fundacionunderlife-ligth.webp"
-          type="image/webp"
-        />
-        {/* Preconnect to AI Agent Server (saves ~460ms LCP) */}
+        {/* Preconnect to AI Chat Server (saves ~460ms on first widget request) */}
         <link rel="preconnect" href="https://app.aikrofy.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://app.aikrofy.com" />
-        {/* Preconnect to PayPal (loaded on-demand when donation section is visible) */}
+        {/* Preconnect to PayPal — SDK loads on-demand only when user reaches donation section */}
         <link rel="preconnect" href="https://www.paypal.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.paypal.com" />
       </head>
@@ -216,18 +223,17 @@ export default function RootLayout({
             <main style={{ minHeight: '100vh' }}>{children}</main>
             <Footer />
             <AikrofyWidget />
-            {/* Aikrofy Conversational AI Webchat & Agentic Copilot */}
-            <Script
-              id="aikrofy-widget-script"
-              src="https://app.aikrofy.com/widget.js"
-              data-widget-id="3e502c00-45ae-4d6e-9bf6-5d60dab2ba46"
-              strategy="afterInteractive"
-            />
-            <Script
-              src="https://www.paypal.com/sdk/js?client-id=BAAHaUaKhWsWq0TTXodULxlOOiK6IkAH93rDl1FvxaCB4EiNVgnRyswgsmPFKUclEPgSRNzblvfHwHJNFA&currency=USD&disable-funding=credit"
-              strategy="lazyOnload"
-              id="paypal-sdk-script"
-            />
+            {/*
+             * PERFORMANCE NOTE: PayPal SDK removed from global layout.
+             *
+             * Previously: sdk/js loaded globally → 100 KiB on EVERY page visit,
+             * even for users who never scroll to the donation section.
+             * This blocked FCP/LCP and was flagged as 66.6 KiB of unused JS.
+             *
+             * Now: PayPal SDK is loaded on-demand inside DonationSection.tsx using an
+             * IntersectionObserver that fires only when the section enters the viewport.
+             * This saves 100 KiB from the initial critical rendering path.
+             */}
           </ThemeProvider>
         </LanguageProvider>
       </body>

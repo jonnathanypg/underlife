@@ -144,11 +144,11 @@ export default function Primeros1000DiasClient() {
               {/* Quick stats / Highlights */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', borderTop: '1px solid var(--border-color)', paddingTop: '20px' }}>
                 <div>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-primary)' }}>11</div>
+                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-primary)' }}>14</div>
                   <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>{t('statsLocations')}</div>
                 </div>
                 <div>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-teal)' }}>2</div>
+                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-teal)' }}>3</div>
                   <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>{t('statsCities')}</div>
                 </div>
                 <div>
@@ -466,6 +466,10 @@ export default function Primeros1000DiasClient() {
                   <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--color-primary)' }}>4 Muros</div>
                   <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Cantón Milagro</div>
                 </div>
+                <div style={{ background: 'var(--bg-card)', padding: '10px 16px', borderRadius: '12px', border: '1px solid rgba(16, 185, 129, 0.25)', textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--color-teal)' }}>3 Muros</div>
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Cantón Guayaquil</div>
+                </div>
                 <div style={{ background: 'var(--bg-card)', padding: '10px 16px', borderRadius: '12px', border: '1px solid rgba(255, 85, 0, 0.25)', textAlign: 'center' }}>
                   <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--color-accent)' }}>7 Muros</div>
                   <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Cantón La Libertad</div>
@@ -521,7 +525,7 @@ export default function Primeros1000DiasClient() {
                   border: '1px solid rgba(255,255,255,0.15)',
                 }}
               >
-                📍 11 Muros Piloto
+                📍 14 Muros en 3 Ciudades
               </div>
             </div>
 
@@ -544,125 +548,6 @@ export default function Primeros1000DiasClient() {
               >
                 {t('sponsorMuralBtn')}
               </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. BENEFICIO FISCAL & DEDUCCIÓN TRIBUTARIA ESTIMADA (RSE & EMPRESAS) */}
-      <section className="section" style={{ padding: '80px 0' }}>
-        <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '40px', alignItems: 'center' }}>
-            <div>
-              <span
-                style={{
-                  display: 'inline-block',
-                  padding: '4px 12px',
-                  borderRadius: 'var(--radius-full)',
-                  fontSize: '0.75rem',
-                  fontWeight: 700,
-                  background: 'rgba(0, 85, 255, 0.1)',
-                  color: 'var(--color-primary)',
-                  border: '1px solid rgba(0, 85, 255, 0.2)',
-                  marginBottom: '12px',
-                }}
-              >
-                {t('taxTag')}
-              </span>
-              <h2
-                style={{
-                  fontSize: 'clamp(1.8rem, 3.5vw, 2.5rem)',
-                  fontWeight: 800,
-                  lineHeight: 1.2,
-                  marginBottom: '16px',
-                }}
-              >
-                {t('taxTitle')}{' '}
-                <span className="gradient-text">{t('taxTitleAccent')}</span>
-              </h2>
-              <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: '20px' }}>
-                {t('taxDesc')}
-              </p>
-
-              {/* Disclaimer Sutil & Transparente */}
-              <div
-                style={{
-                  padding: '16px',
-                  borderRadius: '14px',
-                  background: 'rgba(245, 158, 11, 0.08)',
-                  border: '1px solid rgba(245, 158, 11, 0.25)',
-                  marginBottom: '24px',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                  <span>⚖️</span>
-                  <strong style={{ fontSize: '0.85rem', color: 'var(--color-warning)' }}>
-                    {t('taxDisclaimerTitle')}
-                  </strong>
-                </div>
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>
-                  {t('taxDisclaimerText')}
-                </p>
-              </div>
-
-              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                <button
-                  onClick={() => handleOpenSponsorModal('patrocinador')}
-                  className="btn btn-primary"
-                  style={{
-                    padding: '12px 24px',
-                    borderRadius: 'var(--radius-full)',
-                    background: 'var(--gradient-primary)',
-                    color: '#fff',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    border: 'none',
-                  }}
-                >
-                  {t('taxCta')}
-                </button>
-              </div>
-            </div>
-
-            {/* Simulación Matemática de Ahorro */}
-            <div>
-              <div
-                className="glass-card"
-                style={{
-                  padding: '30px',
-                  borderRadius: '24px',
-                  border: '1px solid var(--border-color-strong)',
-                  background: 'var(--bg-card)',
-                  boxShadow: 'var(--glass-shadow)',
-                }}
-              >
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span>📊</span> {t('taxSimTitle')}
-                </h3>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '20px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 14px', background: 'var(--bg-section-alt)', borderRadius: '10px', fontSize: '0.9rem' }}>
-                    <span style={{ color: 'var(--text-secondary)' }}>{t('taxSimDonated')}</span>
-                    <strong>USD $1.000,00</strong>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 14px', background: 'var(--bg-section-alt)', borderRadius: '10px', fontSize: '0.9rem' }}>
-                    <span style={{ color: 'var(--text-secondary)' }}>{t('taxSimBase')}</span>
-                    <strong style={{ color: 'var(--color-primary)' }}>USD $2.500,00</strong>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 14px', background: 'rgba(16, 185, 129, 0.08)', borderRadius: '10px', fontSize: '0.9rem', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
-                    <span style={{ color: 'var(--text-secondary)' }}>{t('taxSimSaved')}</span>
-                    <strong style={{ color: 'var(--color-success)' }}>USD $625,00 (62,5%)</strong>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 14px', background: 'var(--bg-section-alt)', borderRadius: '10px', fontSize: '0.9rem' }}>
-                    <span style={{ color: 'var(--text-secondary)' }}>{t('taxSimNet')}</span>
-                    <strong style={{ color: 'var(--color-accent)' }}>Solo USD $375,00 (37,5%)</strong>
-                  </div>
-                </div>
-
-                <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', margin: 0, textAlign: 'center' }}>
-                  {t('taxSimNote')}
-                </p>
-              </div>
             </div>
           </div>
         </div>

@@ -217,6 +217,63 @@ export default function DonationSection() {
   const sliderRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
+  // Reference to the donation section container for IntersectionObserver
+  const sectionRef = useRef<HTMLElement>(null);
+
+  /*
+   * PERFORMANCE: PayPal SDK on-demand loading via IntersectionObserver.
+   *
+   * The PayPal SDK (100 KiB) was previously loaded globally in layout.tsx on
+   * every page visit. This caused:
+   *   - 100 KiB on the critical rendering path (blocked FCP/LCP)
+   *   - 66.6 KiB of unused JS flagged by Lighthouse
+   *   - PayPal appearing in "Efficient cache lifetimes" warning (TTL: 1h only)
+   *
+   * Now the SDK loads only when the donation section enters the viewport,
+   * saving 100 KiB from the initial page load for users who don't scroll that far.
+   */
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section || typeof IntersectionObserver === 'undefined') {
+      // Fallback: load immediately if IntersectionObserver is not supported
+      loadPayPalSDK();
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          loadPayPalSDK();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' } // Start loading 200px before section enters viewport
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  function loadPayPalSDK() {
+    const win = window as any;
+    if (win.paypal) {
+      // SDK already loaded (e.g., user scrolled back)
+      setPaypalLoaded(true);
+      return;
+    }
+    const script = document.createElement('script');
+    script.src =
+      'https://www.paypal.com/sdk/js?client-id=BAAHaUaKhWsWq0TTXodULxlOOiK6IkAH93rDl1FvxaCB4EiNVgnRyswgsmPFKUclEPgSRNzblvfHwHJNFA&currency=USD&disable-funding=credit';
+    script.id = 'paypal-sdk-script';
+    script.async = true;
+    script.onload = () => setPaypalLoaded(true);
+    script.onerror = () => {
+      console.warn('[PayPal] SDK failed to load. Payment gateway unavailable.');
+    };
+    document.body.appendChild(script);
+  }
+
+
 
   // Check URL parameters for success returns or screenshot simulator mode
   useEffect(() => {
@@ -490,7 +547,7 @@ export default function DonationSection() {
   const presetAmounts = [10, 25, 50, 100, 250, 500];
 
   return (
-    <section id="donar" className="section" style={{ overflow: 'hidden', position: 'relative' }}>
+    <section ref={sectionRef} id="donar" className="section" style={{ overflow: 'hidden', position: 'relative' }}>
       <div className="container" style={{ maxWidth: 740 }}>
         <div className="section-header">
           <h2 className="section-title">

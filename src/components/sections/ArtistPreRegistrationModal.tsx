@@ -64,7 +64,7 @@ export function ArtistPreRegistrationModal({ isOpen, onClose }: ArtistPreRegistr
           intention: 'volunteering',
           subject: `[Convocatoria Artistas 2026] Pre-registro: ${tagArtistic || artistName} (${city})`,
           subOption: `Estilo: ${artStyle} | Tag/Crew: ${tagArtistic} ${crew ? `(Crew: ${crew})` : ''}`,
-          mode: 'Presencial (Festival 11 Locaciones)',
+          mode: 'Presencial (Festival 14 Locaciones en 3 Ciudades)',
           availability: 'Tour Festival 2026',
           message: `
 --- PRE-REGISTRO DE ARTISTA URBANO / GRAFFITI / MURALISMO ---

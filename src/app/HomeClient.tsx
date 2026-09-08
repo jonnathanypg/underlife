@@ -3,6 +3,7 @@
 import HeroSection from '@/components/sections/HeroSection';
 import ArtivismoTourBannerSection from '@/components/sections/ArtivismoTourBannerSection';
 import DNASection from '@/components/sections/DNASection';
+import LeFriAppSection from '@/components/sections/LeFriAppSection';
 import ImpactSection from '@/components/sections/ImpactSection';
 import GalleriesSection from '@/components/sections/GalleriesSection';
 import VolunteerSection from '@/components/sections/VolunteerSection';
@@ -14,6 +15,7 @@ export default function HomeClient() {
       <HeroSection />
       <ArtivismoTourBannerSection />
       <DNASection />
+      <LeFriAppSection />
       <ImpactSection />
       <GalleriesSection />
       <VolunteerSection />

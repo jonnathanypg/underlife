@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from '@/lib/LanguageContext';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Pagination, Autoplay } from 'swiper/modules';
@@ -97,26 +97,21 @@ export default function GalleriesSection() {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const swiperRef = useRef<any>(null);
 
-  // Defer gallery images background preloading during browser idle to avoid blocking main thread and FCP/LCP
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const schedulePreload = () => {
-        galleries.forEach((g) => {
-          g.images.forEach((img) => {
-            const image = new Image();
-            image.src = `/recursos_opt/${g.folder}/${img}`;
-          });
-        });
-      };
-
-      if ('requestIdleCallback' in window) {
-        (window as any).requestIdleCallback(schedulePreload, { timeout: 3000 });
-      } else {
-        const timer = setTimeout(schedulePreload, 2000);
-        return () => clearTimeout(timer);
-      }
-    }
-  }, []);
+  /*
+   * PERFORMANCE: Background image preloading removed.
+   *
+   * Previously: schedulePreload() triggered via requestIdleCallback after 2s,
+   * mass-downloading all 40+ gallery images (~891 KiB) in the background —
+   * even when the gallery section was not visible.
+   *
+   * Lighthouse flagged all these images with TTL=None in the cache report
+   * because they were downloaded but not cached properly, and they saturated
+   * the browser's network queue, competing with LCP-critical resources.
+   *
+   * Now: Gallery images use loading="lazy" in the DOM and Swiper handles
+   * progressive loading. The browser loads each image only when the user
+   * actually scrolls to it, saving ~891 KiB on initial page load.
+   */
 
   const handleTabChange = (index: number) => {
     if (index === activeTab) return;

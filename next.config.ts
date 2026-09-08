@@ -12,7 +12,11 @@ const nextConfig: NextConfig = {
   images: {
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 31536000,
+    // Serve correctly-sized images to avoid "uses images of appropriate size" warning
+    deviceSizes: [375, 640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 192, 256],
   },
+
 
   async headers() {
     // Shared 1-year immutable header

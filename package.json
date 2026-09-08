@@ -30,13 +30,21 @@
     "prisma": "6.19.3",
     "typescript": "^5"
   },
-  "browserslist": [
-    "Chrome >= 95",
-    "Edge >= 95",
-    "Firefox >= 90",
-    "Safari >= 15.4",
-    "iOS >= 15.4",
-    "not IE 11",
-    "not dead"
-  ]
+  "browserslist": {
+    "production": [
+      "Chrome >= 96",
+      "Edge >= 96",
+      "Firefox >= 95",
+      "Safari >= 15.4",
+      "iOS >= 15.4",
+      "not IE 11",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 Chrome version",
+      "last 1 Firefox version",
+      "last 1 Safari version"
+    ]
+  }
 }

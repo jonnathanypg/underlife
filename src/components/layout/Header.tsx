@@ -86,6 +86,11 @@ export default function Header() {
               ? '/logos/logotipo-fundacionunderlife-dark.webp'
               : '/logos/logotipo-fundacionunderlife-ligth.webp'
             }
+            srcSet={theme === 'dark'
+              ? '/logos/logotipo-fundacionunderlife-dark-208w.webp 208w, /logos/logotipo-fundacionunderlife-dark.webp 319w'
+              : '/logos/logotipo-fundacionunderlife-ligth-208w.webp 208w, /logos/logotipo-fundacionunderlife-ligth.webp 320w'
+            }
+            sizes="(max-width: 600px) 104px, (max-width: 900px) 130px, 159px"
             alt="Fundación Underlife"
             className="site-logo"
             fetchPriority="high"
