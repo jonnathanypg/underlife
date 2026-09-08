@@ -409,6 +409,8 @@ export default function LeFriAppSection() {
                     <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>
                       {t.statFreeLabel}
                     </div>
+                  </div>
+                </div>
               </div>
 
               {/* Action Link to subdominio moved below mac card */}
