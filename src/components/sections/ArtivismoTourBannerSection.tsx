@@ -243,7 +243,7 @@ export default function ArtivismoTourBannerSection() {
                 }}
               >
                 <div style={{ fontSize: '1.9rem', fontWeight: 900, color: '#a855f7', marginBottom: '4px' }}>
-                  150%
+                  3
                 </div>
                 <div style={{ fontSize: '0.9rem', fontWeight: 700, marginBottom: '4px' }}>
                   {t('statTaxTitle')}
