@@ -452,7 +452,7 @@ export default function LeFriAppSection() {
                   </svg>
                 </a>
                 <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', textAlign: 'center' }}>
-                  🌐 {t.domainLabel} — {t.ctaSub}
+                  🌐 {t.ctaSub}
                 </span>
               </div>
             </div>
