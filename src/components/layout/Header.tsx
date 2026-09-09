@@ -48,10 +48,10 @@ export default function Header() {
   ];
 
   const navItems = [
-    { key: 'home', href: '/#inicio' },
+    { key: 'home', href: '/' },
     { key: 'dna', href: '/#adn' },
     { key: 'projects', href: '/#proyectos' },
-    { key: 'primeros1000', href: '/primeros-1000-dias' },
+    { key: 'tour', href: '/primeros-1000-dias' },
     { key: 'transparency', href: '/transparencia' },
     { key: 'volunteer', href: '/#voluntariado' },
     { key: 'contact', href: '/contacto' },
