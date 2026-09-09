@@ -86,38 +86,26 @@ export default function Footer() {
               {t('quickLinks')}
             </h3>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {(['home', 'dna', 'projects', 'impact', 'volunteer'] as const).map((key) => (
-                <li key={key}>
+              {[
+                { key: 'home', href: '/' },
+                { key: 'dna', href: '/#adn' },
+                { key: 'projects', href: '/#proyectos' },
+                { key: 'tour', href: '/primeros-1000-dias' },
+                { key: 'volunteer', href: '/#voluntariado' },
+                { key: 'transparency', href: '/transparencia' },
+                { key: 'contact', href: '/contacto' },
+              ].map((item) => (
+                <li key={item.key}>
                   <Link
-                    href={`/#${key === 'home' ? 'inicio' : key === 'dna' ? 'adn' : key === 'projects' ? 'proyectos' : key}`}
+                    href={item.href}
                     style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', transition: 'color var(--duration-fast)' }}
                     onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
                     onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
                   >
-                    {nav(key)}
+                    {nav(item.key)}
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link
-                  href="/contacto"
-                  style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', transition: 'color var(--duration-fast)' }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
-                >
-                  {nav('contact')}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/transparencia"
-                  style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', transition: 'color var(--duration-fast)' }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
-                >
-                  {t('transparency')}
-                </Link>
-              </li>
               <li>
                 <Link
                   href="/privacidad"
