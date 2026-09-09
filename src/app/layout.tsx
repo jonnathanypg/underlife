@@ -6,6 +6,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ScrollRestorer from '@/components/ui/ScrollRestorer';
 import AikrofyWidget from '@/components/ui/AikrofyWidget';
+import PrivacyCookieBanner from '@/components/ui/PrivacyCookieBanner';
 import { Outfit, Caveat } from 'next/font/google';
 
 const outfit = Outfit({
@@ -223,6 +224,7 @@ export default function RootLayout({
             <main style={{ minHeight: '100vh' }}>{children}</main>
             <Footer />
             <AikrofyWidget />
+            <PrivacyCookieBanner />
             {/*
              * PERFORMANCE NOTE: PayPal SDK removed from global layout.
              *
