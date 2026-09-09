@@ -43,6 +43,8 @@ export default function HomePage() {
         '@type': 'NGO',
         '@id': `${siteUrl}/#organization`,
         name: 'Fundación Underlife',
+        legalName: 'Fundación Underlife',
+        taxID: '0993093904001',
         alternateName: 'Underlife Foundation',
         url: siteUrl,
         logo: `${siteUrl}/logos/logo-fundacionunderlife-dark.png`,

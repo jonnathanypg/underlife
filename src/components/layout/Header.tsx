@@ -51,7 +51,8 @@ export default function Header() {
     { key: 'home', href: '/#inicio' },
     { key: 'dna', href: '/#adn' },
     { key: 'projects', href: '/#proyectos' },
-    { key: 'impact', href: '/#impacto' },
+    { key: 'primeros1000', href: '/primeros-1000-dias' },
+    { key: 'transparency', href: '/transparencia' },
     { key: 'volunteer', href: '/#voluntariado' },
     { key: 'contact', href: '/contacto' },
   ];
@@ -111,7 +112,7 @@ export default function Header() {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 28,
+            gap: 20,
           }}
           className="desktop-nav"
         >

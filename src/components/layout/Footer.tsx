@@ -163,6 +163,10 @@ export default function Footer() {
                   +593 986 020 391
                 </a>
               </li>
+              <li style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: '0.82rem', color: 'var(--text-muted)', paddingTop: 4 }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 16, height: 16, color: 'var(--color-teal)', flexShrink: 0, marginTop: 2 }}><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
+                <span><strong>RUC:</strong> 0993093904001<br /><strong>MIES Res.:</strong> MIES-CZ-5-DDM-2018-0036-R</span>
+              </li>
             </ul>
           </div>
         </div>

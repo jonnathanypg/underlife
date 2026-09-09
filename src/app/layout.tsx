@@ -125,6 +125,8 @@ export default function RootLayout({
                   '@type': 'NGO',
                   '@id': 'https://fundacionunderlife.org/#organization',
                   name: 'Fundación Underlife',
+                  legalName: 'Fundación Underlife',
+                  taxID: '0993093904001',
                   alternateName: 'Underlife Foundation',
                   url: 'https://fundacionunderlife.org',
                   logo: {
