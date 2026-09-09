@@ -432,11 +432,11 @@ export default function Primeros1000DiasClient() {
             </p>
           </div>
 
-          {/* Locations Showcase & Full-Width WebP Map Card */}
+          {/* Locations Showcase & Strategic Hub Card (Sin mapa, adaptativo y moderno) */}
           <div
             className="glass-card"
             style={{
-              padding: 'clamp(24px, 4vw, 36px)',
+              padding: 'clamp(24px, 4vw, 40px)',
               borderRadius: '24px',
               border: '1px solid var(--border-color-strong)',
               background: 'linear-gradient(135deg, rgba(0,85,255,0.06) 0%, rgba(255,85,0,0.05) 100%)',
@@ -444,99 +444,193 @@ export default function Primeros1000DiasClient() {
               overflow: 'hidden',
               display: 'flex',
               flexDirection: 'column',
-              gap: '24px',
+              gap: '28px',
             }}
           >
-            {/* Summary Top Bar */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
-              <div>
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '4px 14px', borderRadius: 'var(--radius-full)', background: 'rgba(0, 85, 255, 0.12)', color: 'var(--color-primary)', fontSize: '0.8rem', fontWeight: 700, marginBottom: '10px' }}>
-                  <span>🗺️</span> {t('mapTitle')}
-                </div>
-                <h3 style={{ fontSize: 'clamp(1.25rem, 2.5vw, 1.6rem)', fontWeight: 800, margin: '0 0 6px', lineHeight: 1.3 }}>
-                  Eje Estratégico: Guayas — Santa Elena
-                </h3>
-                <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', margin: 0, maxWidth: '780px', lineHeight: 1.5 }}>
-                  {t('tourLocationsSummary')}
-                </p>
+            {/* Header & Strategic Route Overview */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', alignSelf: 'flex-start', gap: '8px', padding: '6px 16px', borderRadius: 'var(--radius-full)', background: 'rgba(0, 85, 255, 0.12)', color: 'var(--color-primary)', fontSize: '0.82rem', fontWeight: 700, border: '1px solid rgba(0, 85, 255, 0.25)' }}>
+                <span>🗺️</span> {t('mapTitle')}
               </div>
-
-              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                <div style={{ background: 'var(--bg-card)', padding: '10px 16px', borderRadius: '12px', border: '1px solid rgba(0, 85, 255, 0.25)', textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--color-primary)' }}>4 Muros</div>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Cantón Milagro</div>
-                </div>
-                <div style={{ background: 'var(--bg-card)', padding: '10px 16px', borderRadius: '12px', border: '1px solid rgba(16, 185, 129, 0.25)', textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--color-teal)' }}>3 Muros</div>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Cantón Guayaquil</div>
-                </div>
-                <div style={{ background: 'var(--bg-card)', padding: '10px 16px', borderRadius: '12px', border: '1px solid rgba(255, 85, 0, 0.25)', textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--color-accent)' }}>7 Muros</div>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Cantón La Libertad</div>
-                </div>
-              </div>
+              <h3 style={{ fontSize: 'clamp(1.35rem, 3vw, 1.85rem)', fontWeight: 800, margin: 0, lineHeight: 1.3 }}>
+                Eje Estratégico: Guayas — Santa Elena
+              </h3>
+              <p style={{ fontSize: '0.98rem', color: 'var(--text-secondary)', margin: 0, maxWidth: '820px', lineHeight: 1.6 }}>
+                {t('tourLocationsSummary')}
+              </p>
             </div>
 
-            {/* Full-Width Optimized Map WebP Image Frame */}
+            {/* Hubs Cards Grid (Milagro, Guayaquil, La Libertad) */}
             <div
               style={{
-                position: 'relative',
-                borderRadius: '20px',
-                overflow: 'hidden',
-                border: '1px solid var(--border-color)',
-                boxShadow: '0 16px 36px rgba(0,0,0,0.18)',
-                background: 'var(--bg-card)',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))',
+                gap: '18px',
                 width: '100%',
-                padding: 'clamp(12px, 2.5vw, 24px)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
               }}
             >
-              <img
-                src="/artivismo-img/ubicaciones-artivismo-Underlife-Graffiti-muralismo-ecuador-santa-elena-la-libertad-guayas-milagro.webp"
-                alt="Mapa de ubicaciones de muralismo y graffiti de Artivismo Fundación Underlife en Milagro Guayas y La Libertad Santa Elena Ecuador"
-                loading="lazy"
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  maxHeight: '520px',
-                  objectFit: 'contain',
-                  objectPosition: 'center',
-                  display: 'block',
-                  borderRadius: '12px',
-                  transition: 'transform 0.4s ease',
-                }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = 'scale(1.02)'; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = 'scale(1)'; }}
-              />
+              {/* Milagro */}
               <div
                 style={{
-                  position: 'absolute',
-                  bottom: '24px',
-                  right: '28px',
-                  padding: '4px 14px',
-                  borderRadius: 'var(--radius-full)',
-                  background: 'rgba(5, 5, 20, 0.85)',
-                  backdropFilter: 'blur(8px)',
-                  color: '#fff',
-                  fontSize: '0.78rem',
-                  fontWeight: 700,
-                  border: '1px solid rgba(255,255,255,0.15)',
+                  background: 'var(--bg-card)',
+                  padding: '22px 20px',
+                  borderRadius: '18px',
+                  border: '1px solid rgba(0, 85, 255, 0.22)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '16px',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.05)',
+                  transition: 'transform 0.3s ease, border-color 0.3s ease',
                 }}
               >
-                📍 14 Muros en 3 Ciudades
+                <div
+                  style={{
+                    width: '48px',
+                    height: '48px',
+                    borderRadius: '14px',
+                    background: 'rgba(0, 85, 255, 0.12)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.4rem',
+                    flexShrink: 0,
+                  }}
+                >
+                  📍
+                </div>
+                <div>
+                  <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--color-primary)', lineHeight: 1.1 }}>
+                    4 Muros
+                  </div>
+                  <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '4px' }}>
+                    Cantón Milagro
+                  </div>
+                  <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+                    Provincia del Guayas
+                  </div>
+                </div>
+              </div>
+
+              {/* Guayaquil */}
+              <div
+                style={{
+                  background: 'var(--bg-card)',
+                  padding: '22px 20px',
+                  borderRadius: '18px',
+                  border: '1px solid rgba(16, 185, 129, 0.25)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '16px',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.05)',
+                  transition: 'transform 0.3s ease, border-color 0.3s ease',
+                }}
+              >
+                <div
+                  style={{
+                    width: '48px',
+                    height: '48px',
+                    borderRadius: '14px',
+                    background: 'rgba(16, 185, 129, 0.12)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.4rem',
+                    flexShrink: 0,
+                  }}
+                >
+                  🏙️
+                </div>
+                <div>
+                  <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--color-teal)', lineHeight: 1.1 }}>
+                    3 Muros
+                  </div>
+                  <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '4px' }}>
+                    Cantón Guayaquil
+                  </div>
+                  <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+                    Provincia del Guayas
+                  </div>
+                </div>
+              </div>
+
+              {/* La Libertad */}
+              <div
+                style={{
+                  background: 'var(--bg-card)',
+                  padding: '22px 20px',
+                  borderRadius: '18px',
+                  border: '1px solid rgba(255, 85, 0, 0.25)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '16px',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.05)',
+                  transition: 'transform 0.3s ease, border-color 0.3s ease',
+                }}
+              >
+                <div
+                  style={{
+                    width: '48px',
+                    height: '48px',
+                    borderRadius: '14px',
+                    background: 'rgba(255, 85, 0, 0.12)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.4rem',
+                    flexShrink: 0,
+                  }}
+                >
+                  🌊
+                </div>
+                <div>
+                  <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--color-accent)', lineHeight: 1.1 }}>
+                    7 Muros
+                  </div>
+                  <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '4px' }}>
+                    Cantón La Libertad
+                  </div>
+                  <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+                    Provincia de Santa Elena
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Centered CTA Action */}
-            <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '8px' }}>
+            {/* Total Circuit Callout & Centered CTA Action */}
+            <div
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '20px',
+                paddingTop: '8px',
+                borderTop: '1px solid var(--border-color)',
+              }}
+            >
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '8px 18px',
+                  borderRadius: 'var(--radius-full)',
+                  background: 'var(--bg-card)',
+                  border: '1px solid var(--border-color-strong)',
+                  color: 'var(--text-primary)',
+                  fontSize: '0.9rem',
+                  fontWeight: 700,
+                }}
+              >
+                <span>📍</span> 14 Muros en 3 Ciudades Estratégicas
+              </div>
+
               <button
                 onClick={() => handleOpenSponsorModal('mecenas')}
                 className="btn btn-primary"
                 style={{
                   padding: '16px 36px',
-                  fontSize: '1.05rem',
+                  fontSize: '1.02rem',
                   fontWeight: 700,
                   borderRadius: 'var(--radius-full)',
                   display: 'inline-flex',
